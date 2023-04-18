@@ -27,4 +27,7 @@ public class User : IdentityUser<Guid>
     [Required]
     public string Avatar { get; set; }
 
+    public string SerialNumber { get; set; } = Guid.NewGuid().ToString("N");
+
+    public virtual ICollection<AuthToken> AuthTokens { get; set; }
 }
