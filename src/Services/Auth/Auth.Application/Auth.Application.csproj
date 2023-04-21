@@ -12,6 +12,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\..\BuildingBlocks\BuildingBlocks.Security\BuildingBlocks.Security.csproj" />
 	  <ProjectReference Include="..\Auth.Domain\Auth.Domain.csproj" />
 	</ItemGroup>
 
