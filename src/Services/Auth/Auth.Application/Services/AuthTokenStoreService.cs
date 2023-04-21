@@ -2,6 +2,7 @@
 using Auth.Domain.Entities;
 using BuildingBlocks.Security;
 using BuildingBlocks.Security.Interfaces;
+using BuildingBlocks.Security.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
