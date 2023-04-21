@@ -5,7 +5,7 @@ namespace Auth.Application.Interfaces;
 
 public interface IApplicationDbContext
 {
-    DbSet<AuthToken> AuthTokens { get; set; }
+    DbSet<AuthToken> AuthTokens { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = new());
 }
