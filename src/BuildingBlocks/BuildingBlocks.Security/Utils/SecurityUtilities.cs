@@ -1,9 +1,9 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace BuildingBlocks.Security.Services;
+namespace BuildingBlocks.Security.Utils;
 
-public static class SecurityService
+public static class SecurityUtilities
 {
     public static string GetSha256Hash(string input)
     {
