@@ -27,7 +27,7 @@ public static class ServiceRegistery
 
         services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "API Auth", Version = "v1" });
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "NewAdZone Auth APi", Version = "v1" });
 
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
@@ -143,8 +143,9 @@ public static class ServiceRegistery
 
         services.AddAuthorization(options =>
         {
-            options.AddPolicy(nameof(Roles.BasicUser), policy => policy.RequireRole(nameof(Roles.BasicUser)));
             options.AddPolicy(nameof(Roles.Admin), policy => policy.RequireRole(nameof(Roles.Admin)));
+            options.AddPolicy(nameof(Roles.VerifiedUser), policy => policy.RequireRole(nameof(Roles.VerifiedUser)));
+            options.AddPolicy(nameof(Roles.BasicUser), policy => policy.RequireRole(nameof(Roles.BasicUser)));
         });
     }
 

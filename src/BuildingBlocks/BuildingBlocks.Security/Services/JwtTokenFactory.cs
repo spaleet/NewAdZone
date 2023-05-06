@@ -105,7 +105,7 @@ public class JwtTokenFactory : IJwtTokenFactory
         if (rolesClaims?.Any() is true)
         {
             foreach (string role in rolesClaims)
-                claims.Add(new Claim(ClaimTypes.Role, role.ToLower(CultureInfo.InvariantCulture), ClaimValueTypes.String, _tokenSettings.Issuer));
+                claims.Add(new Claim(ClaimTypes.Role, role));
         }
 
         var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenSettings.Secret));

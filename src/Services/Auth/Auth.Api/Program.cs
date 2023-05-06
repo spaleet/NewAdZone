@@ -7,9 +7,9 @@ builder.Services.ConfigureIdentity();
 builder.Services.ConfigureAuth(builder.Configuration);
 builder.Services.ConfigureServices();
 
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.ConfigureSwagger();
 
 var app = builder.Build();
 
@@ -27,3 +27,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+// TODO : Serilog
