@@ -94,7 +94,7 @@ public class AuthTokenStoreService : IAuthTokenStoreService
         if (string.IsNullOrWhiteSpace(refreshTokenSerial))
             return null;
 
-        string? refreshTokenIdHash = _SecurityUtilities.GetSha256Hash(refreshTokenSerial);
+        string? refreshTokenIdHash = SecurityUtilities.GetSha256Hash(refreshTokenSerial);
 
         return await _dbContext.AuthTokens
             .FirstOrDefaultAsync(x => x.RefreshTokenIdHash == refreshTokenIdHash);
@@ -161,7 +161,7 @@ public class AuthTokenStoreService : IAuthTokenStoreService
 
             if (!string.IsNullOrWhiteSpace(refreshTokenSerial))
             {
-                string? refreshTokenIdHashSource = _SecurityUtilities.GetSha256Hash(refreshTokenSerial);
+                string? refreshTokenIdHashSource = SecurityUtilities.GetSha256Hash(refreshTokenSerial);
                 await DeleteTokensWithSameRefreshTokenSource(refreshTokenIdHashSource);
             }
         }
