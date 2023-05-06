@@ -6,6 +6,7 @@ using Auth.Application.Services;
 using Auth.Domain.Entities;
 using Auth.Domain.Enums;
 using Auth.Infrastructure.Context;
+using Auth.Infrastructure.Seed;
 using BuildingBlocks.Security;
 using BuildingBlocks.Security.Interfaces;
 using BuildingBlocks.Security.Services;
@@ -61,6 +62,8 @@ public static class ServiceRegistery
                 b => b.MigrationsAssembly("Auth.Infrastructure")));
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetService<DatabaseContext>());
+
+        services.AddScoped<AuthDbInitializer>();
     }
 
     public static void ConfigureIdentity(this IServiceCollection services)
