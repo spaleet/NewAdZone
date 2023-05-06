@@ -1,0 +1,120 @@
+﻿using Auth.Application.Interfaces;
+using Auth.Application.Models;
+using Auth.Domain.Entities;
+using Auth.Domain.Enums;
+using BuildingBlocks.Core.Exceptions.Base;
+using BuildingBlocks.Core.Exceptions.Other;
+using BuildingBlocks.Security.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
+namespace Auth.Application.Services;
+public class AuthUserService : IAuthUserService
+{
+    private readonly SignInManager<User> _signInManager;
+    private readonly IJwtTokenFactory _jwtTokenFactory;
+    private readonly IAuthTokenStoreService _authTokenStore;
+    private readonly UserManager<User> _userManager;
+
+    public AuthUserService(UserManager<User> userManager, SignInManager<User> signInManager,
+        IJwtTokenFactory jwtTokenFactory, IAuthTokenStoreService authTokenStore)
+    {
+        _userManager = userManager;
+        _signInManager = signInManager;
+        _jwtTokenFactory = jwtTokenFactory;
+        _authTokenStore = authTokenStore;
+    }
+
+    public async Task RegisterAsync(RegisterAccountRequest model)
+    {
+        // Validate Email
+        InvalidEmailException.ThrowIfNotValid(model.Email);
+
+        // Duplicate Email
+        var duplicateEmail = await _userManager.FindByEmailAsync(model.Email);
+        if (duplicateEmail is not null)
+            throw new InvalidEmailException(model.Email ?? string.Empty);
+
+        // Validate Phone
+        InvalidPhoneNumberException.ThrowIfNotValid(model.PhoneNumber);
+
+        // Duplicate Phone
+        var duplicatePhone = await _userManager.Users.FirstOrDefaultAsync(x => x.PhoneNumber == model.PhoneNumber);
+        if (duplicatePhone is not null)
+            throw new InvalidPhoneNumberException(model.PhoneNumber);
+
+        //TODO: automapper
+        var user = new User
+        {
+            Email = model.Email,
+            UserName = model.Username,
+            PhoneNumber = model.PhoneNumber,
+            FirstName = model.FirstName,
+            LastName = model.LastName,
+            Avatar = "default-avatar.png"
+        };
+
+        var result = await _userManager.CreateAsync(user, model.Password);
+
+        if (!result.Succeeded)
+            throw new ApiException(result.Errors.First().Description);
+
+        await _userManager.AddToRoleAsync(user, Roles.BasicUser.ToString());
+    }
+
+    public async Task<AuthenticateUserResponse> AuthenticateUserAsync(AuthenticateUserRequest model)
+    {
+        var user = await _userManager.FindByEmailAsync(model.Email);
+
+        if (user is null)
+            throw new NotFoundException("No user was found.");
+
+        var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, false, false);
+
+        if (!result.Succeeded)
+            throw new UnAuthorizedException("Authentication failed.");
+
+        var userRoles = (IReadOnlyList<string>)await _userManager.GetRolesAsync(user);
+
+        var token = await _jwtTokenFactory.CreateJwtTokenAsync(user.Id.ToString(),
+                                                               user.UserName,
+                                                               user.Email,
+                                                               user.SerialNumber,
+                                                               userRoles);
+
+        await _authTokenStore.AddUserToken(user, token.RefreshTokenSerial, token.AccessToken);
+
+        return new AuthenticateUserResponse(token);
+    }
+
+    public async Task<AuthenticateUserResponse> RevokeTokenAsync(RevokeRefreshTokenRequest model)
+    {
+        if (string.IsNullOrWhiteSpace(model.RefreshToken))
+            throw new AppException("Token isn't valid!");
+
+        var token = await _authTokenStore.FindToken(model.RefreshToken);
+
+        if (token == null)
+            throw new AppException("Token isn't valid!");
+
+        var user = await _userManager.FindByIdAsync(token.UserId.ToString());
+
+        if (user is null)
+            throw new NotFoundException("No user was found.");
+
+        var userRoles = (IReadOnlyList<string>)await _userManager.GetRolesAsync(user);
+
+        var jwtResult = await _jwtTokenFactory.CreateJwtTokenAsync(user.Id.ToString(),
+                                                               user.UserName,
+                                                               user.Email,
+                                                               user.SerialNumber,
+                                                               userRoles);
+
+        string? refreshTokenSerial = _jwtTokenFactory.GetRefreshTokenSerial(model.RefreshToken);
+
+        await _authTokenStore.AddUserToken(user, jwtResult.RefreshTokenSerial, jwtResult.AccessToken,
+            refreshTokenSerial);
+
+        return new AuthenticateUserResponse(jwtResult);
+    }
+}
