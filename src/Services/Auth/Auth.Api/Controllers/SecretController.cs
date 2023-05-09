@@ -21,7 +21,7 @@ public class SecretController : BaseController
     }
 
     [Authorize(Policy = nameof(Roles.VerifiedUser))]
-    [HttpGet("user")]
+    [HttpGet("verified-user")]
     public IActionResult VerifiedUserSecret()
     {
         return Ok("You can access verified user secret!");

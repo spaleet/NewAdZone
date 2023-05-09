@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.Json;
 using Auth.Application.Interfaces;
+using Auth.Application.Mapping;
 using Auth.Application.Services;
 using Auth.Domain.Entities;
 using Auth.Domain.Enums;
@@ -151,6 +152,8 @@ public static class ServiceRegistery
 
     public static void ConfigureServices(this IServiceCollection services)
     {
+        services.AddAutoMapper(typeof(AuthMappers));
+
         services.AddTransient<IAuthUserService, AuthUserService>();
         services.AddTransient<IJwtTokenFactory, JwtTokenFactory>();
         services.AddTransient<IAuthTokenStoreService, AuthTokenStoreService>();

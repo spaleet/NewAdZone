@@ -2,6 +2,7 @@
 using Auth.Application.Models;
 using Auth.Domain.Entities;
 using Auth.Domain.Enums;
+using AutoMapper;
 using BuildingBlocks.Core.Exceptions.Base;
 using BuildingBlocks.Core.Exceptions.Other;
 using BuildingBlocks.Security.Interfaces;
@@ -14,15 +15,17 @@ public class AuthUserService : IAuthUserService
     private readonly SignInManager<User> _signInManager;
     private readonly IJwtTokenFactory _jwtTokenFactory;
     private readonly IAuthTokenStoreService _authTokenStore;
+    private readonly IMapper _mapper;
     private readonly UserManager<User> _userManager;
 
     public AuthUserService(UserManager<User> userManager, SignInManager<User> signInManager,
-        IJwtTokenFactory jwtTokenFactory, IAuthTokenStoreService authTokenStore)
+        IJwtTokenFactory jwtTokenFactory, IAuthTokenStoreService authTokenStore, IMapper mapper)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _jwtTokenFactory = jwtTokenFactory;
         _authTokenStore = authTokenStore;
+        _mapper = mapper;
     }
 
     public async Task RegisterAsync(RegisterAccountRequest model)
@@ -43,16 +46,8 @@ public class AuthUserService : IAuthUserService
         if (duplicatePhone is not null)
             throw new InvalidPhoneNumberException(model.PhoneNumber);
 
-        //TODO: automapper
-        var user = new User
-        {
-            Email = model.Email,
-            UserName = model.Username,
-            PhoneNumber = model.PhoneNumber,
-            FirstName = model.FirstName,
-            LastName = model.LastName,
-            Avatar = "default-avatar.png"
-        };
+        var user = _mapper.Map<User>(model);
+        user.Avatar = "default-avatar.png";
 
         var result = await _userManager.CreateAsync(user, model.Password);
 
