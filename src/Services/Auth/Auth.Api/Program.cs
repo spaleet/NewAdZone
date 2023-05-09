@@ -16,7 +16,6 @@ builder.Services.ConfigureSwagger();
 
 var app = builder.Build();
 
-//if (app.Environment.IsDevelopment())
 await app.UseDbInitializer();
 
 app.UseSwagger();
