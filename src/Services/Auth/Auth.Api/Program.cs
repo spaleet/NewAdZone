@@ -1,6 +1,9 @@
 using Auth.Api.Extensions;
+using BuildingBlocks.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.AddCustomSerilog();
 
 builder.Services.ConfigureDb(builder.Configuration.GetConnectionString("SqlConnection")!);
 builder.Services.ConfigureIdentity();
@@ -27,6 +30,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
-
-// TODO : Serilog
