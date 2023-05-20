@@ -1,5 +1,7 @@
 using Auth.Api.Extensions;
+using BuildingBlocks.Core.Web.Extenions;
 using BuildingBlocks.Logging;
+using Hellang.Middleware.ProblemDetails;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,10 +13,13 @@ builder.Services.ConfigureAuth(builder.Configuration);
 builder.Services.ConfigureServices();
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
+builder.Services.AddCustomProblemDetails();
 builder.Services.AddControllers();
 builder.Services.ConfigureSwagger();
 
 var app = builder.Build();
+
+app.UseProblemDetails();
 
 await app.UseDbInitializer();
 
