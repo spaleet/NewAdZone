@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using BuildingBlocks.Core.Exceptions.Base;
 
-namespace BuildingBlocks.Core.Exceptions.Other;
+namespace Auth.Application.Exceptions;
 public class InvalidEmailException : BadRequestException
 {
     public string Email { get; }
