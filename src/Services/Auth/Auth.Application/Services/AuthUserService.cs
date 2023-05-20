@@ -1,10 +1,10 @@
-﻿using Auth.Application.Interfaces;
+﻿using Auth.Application.Exceptions;
+using Auth.Application.Interfaces;
 using Auth.Application.Models;
 using Auth.Domain.Entities;
 using Auth.Domain.Enums;
 using AutoMapper;
 using BuildingBlocks.Core.Exceptions.Base;
-using BuildingBlocks.Core.Exceptions.Other;
 using BuildingBlocks.Security.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -85,17 +85,17 @@ public class AuthUserService : IAuthUserService
     public async Task<AuthenticateUserResponse> RevokeTokenAsync(RevokeRefreshTokenRequest model)
     {
         if (string.IsNullOrWhiteSpace(model.RefreshToken))
-            throw new AppException("Token isn't valid!");
+            throw new InvalidTokenException();
 
         var token = await _authTokenStore.FindToken(model.RefreshToken);
 
         if (token == null)
-            throw new AppException("Token isn't valid!");
+            throw new InvalidTokenException();
 
         var user = await _userManager.FindByIdAsync(token.UserId.ToString());
 
         if (user is null)
-            throw new NotFoundException("No user was found.");
+            throw new NotFoundException("No user was found with the provided credentials.");
 
         var userRoles = (IReadOnlyList<string>)await _userManager.GetRolesAsync(user);
 
