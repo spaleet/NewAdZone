@@ -1,10 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+	
+	<ItemGroup>
+		<!--https://github.com/dotnet/aspnetcore/issues/19481-->
+		<!--https://docs.microsoft.com/en-us/aspnet/core/fundamentals/metapackage-app-->
+		<!--https://docs.microsoft.com/en-us/aspnet/core/fundamentals/target-aspnetcore-->
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
 	
 	<ItemGroup>
 		<PackageReference Include="MongoDB.Driver" Version="2.19.2" />
