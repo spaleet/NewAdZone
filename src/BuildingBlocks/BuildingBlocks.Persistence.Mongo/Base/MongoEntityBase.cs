@@ -1,4 +1,7 @@
-﻿namespace BuildingBlocks.Persistence.Mongo;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace BuildingBlocks.Persistence.Mongo.Base;
 
 public abstract class MongoEntityBase
 {
