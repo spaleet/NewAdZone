@@ -7,7 +7,7 @@ namespace Plan.Domain.Entities;
 public class Plan : MongoEntityBase
 {
     [Display(Name = "نام پلن")]
-    [BsonElement("userId")]
+    [BsonElement("title")]
     [Required]
     public string Title { get; set; }
 
