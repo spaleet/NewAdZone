@@ -29,12 +29,12 @@ public class GetPlansHandler : IQueryHandler<GetPlans, GetPlansResponse>
 
     }
 
-    public Task<GetPlansResponse> Handle(GetPlans request, CancellationToken cancellationToken)
+    public async Task<GetPlansResponse> Handle(GetPlans request, CancellationToken cancellationToken)
     {
-        var plans = _context.Plans.AsQueryable()
-                                        .Select(x => _mapper.Map(x, new PlanDto()))
-                                        .ToList();
+        var plans = await _context.Plans.AsQueryable().ToListAsync();
 
-        return Task.FromResult(new GetPlansResponse(plans));
+        var mappedPlans = plans.Select(x => _mapper.Map(x, new PlanDto())).ToList();
+
+        return new GetPlansResponse(mappedPlans);
     }
 }

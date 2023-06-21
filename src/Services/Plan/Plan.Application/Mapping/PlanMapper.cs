@@ -7,6 +7,6 @@ public class PlanMapper : Profile
 {
     public PlanMapper()
     {
-        CreateMap<PlanDto, Domain.Entities.Plan>();
+        CreateMap<Domain.Entities.Plan, PlanDto>();
     }
 }
