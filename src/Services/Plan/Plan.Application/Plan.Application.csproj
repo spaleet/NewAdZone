@@ -7,11 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.5.2" />
     <PackageReference Include="MediatR" Version="12.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Plan.Domain\Plan.Domain.csproj" />
+    <ProjectReference Include="..\Plan.Infrastructure\Plan.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

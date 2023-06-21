@@ -18,8 +18,4 @@ public class Plan : MongoEntityBase
     [Display(Name = "قیمت پلن")]
     [BsonElement("price")]
     public decimal? Price { get; set; }
-
-    [Display(Name = "حساب")]
-    [BsonElement("userId")]
-    public string UserId { get; set; }
 }
