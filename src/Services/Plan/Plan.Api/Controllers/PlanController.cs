@@ -1,8 +1,7 @@
 ﻿using BuildingBlocks.Core.Web;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Plan.Application.Features.CreatingNewPlan;
 using Plan.Application.Features.GettingPlans;
-using Plan.Infrastructure.Context;
 
 namespace Plan.Api.Controllers;
 
@@ -14,5 +13,13 @@ public class PlanController : BaseController
         var plans = await Mediator.Send(new GetPlans(), cancellationToken);
 
         return Ok(plans);
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> CreatePlan([FromBody] CreateNewPlan request, CancellationToken cancellationToken)
+    {
+        await Mediator.Send(request, cancellationToken);
+
+        return Ok("Plan successfully created!");
     }
 }

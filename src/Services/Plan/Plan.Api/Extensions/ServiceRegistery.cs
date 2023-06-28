@@ -1,5 +1,7 @@
-﻿using BuildingBlocks.Persistence.Mongo;
+﻿using BuildingBlocks.Core.Validation;
+using BuildingBlocks.Persistence.Mongo;
 using FluentValidation;
+using MediatR;
 using Plan.Application;
 using Plan.Infrastructure.Context;
 
@@ -28,6 +30,7 @@ public static class ServiceRegistery
 
         services.AddAutoMapper(typeof(AssemblyMarker));
         services.AddValidatorsFromAssemblyContaining<AssemblyMarker>();
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
     }
 
 
