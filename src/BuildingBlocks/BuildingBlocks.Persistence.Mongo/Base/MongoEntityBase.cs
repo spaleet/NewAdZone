@@ -14,8 +14,4 @@ public abstract class MongoEntityBase
     [BsonElement("creationDate")]
     [BsonRepresentation(BsonType.DateTime)]
     public DateTime CreationDate { get; set; } = DateTime.Now;
-
-    [BsonElement("lastUpdateDate")]
-    [BsonRepresentation(BsonType.DateTime)]
-    public DateTime LastUpdateDate { get; set; } = DateTime.Now;
 }

@@ -2,11 +2,12 @@
 using System.Text.Json;
 using Auth.Application.Interfaces;
 using Auth.Application.Models;
+using BuildingBlocks.Core.Web;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Auth.Api.Controllers;
 
-public class AuthController : BaseController
+public class AuthController : BaseControllerLite
 {
     private readonly IAuthTokenStoreService _tokenStoreService;
     private readonly IAuthUserService _userService;

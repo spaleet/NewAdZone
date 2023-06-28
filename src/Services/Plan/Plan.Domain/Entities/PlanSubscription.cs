@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using BuildingBlocks.Persistence.Mongo.Base;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 namespace Plan.Domain.Entities;
 
@@ -32,6 +33,16 @@ public class PlanSubscription : MongoEntityBase
     [Display(Name = "کد بازگشت درگاه پرداخت")]
     [BsonElement("refId")]
     public long RefId { get; set; }
+
+    [Display(Name = "شروع اشتراک")]
+    [BsonElement("subscriptionStart")]
+    [BsonRepresentation(BsonType.DateTime)]
+    public DateTime SubscriptionStart { get; set; }
+
+    [Display(Name = "انقضای اشتراک")]
+    [BsonElement("subscriptionExpire")]
+    [BsonRepresentation(BsonType.DateTime)]
+    public DateTime SubscriptionExpire { get; set; }
 }
 
 public enum PlanSubscriptionState : byte

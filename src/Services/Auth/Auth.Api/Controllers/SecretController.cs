@@ -1,10 +1,11 @@
 ﻿using Auth.Domain.Enums;
+using BuildingBlocks.Core.Web;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Auth.Api.Controllers;
 
-public class SecretController : BaseController
+public class SecretController : BaseControllerLite
 {
     [Authorize]
     [HttpGet("all")]
