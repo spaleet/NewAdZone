@@ -6,23 +6,25 @@ using Plan.Infrastructure.Context;
 
 namespace Plan.Application.Features.CreatingNewPlan;
 
-public record CreateNewPlan(string Title, int AdQuota, decimal? Price) : ICommand;
+public record CreateNewPlan(string Title, int MonthlyQuota, decimal? Price) : ICommand;
 
 public class CreateNewPlanValidator : AbstractValidator<CreateNewPlan>
 {
     public CreateNewPlanValidator()
     {
         RuleFor(x => x.Title).NotEmpty().WithMessage("عنوان را وارد کنید");
-        RuleFor(x => x.AdQuota)
-            .NotEmpty().NotNull().WithMessage("کوتا را وارد کنید")
+        RuleFor(x => x.MonthlyQuota)
+            .NotEmpty().WithMessage("کوتا ماهانه را وارد کنید")
+            .NotNull().WithMessage("کوتا ماهانه را وارد کنید")
             .NotEqual(0).WithMessage("کوتا معتبر وارد کنید");
 
         RuleFor(x => x.Price)
             .Must(x =>
             {
-                if (x is not null)
-                    if (x < 0 || x == 0) 
-                        return false;
+                if (x == 0) return true;
+
+                if (x is null)
+                    return false;
 
                 return true;
             }).WithMessage("قیمت معتبر وارد کنید");

@@ -5,7 +5,7 @@ public class PlanDto
 
     public string Title { get; set; }
 
-    public int AdQuota { get; set; }
+    public int MonthlyQuota { get; set; }
 
     public decimal? Price { get; set; }
 }

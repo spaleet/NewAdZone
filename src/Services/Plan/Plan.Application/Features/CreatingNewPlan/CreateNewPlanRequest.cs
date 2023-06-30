@@ -8,8 +8,8 @@ public class CreateNewPlanRequest
     [JsonPropertyName("title")]
     public string Title { get; set; }
 
-    [JsonPropertyName("adQuota")]
-    public int AdQuota { get; set; }
+    [JsonPropertyName("monthlyAdQuota")]
+    public int MonthlyAdQuota { get; set; }
 
     [Display(Name = "قیمت پلن")]
     [JsonPropertyName("price")]

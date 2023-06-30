@@ -12,10 +12,10 @@ public class Plan : MongoEntityBase
     public string Title { get; set; }
 
     [Display(Name = "تعداد آگهی های قابل بارگزاری")]
-    [BsonElement("adQuota")]
-    public int AdQuota { get; set; }
+    [BsonElement("monthlyQuota")]
+    public int MonthlyQuota { get; set; }
 
     [Display(Name = "قیمت پلن")]
     [BsonElement("price")]
-    public decimal? Price { get; set; }
+    public decimal? Price { get; set; } = 0;
 }
