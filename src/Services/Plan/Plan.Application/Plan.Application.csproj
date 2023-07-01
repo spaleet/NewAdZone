@@ -18,8 +18,4 @@
     <ProjectReference Include="..\Plan.Infrastructure\Plan.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\VerifyingPayment\" />
-  </ItemGroup>
-
 </Project>

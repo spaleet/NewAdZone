@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using BuildingBlocks.Core.Web;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
@@ -8,6 +9,7 @@ using Plan.Application.Features.CreatingNewPlan;
 using Plan.Application.Features.GettingPlans;
 using Plan.Application.Features.InitializingPayment;
 using Plan.Application.Features.SubscribingPlan;
+using Plan.Application.Features.VerifyingPayment;
 
 namespace Plan.Api.Controllers;
 
@@ -46,16 +48,30 @@ public class PlanController : BaseController
     [HttpPost("initialize")]
     public async Task<IActionResult> InitializePayment([FromQuery] string subId, [FromQuery] decimal price)
     {
-        subId = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(subId));
-
         var addresses = _server.Features.Get<IServerAddressesFeature>().Addresses;
 
         string callBack = $"{addresses.First()}/api/plan/verify?subId={subId}";
-        
 
         var request = new InitializePayment(subId, price, callBack);
 
         var res = await Mediator.Send(request);
+
+        return Ok(res);
+    }
+
+    [HttpGet("verify")]
+    public async Task<IActionResult> VerifyPayment([FromQuery] string subId,
+                                                   [FromQuery(Name = "Authority")] string authority,
+                                                   [FromQuery(Name = "Status")] string status,
+                                                   CancellationToken cancellationToken)
+    {
+
+        if (string.IsNullOrEmpty(authority) || status.ToLower() != "ok" || string.IsNullOrEmpty(subId))
+            return BadRequest("پرداخت با موفقیت انجام نشد. درصورت کسر وجه از حساب، مبلغ تا 24 ساعت دیگر به حساب شما بازگردانده خواهد شد.");
+
+        subId = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(subId));
+
+        var res = await Mediator.Send(new VerifyPayment(subId, authority), cancellationToken);
 
         return Ok(res);
     }

@@ -1,10 +1,12 @@
 ﻿using System.Globalization;
+using System.Text;
 using AutoMapper;
 using BuildingBlocks.Core.CQRS.Commands;
 using BuildingBlocks.Core.Exceptions.Base;
 using BuildingBlocks.Payment;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.WebUtilities;
 using MongoDB.Driver;
 using Plan.Application.Features.CreatingNewPlan;
 using Plan.Application.Features.SubscribingPlan;
@@ -37,7 +39,9 @@ public class InitializePaymentHandler : ICommandHandler<InitializePayment, Initi
 
     public async Task<InitializePaymentResponse> Handle(InitializePayment request, CancellationToken cancellationToken)
     {
-        var planSub = _context.PlanSubscription.AsQueryable().FirstOrDefault(x => x.Id == request.SubId);
+        var subId = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(request.SubId));
+
+        var planSub = _context.PlanSubscription.AsQueryable().FirstOrDefault(x => x.Id == subId);
 
         if (planSub is null)
             throw new NotFoundException("اشتراک مورد نظر پیدا نشد");
