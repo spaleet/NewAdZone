@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Plan.Application.Features.CreatingNewPlan;
 using Plan.Application.Features.GettingPlans;
+using Plan.Application.Features.SubscribingPlan;
 
 namespace Plan.Api.Controllers;
 
@@ -24,8 +25,22 @@ public class PlanController : BaseController
     }
 
     [HttpPost("subscribe")]
-    public async Task<IActionResult> SubscribeToPlan(CancellationToken cancellationToken)
+    public async Task<IActionResult> SubscribeToPlan([FromBody] SubscribePlan request, CancellationToken cancellationToken)
     {
-        return Ok();
+        var res = await Mediator.Send(request, cancellationToken);
+
+        switch (res.State)
+        {
+            case SubscribePlanState.Error:
+                return BadRequest("عملیات با خطا مواجه شد");
+
+            case SubscribePlanState.AlreadyHavePlan:
+                return BadRequest("شما قبلا این پلن را انتخاب کرده اید");
+
+            case SubscribePlanState.Success:
+                return Ok(res);
+            default:
+                return BadRequest(res);
+        }
     }
 }
