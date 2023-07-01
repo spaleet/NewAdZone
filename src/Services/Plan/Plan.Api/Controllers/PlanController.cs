@@ -22,4 +22,10 @@ public class PlanController : BaseController
 
         return Ok("Plan successfully created!");
     }
+
+    [HttpPost("subscribe")]
+    public async Task<IActionResult> SubscribeToPlan(CancellationToken cancellationToken)
+    {
+        return Ok();
+    }
 }
