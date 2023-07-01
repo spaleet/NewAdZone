@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using AutoMapper;
 using BuildingBlocks.Core.CQRS.Commands;
+using BuildingBlocks.Core.Exceptions.Base;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.WebUtilities;
@@ -34,11 +35,12 @@ public class SubscribePlanHandler : ICommandHandler<SubscribePlan, SubscribePlan
         var plan = _context.Plans.AsQueryable().FirstOrDefault(x => x.Id == request.PlanId);
 
         if (plan is null)
-            return new SubscribePlanResponse(string.Empty, SubscribePlanState.Error);
+            throw new NotFoundException("پلن مورد نظر پیدا نشد");
 
         // TODO : check user has plan
         // if (**)
-        //return new SubscribePlanResponse(string.Empty, SubscribePlanState.AlreadyHavePlan);
+        //      throw new BadRequestException("شما قبلا این پلن را انتخاب کرده اید");
+
 
         var subscription = new PlanSubscription
         {
@@ -53,6 +55,6 @@ public class SubscribePlanHandler : ICommandHandler<SubscribePlan, SubscribePlan
 
         string subscriptionId = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(subscription.Id));
 
-        return new SubscribePlanResponse(subscriptionId, SubscribePlanState.Success);
+        return new SubscribePlanResponse(subscriptionId, subscription.Price);
     }
 }

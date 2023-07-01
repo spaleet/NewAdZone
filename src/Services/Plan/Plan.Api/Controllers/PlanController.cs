@@ -29,18 +29,6 @@ public class PlanController : BaseController
     {
         var res = await Mediator.Send(request, cancellationToken);
 
-        switch (res.State)
-        {
-            case SubscribePlanState.Error:
-                return BadRequest("عملیات با خطا مواجه شد");
-
-            case SubscribePlanState.AlreadyHavePlan:
-                return BadRequest("شما قبلا این پلن را انتخاب کرده اید");
-
-            case SubscribePlanState.Success:
-                return Ok(res);
-            default:
-                return BadRequest(res);
-        }
+        return Ok(res);
     }
 }

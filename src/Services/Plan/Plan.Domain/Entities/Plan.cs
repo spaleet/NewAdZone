@@ -17,5 +17,5 @@ public class Plan : MongoEntityBase
 
     [Display(Name = "قیمت پلن")]
     [BsonElement("price")]
-    public decimal? Price { get; set; } = 0;
+    public decimal Price { get; set; } = 0;
 }
