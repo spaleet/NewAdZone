@@ -31,4 +31,5 @@ public class PlanController : BaseController
 
         return Ok(res);
     }
+    [HttpPost("initialize")]
 }
