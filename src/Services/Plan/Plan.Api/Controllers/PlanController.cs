@@ -40,23 +40,25 @@ public class PlanController : BaseController
     [HttpPost("subscribe")]
     public async Task<IActionResult> SubscribeToPlan([FromBody] SubscribePlan request, CancellationToken cancellationToken)
     {
-        var res = await Mediator.Send(request, cancellationToken);
+        // add subscription in db
+        var subscribeResult = await Mediator.Send(request, cancellationToken);
 
-        return Ok(res);
-    }
+        if (subscribeResult.Price == 0)
+            return Ok("اشتراک با موفقیت فعال شد");
 
-    [HttpPost("initialize")]
-    public async Task<IActionResult> InitializePayment([FromQuery] string subId, [FromQuery] decimal price)
-    {
+        // initialize payment
         var addresses = _server.Features.Get<IServerAddressesFeature>().Addresses;
 
-        string callBack = $"{addresses.First()}/api/plan/verify?subId={subId}";
+        string encodedSubId = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(subscribeResult.SubscriptionId));
+        string callBack = $"{addresses.First()}/api/plan/verify?subId={encodedSubId}";
 
-        var request = new InitializePayment(subId, price, callBack);
+        var initializeRequest = new InitializePayment(subscribeResult.SubscriptionId,
+                                                      subscribeResult.Price,
+                                                      callBack);
 
-        var res = await Mediator.Send(request);
+        var initializeResult = await Mediator.Send(initializeRequest);
 
-        return Ok(res);
+        return Ok(initializeResult);
     }
 
     [HttpGet("verify")]

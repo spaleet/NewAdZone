@@ -2,6 +2,7 @@
 using AutoMapper;
 using BuildingBlocks.Core.CQRS.Commands;
 using BuildingBlocks.Core.Exceptions.Base;
+using BuildingBlocks.Core.Utilities;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.WebUtilities;
@@ -60,12 +61,11 @@ public class SubscribePlanHandler : ICommandHandler<SubscribePlan, SubscribePlan
             subscription.State = PlanSubscriptionState.Subscribed;
             subscription.SubscriptionStart = DateTime.Now;
             subscription.SubscriptionExpire = DateTime.Now.AddMonths(1);
+            subscription.IssueTrackingNo = Generator.IssueTrackingCode();
         }
 
         await _context.PlanSubscription.InsertOneAsync(subscription);
 
-        string subscriptionId = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(subscription.Id));
-
-        return new SubscribePlanResponse(subscriptionId, subscription.Price);
+        return new SubscribePlanResponse(subscription.Id, subscription.Price);
     }
 }
