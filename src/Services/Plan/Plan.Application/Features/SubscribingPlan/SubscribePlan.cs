@@ -37,10 +37,14 @@ public class SubscribePlanHandler : ICommandHandler<SubscribePlan, SubscribePlan
         if (plan is null)
             throw new NotFoundException("پلن مورد نظر پیدا نشد");
 
-        // TODO : check user has plan
-        // if (**)
-        //      throw new BadRequestException("شما قبلا این پلن را انتخاب کرده اید");
+        // TODO : check user exists
 
+        var userWithPlan = _context.PlanSubscription.AsQueryable()
+            .Where(x => x.UserId == request.UserId && x.PlanId == request.PlanId)
+            .FirstOrDefault();
+
+        if (userWithPlan != null)
+            throw new BadRequestException("شما قبلا این پلن را انتخاب کرده اید");
 
         var subscription = new PlanSubscription
         {
