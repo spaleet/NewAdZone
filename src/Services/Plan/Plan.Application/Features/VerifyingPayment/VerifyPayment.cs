@@ -5,6 +5,7 @@ using System.Text;
 using AutoMapper;
 using BuildingBlocks.Core.CQRS.Commands;
 using BuildingBlocks.Core.Exceptions.Base;
+using BuildingBlocks.Core.Utilities;
 using BuildingBlocks.Payment;
 using FluentValidation;
 using MediatR;
@@ -55,7 +56,7 @@ public class VerifyPaymentHandler : ICommandHandler<VerifyPayment, VerifyPayment
         subscription.SubscriptionExpire = DateTime.Now.AddMonths(1);
 
         subscription.RefId = verificationResponse.RefID;
-        subscription.IssueTrackingNo = "****";
+        subscription.IssueTrackingNo = Generator.IssueTrackingCode();
 
         await _context.PlanSubscription.ReplaceOneAsync(
             Builders<PlanSubscription>.Filter.Eq(x => x.Id, subscription.Id),
