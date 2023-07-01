@@ -1,4 +1,5 @@
 ﻿using BuildingBlocks.Core.Validation;
+using BuildingBlocks.Payment;
 using BuildingBlocks.Persistence.Mongo;
 using FluentValidation;
 using MediatR;
@@ -31,6 +32,8 @@ public static class ServiceRegistery
         services.AddAutoMapper(typeof(AssemblyMarker));
         services.AddValidatorsFromAssemblyContaining<AssemblyMarker>();
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
+        services.AddZarinPal();
     }
 
 

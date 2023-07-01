@@ -1,7 +1,10 @@
-﻿using BuildingBlocks.Core.Web;
+﻿using System.Text;
+using BuildingBlocks.Core.Web;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Plan.Application.Features.CreatingNewPlan;
 using Plan.Application.Features.GettingPlans;
+using Plan.Application.Features.InitializingPayment;
 using Plan.Application.Features.SubscribingPlan;
 
 namespace Plan.Api.Controllers;
@@ -31,5 +34,17 @@ public class PlanController : BaseController
 
         return Ok(res);
     }
+
     [HttpPost("initialize")]
+    public async Task<IActionResult> InitializePayment([FromQuery] string subId, [FromQuery] decimal price,
+        [FromQuery] string callBack)
+    {
+        subId = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(subId));
+
+        var request = new InitializePayment(subId, price, callBack);
+
+        var res = await Mediator.Send(request);
+
+        return Ok(res);
+    }
 }

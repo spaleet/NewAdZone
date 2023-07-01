@@ -8,6 +8,7 @@ using MediatR;
 using MongoDB.Driver;
 using Plan.Application.Features.CreatingNewPlan;
 using Plan.Application.Features.SubscribingPlan;
+using Plan.Domain.Entities;
 using Plan.Infrastructure.Context;
 
 namespace Plan.Application.Features.InitializingPayment;
@@ -41,8 +42,11 @@ public class InitializePaymentHandler : ICommandHandler<InitializePayment, Initi
         if (planSub is null)
             throw new NotFoundException("اشتراک مورد نظر پیدا نشد");
 
+        if (planSub.State == PlanSubscriptionState.Subscribed || planSub.State == PlanSubscriptionState.Canceled)
+            throw new BadRequestException("اشتراک مورد نظر فعال است");
+
         var paymentResponse = await _zarinPalFactory.CreatePaymentRequest(request.CallBackUrl,
-                                                                          request.Price.ToString(CultureInfo.InvariantCulture),
+                                                                          planSub.Price.ToString(CultureInfo.InvariantCulture),
                                                                           string.Empty,
                                                                           planSub.Id);
 

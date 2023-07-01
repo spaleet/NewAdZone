@@ -55,6 +55,13 @@ public class SubscribePlanHandler : ICommandHandler<SubscribePlan, SubscribePlan
             IssueTrackingNo = "0000-0000"
         };
 
+        if (plan.Price == 0)
+        {
+            subscription.State = PlanSubscriptionState.Subscribed;
+            subscription.SubscriptionStart = DateTime.Now;
+            subscription.SubscriptionExpire = DateTime.Now.AddMonths(1);
+        }
+
         await _context.PlanSubscription.InsertOneAsync(subscription);
 
         string subscriptionId = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(subscription.Id));
