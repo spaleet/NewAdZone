@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Ad.Domain.Enums;
 using BuildingBlocks.Persistence.Ef.Base;
 
@@ -29,17 +30,21 @@ public class Ad : EfEntityBase
     [Required]
     public ProductStatus ProductState { get; set; }
 
-    [Display(Name = "شرح")]
+    [Display(Name = "توضیحات")]
     [Required]
-    [MinLength(25)]
+    [MinLength(15)]
     public string Description { get; set; }
 
     [Display(Name = "کلمات کلیدی")]
     public string Tags { get; set; }
 
     [Display(Name = "قیمت")]
-    public int? Price { get; set; }
+    public decimal Price { get; set; } = 0;
 
-    [Display(Name = "محصول ویژه")]
-    public bool IsSpecial { get; set; }
+    //================================== Relations
+    [ForeignKey(nameof(CategoryId))]
+    public virtual AdCategory AdCategory { get; set; }
+
+    public virtual ICollection<AdGallery> AdGalleries { get; set; }
+
 }
