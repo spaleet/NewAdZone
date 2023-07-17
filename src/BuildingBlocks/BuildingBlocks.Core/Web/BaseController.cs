@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -7,13 +6,8 @@ namespace BuildingBlocks.Core.Web;
 
 [ApiController]
 [Route("api/[controller]")]
-public abstract class BaseController : ControllerBase
+public abstract class BaseControllerParent : ControllerBase
 {
-    private IMediator _mediator;
-    protected IMediator Mediator => _mediator ??= HttpContext?.RequestServices.GetService<IMediator>();
-
-    #region ok
-
     protected OkObjectResult Ok()
     {
         var res = new ApiResult(200, "عملیات با موفقیت انجام شد");
@@ -35,10 +29,6 @@ public abstract class BaseController : ControllerBase
         return base.Ok(res);
     }
 
-    #endregion
-
-    #region BadRequest
-
     protected BadRequestObjectResult BadRequest()
     {
         var res = new ApiResult(400, "عملیات با خطا مواجه شد");
@@ -59,12 +49,14 @@ public abstract class BaseController : ControllerBase
 
         return base.BadRequest(res);
     }
-
-    #endregion
 }
 
-[ApiController]
-[Route("api/[controller]")]
-public class BaseControllerLite : ControllerBase
+public abstract class BaseController : BaseControllerParent
+{
+    private IMediator _mediator;
+    protected IMediator Mediator => _mediator ??= HttpContext?.RequestServices.GetService<IMediator>();
+}
+
+public class BaseControllerLite : BaseControllerParent
 {
 }

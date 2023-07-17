@@ -47,7 +47,7 @@ public class PlanController : BaseController
             return Ok("اشتراک با موفقیت فعال شد");
 
         // initialize payment
-        var addresses = _server.Features.Get<IServerAddressesFeature>().Addresses;
+        var addresses = _server.Features?.Get<IServerAddressesFeature>()?.Addresses;
 
         string encodedSubId = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(subscribeResult.SubscriptionId));
         string callBack = $"{addresses.First()}/api/plan/verify?subId={encodedSubId}";
