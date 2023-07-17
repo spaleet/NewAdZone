@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Ad.Domain.Enums;
+using BuildingBlocks.Persistence.Ef.Base;
 
 namespace Ad.Domain.Entities;
 
-public class Ad
+public class Ad : EfEntityBase
 {
     [Display(Name = "آگهی دهنده")]
     public long UserId { get; set; }
