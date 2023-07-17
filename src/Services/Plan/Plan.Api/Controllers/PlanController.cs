@@ -34,7 +34,7 @@ public class PlanController : BaseController
     {
         await Mediator.Send(request, cancellationToken);
 
-        return Ok("Plan successfully created!");
+        return Ok();
     }
 
     [HttpPost("subscribe")]

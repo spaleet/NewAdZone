@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using System.Text.Json;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -6,10 +7,60 @@ namespace BuildingBlocks.Core.Web;
 
 [ApiController]
 [Route("api/[controller]")]
-public class BaseController : ControllerBase
+public abstract class BaseController : ControllerBase
 {
     private IMediator _mediator;
-    protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
+    protected IMediator Mediator => _mediator ??= HttpContext?.RequestServices.GetService<IMediator>();
+
+    #region ok
+
+    protected OkObjectResult Ok()
+    {
+        var res = new ApiResult(200, "عملیات با موفقیت انجام شد");
+
+        return base.Ok(res);
+    }
+
+    protected OkObjectResult Ok(string message)
+    {
+        var res = new ApiResult(200, message);
+
+        return base.Ok(res);
+    }
+
+    protected OkObjectResult Ok(object data)
+    {
+        var res = new ApiResult(200, "عملیات با موفقیت انجام شد", data);
+
+        return base.Ok(res);
+    }
+
+    #endregion
+
+    #region BadRequest
+
+    protected BadRequestObjectResult BadRequest()
+    {
+        var res = new ApiResult(400, "عملیات با خطا مواجه شد");
+
+        return base.BadRequest(res);
+    }
+
+    protected BadRequestObjectResult BadRequest(string msg)
+    {
+        var res = new ApiResult(400, msg);
+
+        return base.BadRequest(res);
+    }
+
+    protected BadRequestObjectResult BadRequest(object data)
+    {
+        var res = new ApiResult(400, "عملیات با خطا مواجه شد", data);
+
+        return base.BadRequest(res);
+    }
+
+    #endregion
 }
 
 [ApiController]
