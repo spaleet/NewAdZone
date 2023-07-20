@@ -1,19 +1,16 @@
 ﻿using Ad.Application.Interfaces;
-using Ad.Infrastructure;
+using Ad.Infrastructure.Context;
+using Ad.Infrastructure.Seed;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Ad.Api.Extensions;
+namespace Ad.Infrastructure;
 
 public static class ServiceRegistery
 {
-    public static void ConfigureSwagger(this IServiceCollection services)
+    public static void AddInfrastructure(this IServiceCollection services, string connectionString)
     {
-        services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
-    }
-
-    public static void ConfigureDb(this IServiceCollection services, string connectionString)
-    {
+        //================================== Configure Db
         services.AddDbContext<AdDbContext>(
             opts => opts.UseSqlServer(connectionString,
                 b => b.MigrationsAssembly("Ad.Infrastructure")));
