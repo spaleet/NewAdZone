@@ -3,7 +3,6 @@ using Auth.Application.Mapping;
 using Auth.Application.Services;
 using BuildingBlocks.Security.Interfaces;
 using BuildingBlocks.Security.Services;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Auth.Application;

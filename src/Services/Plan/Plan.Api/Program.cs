@@ -1,16 +1,18 @@
 using BuildingBlocks.Core.Web;
 using BuildingBlocks.Logging;
 using Hellang.Middleware.ProblemDetails;
-using Plan.Api.Extensions;
+using Plan.Infrastructure;
+using Plan.Application;
+using Plan.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddCustomSerilog();
 builder.AddGeneralConfiguration();
 
-builder.Services.ConfigureDb();
-builder.Services.ConfigureSwagger();
-builder.Services.ConfigureServices();
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure();
+builder.Services.AddApi();
 
 var app = builder.Build();
 

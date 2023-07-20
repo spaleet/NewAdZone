@@ -1,28 +1,13 @@
 ﻿using BuildingBlocks.Core.Validation;
 using BuildingBlocks.Payment;
-using BuildingBlocks.Persistence.Mongo;
 using FluentValidation;
 using MediatR;
-using Plan.Application;
-using Plan.Infrastructure.Context;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Plan.Api.Extensions;
-
+namespace Plan.Application;
 public static class ServiceRegistery
 {
-    public static void ConfigureSwagger(this IServiceCollection services)
-    {
-        services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
-    }
-
-    // TODO : rename to AddInfrastracure
-    public static void ConfigureDb(this IServiceCollection services)
-    {
-        services.AddMongoDbContext<PlanDbContext>();
-    }
-
-    public static void ConfigureServices(this IServiceCollection services)
+    public static void AddApplication(this IServiceCollection services)
     {
         services.AddMediatR(cfg =>
         {
@@ -35,6 +20,8 @@ public static class ServiceRegistery
 
         services.AddZarinPal();
     }
+}
 
-
+public interface AssemblyMarker
+{
 }
