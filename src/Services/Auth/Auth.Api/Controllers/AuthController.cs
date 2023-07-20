@@ -31,12 +31,7 @@ public class AuthController : BaseControllerLite
     {
         var authenticateResult = await _userService.AuthenticateUserAsync(login);
 
-        string result = JsonSerializer.Serialize(authenticateResult, new JsonSerializerOptions
-        {
-            WriteIndented = true
-        });
-
-        return Ok(result);
+        return Ok(authenticateResult);
     }
 
     [HttpPost("sign-out")]
@@ -55,12 +50,7 @@ public class AuthController : BaseControllerLite
     {
         var refreshTokenResult = await _userService.RevokeTokenAsync(token);
 
-        string result = JsonSerializer.Serialize(refreshTokenResult, new JsonSerializerOptions
-        {
-            WriteIndented = true
-        });
-
-        return Ok(result);
+        return Ok(refreshTokenResult);
     }
 
     [HttpPost("is-authenticated")]

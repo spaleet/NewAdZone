@@ -2,28 +2,20 @@
 using System.Text;
 using System.Text.Json;
 using Auth.Application.Interfaces;
-using Auth.Application.Mapping;
-using Auth.Application.Services;
-using Auth.Domain.Entities;
 using Auth.Domain.Enums;
-using Auth.Infrastructure.Context;
-using Auth.Infrastructure.Seed;
 using BuildingBlocks.Security;
-using BuildingBlocks.Security.Interfaces;
-using BuildingBlocks.Security.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
-namespace Auth.Api.Extensions;
+namespace Auth.Api;
 
 public static class ServiceRegistery
 {
-    public static void ConfigureSwagger(this IServiceCollection services)
+    public static void AddApi(this IServiceCollection services, IConfiguration config)
     {
+        //================================== Swagger
         services.AddEndpointsApiExplorer();
 
         services.AddSwaggerGen(c =>
@@ -54,37 +46,8 @@ public static class ServiceRegistery
                 }
             });
         });
-    }
 
-    public static void ConfigureDb(this IServiceCollection services, string connectionString)
-    {
-        services.AddDbContext<DatabaseContext>(
-            opts => opts.UseSqlServer(connectionString,
-                b => b.MigrationsAssembly("Auth.Infrastructure")));
-
-        services.AddScoped<IAuthDbContext>(provider => provider.GetService<DatabaseContext>());
-
-        services.AddScoped<AuthDbInitializer>();
-    }
-
-    public static void ConfigureIdentity(this IServiceCollection services)
-    {
-        services.AddIdentity<User, UserRole>(options =>
-        {
-            options.Password.RequireDigit = false;
-            options.Password.RequireLowercase = false;
-            options.Password.RequireUppercase = false;
-            options.Password.RequireNonAlphanumeric = false;
-            options.Password.RequiredLength = 4;
-            options.Password.RequiredUniqueChars = 0;
-            options.User.RequireUniqueEmail = true;
-        })
-            .AddEntityFrameworkStores<DatabaseContext>()
-            .AddDefaultTokenProviders();
-    }
-
-    public static void ConfigureAuth(this IServiceCollection services, IConfiguration config)
-    {
+        //================================== Auth
         var bearerTokenSettings =
             config.GetSection("BearerTokenSettings").Get(typeof(BearerTokenSettings)) as BearerTokenSettings;
 
@@ -148,16 +111,6 @@ public static class ServiceRegistery
             options.AddPolicy(nameof(Roles.VerifiedUser), policy => policy.RequireRole(nameof(Roles.VerifiedUser)));
             options.AddPolicy(nameof(Roles.BasicUser), policy => policy.RequireRole(nameof(Roles.BasicUser)));
         });
-    }
-
-    public static void ConfigureServices(this IServiceCollection services)
-    {
-        services.AddAutoMapper(typeof(AuthMappers));
-
-        services.AddTransient<IAuthUserService, AuthUserService>();
-        services.AddTransient<IJwtTokenFactory, JwtTokenFactory>();
-        services.AddTransient<IAuthTokenStoreService, AuthTokenStoreService>();
-        services.AddTransient<IAuthTokenValidatorService, AuthTokenValidatorService>();
     }
 
     private static string ProduceUnAuthorizedResponse()
