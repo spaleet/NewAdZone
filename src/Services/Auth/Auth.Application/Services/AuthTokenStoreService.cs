@@ -9,11 +9,11 @@ using Microsoft.Extensions.Options;
 namespace Auth.Application.Services;
 public class AuthTokenStoreService : IAuthTokenStoreService
 {
-    private readonly IApplicationDbContext _dbContext;
+    private readonly IAuthDbContext _dbContext;
     private readonly IJwtTokenFactory _jwtTokenFactory;
     private readonly BearerTokenSettings _tokenSettings;
 
-    public AuthTokenStoreService(IApplicationDbContext dbContext, IOptions<BearerTokenSettings> tokenSettings, IJwtTokenFactory jwtTokenFactory)
+    public AuthTokenStoreService(IAuthDbContext dbContext, IOptions<BearerTokenSettings> tokenSettings, IJwtTokenFactory jwtTokenFactory)
     {
         _dbContext = dbContext;
         _tokenSettings = tokenSettings.Value;

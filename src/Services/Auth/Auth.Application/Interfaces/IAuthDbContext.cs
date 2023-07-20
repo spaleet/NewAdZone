@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Auth.Application.Interfaces;
 
-public interface IApplicationDbContext
+public interface IAuthDbContext
 {
     DbSet<AuthToken> AuthTokens { get; }
 

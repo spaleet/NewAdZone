@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Auth.Infrastructure.Context;
 
-public class DatabaseContext : IdentityDbContext<User, UserRole, Guid>, IApplicationDbContext
+public class DatabaseContext : IdentityDbContext<User, UserRole, Guid>, IAuthDbContext
 {
     public DatabaseContext(DbContextOptions options) : base(options)
     {

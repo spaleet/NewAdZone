@@ -62,7 +62,7 @@ public static class ServiceRegistery
             opts => opts.UseSqlServer(connectionString,
                 b => b.MigrationsAssembly("Auth.Infrastructure")));
 
-        services.AddScoped<IApplicationDbContext>(provider => provider.GetService<DatabaseContext>());
+        services.AddScoped<IAuthDbContext>(provider => provider.GetService<DatabaseContext>());
 
         services.AddScoped<AuthDbInitializer>();
     }
