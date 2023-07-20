@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Ad.Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Ad.Infrastructure;
+namespace Ad.Infrastructure.Seed;
 
 public class AdDbInitializer
 {

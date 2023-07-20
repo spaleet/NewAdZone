@@ -1,17 +1,23 @@
+using Ad.Api;
 using Ad.Api.Extensions;
+using Ad.Application;
+using Ad.Infrastructure;
 using BuildingBlocks.Core.Web;
 using BuildingBlocks.Logging;
 using Hellang.Middleware.ProblemDetails;
-using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddCustomSerilog();
 builder.AddGeneralConfiguration();
 
-builder.Services.ConfigureSwagger();
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("SqlConnection"));
+builder.Services.AddApi();
 
 var app = builder.Build();
+
+await app.UseDbInitializer();
 
 app.UseProblemDetails();
 

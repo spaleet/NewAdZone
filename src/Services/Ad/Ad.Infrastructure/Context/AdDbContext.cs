@@ -2,7 +2,7 @@
 using Ad.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Ad.Infrastructure;
+namespace Ad.Infrastructure.Context;
 
 public class AdDbContext : DbContext, IAdDbContext
 {
