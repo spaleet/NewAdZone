@@ -13,6 +13,9 @@ public class AdCategory : EfEntityBase
     [Display(Name = "سردسته")]
     public long? ParentId { get; set; }
 
+    [Required]
+    public string Slug { get; set; }
+
     //================================== Relations
     [ForeignKey(nameof(ParentId))]
     public virtual AdCategory ParentCategory { get; set; }
