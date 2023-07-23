@@ -32,9 +32,11 @@ public class CreateAdCategoryHandler : ICommandHandler<CreateAdCategory>
 
     public async Task<Unit> Handle(CreateAdCategory request, CancellationToken cancellationToken)
     {
+        // map request to AdCategory
+        // make slug from provided title
         var category = _mapper.Map(request, new Domain.Entities.AdCategory());
 
-        if (request.ParentId != null || request.ParentId != 0)
+        if (request.ParentId != null && request.ParentId != 0)
         {
             var parent = await _context.AdCategories.FindAsync(request.ParentId);
 
@@ -43,6 +45,8 @@ public class CreateAdCategoryHandler : ICommandHandler<CreateAdCategory>
             else
                 category.ParentId = parent.Id;
         }
+
+        if (request.ParentId == 0) category.ParentId = null;
 
         await _context.AdCategories.AddAsync(category);
         await _context.SaveChangesAsync();
