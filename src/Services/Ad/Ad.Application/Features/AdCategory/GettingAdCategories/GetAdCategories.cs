@@ -22,10 +22,20 @@ public class GetAdCategoriesHandler : IQueryHandler<GetAdCategories, GetAdCatego
 
     public async Task<GetAdCategoriesResponse> Handle(GetAdCategories request, CancellationToken cancellationToken)
     {
-        var categories = await _context.AdCategories.AsQueryable().ToListAsync();
+        var categories = await _context.AdCategories.AsQueryable()
+                                                    .Select(x => _mapper.Map(x, new AdCategoryDto()))
+                                                    .ToListAsync();
 
-        var mappedCategories = categories.Select(x => _mapper.Map(x, new AdCategoryDto())).ToList();
+        var parents = categories.Where(x => x.ParentId == null).ToList();
 
-        return new GetAdCategoriesResponse(mappedCategories);
+        var response = new List<AdCategoryOrderedResponse>();
+
+        foreach (var p in parents)
+        {
+            var children = categories.Where(x => x.ParentId == p.Id).ToList();
+            response.Add(new AdCategoryOrderedResponse(p, children));
+        }
+
+        return new GetAdCategoriesResponse(response);
     }
 }
