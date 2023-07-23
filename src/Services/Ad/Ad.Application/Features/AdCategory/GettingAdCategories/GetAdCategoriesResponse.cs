@@ -2,4 +2,4 @@
 
 namespace Ad.Application.Features.AdCategory.GettingAdCategories;
 
-public record GetAdCategoriesResponse(List<AdCategoryDto>? Plans);
+public record GetAdCategoriesResponse(List<AdCategoryDto>? Categories);
