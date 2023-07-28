@@ -6,7 +6,7 @@ namespace BuildingBlocks.Core.Utilities.ImageRelated;
 
 public static class ImageHelper
 {
-    public static async Task<bool> UploadImage(this IFormFile file, string path, string? name, int? width, int? height)
+    public static bool UploadImage(this IFormFile file, string path, string? name = null, int? width = null, int? height = null)
     {
         if (file is null || !file.IsImage())
             return false;
@@ -20,6 +20,7 @@ public static class ImageHelper
 
         if (!string.IsNullOrEmpty(name))
             fileName = name;
+        // TODO = auto remove file extention
 
         if (width == null && height == null)
         {
@@ -27,8 +28,10 @@ public static class ImageHelper
             string uploadPath = path + fileName;
 
             // upload
-            using var stream = new FileStream(uploadPath, FileMode.Create);
-            await file.CopyToAsync(stream);
+            using (var stream = new FileStream(uploadPath, FileMode.Create))
+            {
+                file.CopyTo(stream);
+            }
 
             return true;
         } else
@@ -37,8 +40,10 @@ public static class ImageHelper
             string tempPath = path + "temp" + fileName;
 
             // upload temp
-            using var stream = new FileStream(tempPath, FileMode.Create);
-            await file.CopyToAsync(stream);
+            using (var stream = new FileStream(tempPath, FileMode.Create))
+            {
+                file.CopyTo(stream);
+            }
 
             // resize
             var resizer = new ImageOptimizer();
