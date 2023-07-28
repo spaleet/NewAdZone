@@ -1,4 +1,5 @@
-﻿using BuildingBlocks.Core.Utilities.ImageRelated;
+﻿using BuildingBlocks.Core.Exceptions.Base;
+using BuildingBlocks.Core.Utilities.ImageRelated;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 
@@ -6,10 +7,19 @@ namespace BuildingBlocks.Core.Utilities.ImageRelated;
 
 public static class ImageHelper
 {
-    public static bool UploadImage(this IFormFile file, string path, string? name = null, int? width = null, int? height = null)
+    /// <summary>
+    /// Uploads Image to provided path
+    /// </summary>
+    /// <param name="file"></param>
+    /// <param name="path">upload path</param>
+    /// <param name="name">custom file name</param>
+    /// <param name="width"></param>
+    /// <param name="height"></param>
+    /// <returns>New File Name</returns>
+    public static string UploadImage(this IFormFile file, string path, string? name = null, int? width = null, int? height = null)
     {
         if (file is null || !file.IsImage())
-            return false;
+            throw new BadRequestException("فایل مشکل دارد");
 
         // create upload directory
         if (!Directory.Exists(path))
@@ -33,7 +43,7 @@ public static class ImageHelper
                 file.CopyTo(stream);
             }
 
-            return true;
+            return fileName;
         } else
         {
             // create temp upload path
@@ -57,7 +67,7 @@ public static class ImageHelper
             // delete temp file
             File.Delete(tempPath);
 
-            return true;
+            return fileName;
         }
 
     }

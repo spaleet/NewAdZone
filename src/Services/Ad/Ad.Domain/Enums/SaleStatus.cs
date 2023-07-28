@@ -20,4 +20,5 @@ public enum SaleStatus
     /// </summary>
     [Display(Name = "معاوضه")]
     Exchange,
+    P,
 }

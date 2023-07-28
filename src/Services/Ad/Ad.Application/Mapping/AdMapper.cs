@@ -1,5 +1,6 @@
 ﻿using Ad.Application.Dtos;
 using Ad.Application.Features.Ad.GettingAd;
+using Ad.Application.Features.Ad.PostingAd;
 using Ad.Application.Features.AdCategory.CreatingAdCategory;
 using Ad.Domain.Entities;
 using AutoMapper;
@@ -23,5 +24,8 @@ public class AdMapper : Profile
         CreateMap<Domain.Entities.Ad, GetAdResponse>()
             .ForMember(dest => dest.Category,
                            opt => opt.MapFrom(src => src.AdCategory));
+    
+        CreateMap<PostAd, Domain.Entities.Ad>();
+
     }
 }

@@ -20,6 +20,6 @@ public class AdController : BaseController
     {
         var ads = await Mediator.Send(new GetRelatedAds(id), cancellationToken);
 
-        return Ok(ad);
+        return Ok(ads);
     }
 }
