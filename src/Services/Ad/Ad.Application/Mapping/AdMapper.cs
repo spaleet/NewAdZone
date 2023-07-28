@@ -16,5 +16,7 @@ public class AdMapper : Profile
             .ForMember(dest => dest.Slug,
                            opt => opt.MapFrom(src => src.Title.ToSlug()));
 
+    
+        CreateMap<Domain.Entities.Ad, AdDto>();
     }
 }

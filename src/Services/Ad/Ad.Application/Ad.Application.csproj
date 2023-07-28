@@ -21,7 +21,6 @@
   </ItemGroup>
 	
   <ItemGroup>
-    <Folder Include="Features\Ad\" />
     <Folder Include="Features\AdGallery\" />
   </ItemGroup>
 
