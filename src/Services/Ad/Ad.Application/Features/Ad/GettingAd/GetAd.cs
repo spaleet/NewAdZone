@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Ad.Application.Features.Ad.GettingAd;
 
-public record GetAd(long Id) : IQuery<AdDto>;
+public record GetAd(long Id) : IQuery<GetAdResponse>;
 
 public class GetAdValidator : AbstractValidator<GetAd>
 {
@@ -21,7 +21,7 @@ public class GetAdValidator : AbstractValidator<GetAd>
 }
 
 
-public class GetAdHandler : IQueryHandler<GetAd, AdDto>
+public class GetAdHandler : IQueryHandler<GetAd, GetAdResponse>
 {
     private readonly IAdDbContext _context;
     private readonly IMapper _mapper;
@@ -32,7 +32,7 @@ public class GetAdHandler : IQueryHandler<GetAd, AdDto>
         _mapper = mapper;
     }
 
-    public async Task<AdDto> Handle(GetAd request, CancellationToken cancellationToken)
+    public async Task<GetAdResponse> Handle(GetAd request, CancellationToken cancellationToken)
     {
         var ad = await _context.Ads
             .Include(x => x.AdCategory)
@@ -41,6 +41,6 @@ public class GetAdHandler : IQueryHandler<GetAd, AdDto>
 
         if (ad is null) throw new NotFoundException("آگهی مورد نظر پیدا نشد");
 
-        return _mapper.Map<AdDto>(ad);
+        return _mapper.Map<GetAdResponse>(ad);
     }
 }
