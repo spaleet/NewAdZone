@@ -30,12 +30,14 @@ public class GetAdHandler : IQueryHandler<GetAd, AdDto>
     {
         _context = context;
         _mapper = mapper;
-
     }
 
     public async Task<AdDto> Handle(GetAd request, CancellationToken cancellationToken)
     {
-        var ad = await _context.Ads.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var ad = await _context.Ads
+            .Include(x => x.AdCategory)
+            .Include(x => x.AdGalleries)
+            .FirstOrDefaultAsync(x => x.Id == request.Id);
 
         if (ad is null) throw new NotFoundException("آگهی مورد نظر پیدا نشد");
 
