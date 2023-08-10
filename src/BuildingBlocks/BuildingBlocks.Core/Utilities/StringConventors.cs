@@ -22,9 +22,10 @@ public static class StringConventors
         return value;
     }
 
-    public static string ToMoney(this decimal text)
+    public static string ToMoney(this decimal money)
     {
-        string result = text.ToString("N0", CultureInfo.CreateSpecificCulture("fa-ir"));
-        return result;
+        string result = money.ToString("N0", CultureInfo.CreateSpecificCulture("fa-ir"));
+
+        return $"{result} تومان";
     }
 }

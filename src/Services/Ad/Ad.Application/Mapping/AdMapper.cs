@@ -19,12 +19,16 @@ public class AdMapper : Profile
                            opt => opt.MapFrom(src => src.Title.ToSlug()));
 
     
-        CreateMap<Domain.Entities.Ad, AdDto>();
+        CreateMap<Domain.Entities.Ad, AdDto>()
+            .ForMember(dest => dest.Price,
+                           opt => opt.MapFrom(src => src.Price.ToMoney()));
 
         CreateMap<Domain.Entities.Ad, GetAdResponse>()
             .ForMember(dest => dest.Category,
-                           opt => opt.MapFrom(src => src.AdCategory));
-    
+                           opt => opt.MapFrom(src => src.AdCategory))
+            .ForMember(dest => dest.Price,
+                           opt => opt.MapFrom(src => src.Price.ToMoney()));
+
         CreateMap<PostAd, Domain.Entities.Ad>()
             .ForMember(dest => dest.CategoryId,
                            opt => opt.MapFrom(src => src.SelectedCategory));

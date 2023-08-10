@@ -9,7 +9,7 @@ public record AdDto
 
     public long CategoryId { get; set; }
 
-    public decimal Price { get; set; } = 0;
+    public string Price { get; set; }
 
     public string Title { get; set; }
 
