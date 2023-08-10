@@ -8,18 +8,18 @@ namespace Ad.Api.Controllers;
 
 public class AdController : BaseController
 {
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetAd([FromRoute] long id)
+    [HttpGet("{slug}")]
+    public async Task<IActionResult> GetAd([FromRoute] string slug)
     {
-        var ad = await Mediator.Send(new GetAd(id));
+        var ad = await Mediator.Send(new GetAd(slug));
 
         return Ok(ad);
     }
 
-    [HttpGet("{id}/related")]
-    public async Task<IActionResult> GetRelated([FromRoute] long id)
+    [HttpGet("{slug}/related")]
+    public async Task<IActionResult> GetRelated([FromRoute] string slug)
     {
-        var ads = await Mediator.Send(new GetRelatedAds(id));
+        var ads = await Mediator.Send(new GetRelatedAds(slug));
 
         return Ok(ads);
     }

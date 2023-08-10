@@ -31,7 +31,9 @@ public class AdMapper : Profile
 
         CreateMap<PostAd, Domain.Entities.Ad>()
             .ForMember(dest => dest.CategoryId,
-                           opt => opt.MapFrom(src => src.SelectedCategory));
+                           opt => opt.MapFrom(src => src.SelectedCategory))
+            .ForMember(dest => dest.Slug,
+                           opt => opt.MapFrom(src => src.Title.ToSlug()));
 
     }
 }

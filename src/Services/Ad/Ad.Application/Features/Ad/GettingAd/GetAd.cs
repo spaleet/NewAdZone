@@ -8,15 +8,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Ad.Application.Features.Ad.GettingAd;
 
-public record GetAd(long Id) : IQuery<GetAdResponse>;
+public record GetAd(string Slug) : IQuery<GetAdResponse>;
 
 public class GetAdValidator : AbstractValidator<GetAd>
 {
     public GetAdValidator()
     {
-        RuleFor(x => x.Id)
+        RuleFor(x => x.Slug)
             .NotEmpty()
-            .WithMessage("شناسه را وارد کنید");
+            .WithMessage("آدرس اسلاگ را وارد کنید");
     }
 }
 
@@ -37,7 +37,7 @@ public class GetAdHandler : IQueryHandler<GetAd, GetAdResponse>
         var ad = await _context.Ads
             .Include(x => x.AdCategory)
             .Include(x => x.AdGalleries)
-            .FirstOrDefaultAsync(x => x.Id == request.Id);
+            .FirstOrDefaultAsync(x => x.Slug == request.Slug);
 
         if (ad is null) throw new NotFoundException("آگهی مورد نظر پیدا نشد");
 
