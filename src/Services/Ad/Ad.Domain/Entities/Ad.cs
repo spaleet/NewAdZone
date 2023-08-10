@@ -41,6 +41,9 @@ public class Ad : EfEntityBase
     [Display(Name = "قیمت")]
     public decimal Price { get; set; } = 0;
 
+    [Required]
+    public string Slug { get; set; }
+
     //================================== Relations
     [ForeignKey(nameof(CategoryId))]
     public virtual AdCategory AdCategory { get; set; }
