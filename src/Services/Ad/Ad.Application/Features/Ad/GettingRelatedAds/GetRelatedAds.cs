@@ -9,15 +9,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Ad.Application.Features.Ad.GettingRelatedAds;
 
-public record GetRelatedAds(long Id) : IQuery<List<AdDto>>;
+public record GetRelatedAds(string Slug) : IQuery<List<AdDto>>;
 
 public class GetRelatedAdsValidator : AbstractValidator<GetRelatedAds>
 {
     public GetRelatedAdsValidator()
     {
-        RuleFor(x => x.Id)
+        RuleFor(x => x.Slug)
             .NotEmpty()
-            .WithMessage("شناسه را وارد کنید");
+            .WithMessage("آدرس اسلاگ را وارد کنید");
     }
 }
 public class GetRelatedAdsHandler : IQueryHandler<GetRelatedAds, List<AdDto>>
@@ -35,7 +35,7 @@ public class GetRelatedAdsHandler : IQueryHandler<GetRelatedAds, List<AdDto>>
     {
         var ad = await _context.Ads
             .IgnoreAutoIncludes()
-            .FirstOrDefaultAsync(x => x.Id == request.Id);
+            .FirstOrDefaultAsync(x => x.Slug == request.Slug);
 
         //TODO only select cat id
 

@@ -5,6 +5,8 @@ public record AdDto
 {
     public long Id { get; set; }
 
+    public string Slug { get; set; }
+
     public long UserId { get; set; }
 
     public long CategoryId { get; set; }
