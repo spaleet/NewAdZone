@@ -20,13 +20,15 @@ public record PostAd : ICommand
     
     public string Title { get; set; }
 
-    public SaleStatus SaleStatus { get; set; }
+    public SaleStatus SaleState { get; set; }
 
-    public ProductStatus ProductStatus { get; set; }
+    public ProductStatus ProductState { get; set; }
 
     public string Description { get; set; }
 
     public decimal? Price { get; set; } = 0;
+
+    public string Tags { get; set; }
 
     public IFormFile ImageSource { get; set; }
 }
@@ -40,6 +42,10 @@ public class PostAdValidator : AbstractValidator<PostAd>
             .WithMessage("عنوان را وارد کنید")
             .MaximumLength(75)
             .WithMessage("عنوان حداکثر 75 کاراکتر است!");
+
+        RuleFor(x => x.Tags)
+            .NotEmpty()
+            .WithMessage("کلمات کلیدی را وارد کنید");
 
         RuleFor(x => x.Description)
             .MinimumLength(50)
@@ -71,7 +77,7 @@ public class PostAdHandler : ICommandHandler<PostAd>
         // TODO CHECK USER LIMIT & ROLE
 
         // if ad is paid but price not entered!
-        if (request.SaleStatus == SaleStatus.Paid && request.Price == 0)
+        if (request.SaleState == SaleStatus.Paid && request.Price == 0)
             throw new BadRequestException("لطفا قیمت را وارد کنید یا وضعیت فروش را تغییر دهید");
 
         var createdAd = _mapper.Map<Domain.Entities.Ad>(request);
