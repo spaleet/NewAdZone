@@ -1,4 +1,5 @@
 ﻿using Ad.Application.Dtos;
+using Ad.Application.Features.Ad.EditingAd;
 using Ad.Application.Features.Ad.GettingAd;
 using Ad.Application.Features.Ad.PostingAd;
 using Ad.Application.Features.AdCategory.CreatingAdCategory;
@@ -30,6 +31,14 @@ public class AdMapper : Profile
                            opt => opt.MapFrom(src => src.Price.ToMoney()));
 
         CreateMap<PostAd, Domain.Entities.Ad>()
+            .ForMember(dest => dest.CategoryId,
+                           opt => opt.MapFrom(src => src.SelectedCategory))
+            .ForMember(dest => dest.Slug,
+                           opt => opt.MapFrom(src => src.Title.ToSlug()));
+        
+        CreateMap<EditAd, Domain.Entities.Ad>()
+            .ForMember(dest => dest.Id,
+                           opt => opt.Ignore())
             .ForMember(dest => dest.CategoryId,
                            opt => opt.MapFrom(src => src.SelectedCategory))
             .ForMember(dest => dest.Slug,
