@@ -9,6 +9,8 @@ using BuildingBlocks.Core.Utilities.ImageRelated;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 
 namespace Ad.Application.Features.Ad.PostingAd;
 
@@ -28,8 +30,6 @@ public record PostAd : ICommand
 
     public decimal? Price { get; set; } = 0;
 
-    public string Tags { get; set; }
-
     public IFormFile ImageSource { get; set; }
 }
 
@@ -42,10 +42,6 @@ public class PostAdValidator : AbstractValidator<PostAd>
             .WithMessage("عنوان را وارد کنید")
             .MaximumLength(75)
             .WithMessage("عنوان حداکثر 75 کاراکتر است!");
-
-        RuleFor(x => x.Tags)
-            .NotEmpty()
-            .WithMessage("کلمات کلیدی را وارد کنید");
 
         RuleFor(x => x.Description)
             .MinimumLength(50)
@@ -80,12 +76,26 @@ public class PostAdHandler : ICommandHandler<PostAd>
         if (request.SaleState == SaleStatus.Paid && request.Price == 0)
             throw new BadRequestException("لطفا قیمت را وارد کنید یا وضعیت فروش را تغییر دهید");
 
+        // map ad model
         var createdAd = _mapper.Map<Domain.Entities.Ad>(request);
 
+        // map Tags based on categories
+        // get category and parent category titles to an string array splitted by space
+        string[] categories = await _context.AdCategories
+            .Include(x => x.ParentCategory)
+            .Where(x => x.Id == createdAd.CategoryId)
+            .Select(x => $"{x.Title} {x.ParentCategory.Title ?? string.Empty}".Trim().Split())
+            .FirstOrDefaultAsync();
+
+        // seperate titles by comma
+        createdAd.Tags = string.Join(",", categories);
+
+        // upload image
         string uploadFileName = request.ImageSource.UploadImage("wwwroot/upload/ad/", width: 500, height: 500);
 
         createdAd.MainImage = uploadFileName;
 
+        // fix price
         if (createdAd.SaleState != SaleStatus.Paid)
             createdAd.Price = 0;
 
