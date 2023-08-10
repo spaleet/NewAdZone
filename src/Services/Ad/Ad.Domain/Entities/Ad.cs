@@ -39,6 +39,7 @@ public class Ad : EfEntityBase
     public string Tags { get; set; }
 
     [Display(Name = "قیمت")]
+    [Column(TypeName = "decimal(18,4)")] 
     public decimal Price { get; set; } = 0;
 
     [Required]
