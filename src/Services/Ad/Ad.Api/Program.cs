@@ -20,7 +20,6 @@ var app = builder.Build();
 await app.UseDbInitializer();
 
 app.UseProblemDetails();
-
 app.UseSwagger();
 app.UseSwaggerUI();
 

@@ -25,7 +25,9 @@ public class AdMapper : Profile
             .ForMember(dest => dest.Category,
                            opt => opt.MapFrom(src => src.AdCategory));
     
-        CreateMap<PostAd, Domain.Entities.Ad>();
+        CreateMap<PostAd, Domain.Entities.Ad>()
+            .ForMember(dest => dest.CategoryId,
+                           opt => opt.MapFrom(src => src.SelectedCategory));
 
     }
 }
