@@ -29,7 +29,7 @@ public class DatabaseContext : IdentityDbContext<User, UserRole, Guid>, IAuthDbC
 
         foreach (var insertedEntry in insertedEntries)
         {
-            var baseEntity = insertedEntry as EfEntityBase;
+            var baseEntity = insertedEntry as AuditableBase;
 
             // if insertedEntry inherits BaseEntity
             if (baseEntity != null)
@@ -45,7 +45,7 @@ public class DatabaseContext : IdentityDbContext<User, UserRole, Guid>, IAuthDbC
         foreach (var modifiedEntry in modifiedEntries)
         {
             //if modifiedEntry inherits BaseEntity. 
-            var baseEntity = modifiedEntry as EfEntityBase;
+            var baseEntity = modifiedEntry as AuditableBase;
             if (baseEntity != null)
             {
                 baseEntity.LastUpdateDate = DateTime.Now;

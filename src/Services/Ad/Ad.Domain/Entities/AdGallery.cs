@@ -2,7 +2,7 @@
 using BuildingBlocks.Persistence.Ef.Base;
 
 namespace Ad.Domain.Entities;
-public class AdGallery : EfEntityBase
+public class AdGallery : EfEntityBase<Guid>
 {
     [Display(Name = "آگهی")]
     public long AdId { get; set; }

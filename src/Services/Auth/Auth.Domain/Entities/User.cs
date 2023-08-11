@@ -30,5 +30,10 @@ public class User : IdentityUser<Guid>, AuditableBase
 
     public string SerialNumber { get; set; } = Guid.NewGuid().ToString("N");
 
+    public DateTime CreateDate { get; set; } = DateTime.Now;
+
+    public DateTime LastUpdateDate { get; set; } = DateTime.Now;
+
+    //================================== Relations
     public virtual ICollection<AuthToken> AuthTokens { get; set; }
 }
