@@ -88,7 +88,7 @@ public class EditAdHandler : ICommandHandler<EditAd>
             throw new BadRequestException("لطفا قیمت را وارد کنید یا وضعیت فروش را تغییر دهید");
 
         // if title changed set tags again
-        if (adModel.Title != request.Title)
+        if (adModel.CategoryId != request.SelectedCategory)
         {
             // map Tags based on categories
             // get category and parent category titles to an string array splitted by space
