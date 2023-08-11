@@ -1,4 +1,5 @@
-﻿using Ad.Application.Features.Ad.GettingAd;
+﻿using Ad.Application.Features.Ad.EditingAd;
+using Ad.Application.Features.Ad.GettingAd;
 using Ad.Application.Features.Ad.GettingRelatedAds;
 using Ad.Application.Features.Ad.PostingAd;
 using BuildingBlocks.Core.Web;
@@ -30,5 +31,13 @@ public class AdController : BaseController
         await Mediator.Send(postAd);
 
         return Ok("آگهی با موفقیت ساخته شد!");
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> Edit([FromForm] EditAd editAd)
+    {
+        await Mediator.Send(editAd);
+
+        return Ok("آگهی با موفقیت ویرایش شد!");
     }
 }

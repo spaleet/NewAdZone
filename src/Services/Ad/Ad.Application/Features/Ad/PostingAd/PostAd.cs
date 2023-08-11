@@ -1,6 +1,4 @@
-﻿using Ad.Application.Exceptions;
-using Ad.Application.Interfaces;
-using Ad.Domain.Entities;
+﻿using Ad.Application.Interfaces;
 using Ad.Domain.Enums;
 using AutoMapper;
 using BuildingBlocks.Core.CQRS.Commands;
@@ -10,7 +8,6 @@ using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 
 namespace Ad.Application.Features.Ad.PostingAd;
 
