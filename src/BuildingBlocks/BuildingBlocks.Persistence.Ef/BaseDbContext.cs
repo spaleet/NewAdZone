@@ -23,8 +23,9 @@ public abstract class BaseDbContext : DbContext, IBaseDbContext
 
         foreach (var insertedEntry in insertedEntries)
         {
-            var baseEntity = insertedEntry as EfEntityBase;
-            //If the inserted object is an Auditable. 
+            var baseEntity = insertedEntry as AuditableBase;
+
+            // if insertedEntry inherits AuditableBase
             if (baseEntity != null)
             {
                 baseEntity.CreateDate = DateTime.Now;
@@ -37,8 +38,8 @@ public abstract class BaseDbContext : DbContext, IBaseDbContext
 
         foreach (var modifiedEntry in modifiedEntries)
         {
-            //If the inserted object is an Auditable. 
-            var baseEntity = modifiedEntry as EfEntityBase;
+            //if modifiedEntry inherits AuditableBase
+            var baseEntity = modifiedEntry as AuditableBase;
             if (baseEntity != null)
             {
                 baseEntity.LastUpdateDate = DateTime.Now;

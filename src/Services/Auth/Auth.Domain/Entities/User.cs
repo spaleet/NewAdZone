@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using BuildingBlocks.Persistence.Ef.Base;
 using Microsoft.AspNetCore.Identity;
 
 namespace Auth.Domain.Entities;
 
-public class User : IdentityUser<Guid>
+public class User : IdentityUser<Guid>, AuditableBase
 {
     public User()
     {
