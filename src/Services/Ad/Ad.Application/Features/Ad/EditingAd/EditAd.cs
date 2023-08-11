@@ -53,7 +53,12 @@ public class EditAdValidator : AbstractValidator<EditAd>
             .WithMessage("توضیحات حداکثر 1000 کاراکتر است!");
 
         RuleFor(x => x.ImageSource)
-            .Must(x => x.IsImage())
+            .Must(x =>
+            {
+                if (x is not null) return x.IsImage();
+
+                return true;
+            })
             .WithMessage("لطفا عکس معتبر وارد کنید");
         //TODO MAX SIZE CHECk
     }
