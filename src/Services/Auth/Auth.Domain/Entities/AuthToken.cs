@@ -1,13 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using BuildingBlocks.Persistence.Ef.Base;
 
 namespace Auth.Domain.Entities;
 
-public class AuthToken
+public class AuthToken : EfEntityBase<Guid>
 {
-    [Key]
-    public Guid Id { get; set; } = Guid.NewGuid();
-
     public Guid UserId { get; set; }
 
     public string AccessTokenHash { get; set; }
@@ -20,8 +17,7 @@ public class AuthToken
 
     public DateTimeOffset RefreshTokenExpiresDateTime { get; set; }
 
-    public DateTime CreateDate { get; set; } = DateTime.Now;
-
+    //================================== Relations
     [ForeignKey(nameof(UserId))]
     public virtual User User { get; set; }
 }

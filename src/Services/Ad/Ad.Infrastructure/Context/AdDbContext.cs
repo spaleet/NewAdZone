@@ -1,10 +1,11 @@
 ﻿using Ad.Application.Interfaces;
 using Ad.Domain.Entities;
+using BuildingBlocks.Persistence.Ef;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ad.Infrastructure.Context;
 
-public class AdDbContext : DbContext, IAdDbContext
+public class AdDbContext : BaseDbContext, IAdDbContext
 {
     public AdDbContext(DbContextOptions options) : base(options)
     {
@@ -15,9 +16,4 @@ public class AdDbContext : DbContext, IAdDbContext
     public DbSet<AdGallery> AdGalleries { get; set; }
 
     public DbSet<AdCategory> AdCategories { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
-    }
 }

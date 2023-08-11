@@ -1,10 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BuildingBlocks.Persistence.Ef.Base;
-public abstract class EfEntityBase
+
+public interface AuditableBase
+{
+    public DateTime CreateDate { get; set; } 
+
+    public DateTime LastUpdateDate { get; set; }
+}
+
+public abstract class EfEntityBase<TId> : AuditableBase
 {
     [Key]
-    public long Id { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public TId Id { get; set; }
 
     public bool IsDelete { get; set; }
 

@@ -4,7 +4,7 @@ using BuildingBlocks.Persistence.Ef.Base;
 
 namespace Ad.Domain.Entities;
 
-public class AdCategory : EfEntityBase
+public class AdCategory : EfEntityBase<long>
 {
     [Display(Name = "نام گروه")]
     [Required]

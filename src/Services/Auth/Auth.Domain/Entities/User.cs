@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using BuildingBlocks.Persistence.Ef.Base;
 using Microsoft.AspNetCore.Identity;
 
 namespace Auth.Domain.Entities;
 
-public class User : IdentityUser<Guid>
+public class User : IdentityUser<Guid>, AuditableBase
 {
     public User()
     {
@@ -29,5 +30,10 @@ public class User : IdentityUser<Guid>
 
     public string SerialNumber { get; set; } = Guid.NewGuid().ToString("N");
 
+    public DateTime CreateDate { get; set; } = DateTime.Now;
+
+    public DateTime LastUpdateDate { get; set; } = DateTime.Now;
+
+    //================================== Relations
     public virtual ICollection<AuthToken> AuthTokens { get; set; }
 }

@@ -5,7 +5,7 @@ using BuildingBlocks.Persistence.Ef.Base;
 
 namespace Ad.Domain.Entities;
 
-public class Ad : EfEntityBase
+public class Ad : EfEntityBase<long>
 {
     [Display(Name = "آگهی دهنده")]
     public long UserId { get; set; }

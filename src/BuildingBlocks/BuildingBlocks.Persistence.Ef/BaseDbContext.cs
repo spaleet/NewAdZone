@@ -1,26 +1,20 @@
-﻿using Auth.Application.Interfaces;
-using Auth.Domain.Entities;
-using BuildingBlocks.Persistence.Ef;
-using BuildingBlocks.Persistence.Ef.Base;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using BuildingBlocks.Persistence.Ef.Base;
 using Microsoft.EntityFrameworkCore;
 
-namespace Auth.Infrastructure.Context;
+namespace BuildingBlocks.Persistence.Ef;
 
-public class DatabaseContext : IdentityDbContext<User, UserRole, Guid>, IAuthDbContext
+public interface IBaseDbContext
 {
-    public DatabaseContext(DbContextOptions options) : base(options)
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = new());
+}
+
+
+public abstract class BaseDbContext : DbContext, IBaseDbContext 
+{
+    public BaseDbContext(DbContextOptions options) : base(options)
     {
     }
 
-    public DbSet<AuthToken> AuthTokens { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
-    }
-
-    // can't inherit BaseDbContext so here we go
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         var insertedEntries = this.ChangeTracker.Entries()
@@ -31,7 +25,7 @@ public class DatabaseContext : IdentityDbContext<User, UserRole, Guid>, IAuthDbC
         {
             var baseEntity = insertedEntry as AuditableBase;
 
-            // if insertedEntry inherits BaseEntity
+            // if insertedEntry inherits AuditableBase
             if (baseEntity != null)
             {
                 baseEntity.CreateDate = DateTime.Now;
@@ -44,7 +38,7 @@ public class DatabaseContext : IdentityDbContext<User, UserRole, Guid>, IAuthDbC
 
         foreach (var modifiedEntry in modifiedEntries)
         {
-            //if modifiedEntry inherits BaseEntity. 
+            //if modifiedEntry inherits AuditableBase
             var baseEntity = modifiedEntry as AuditableBase;
             if (baseEntity != null)
             {
