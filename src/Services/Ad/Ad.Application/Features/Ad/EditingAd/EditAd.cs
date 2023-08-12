@@ -8,6 +8,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Ad.Application.Exceptions;
 
 namespace Ad.Application.Features.Ad.EditingAd;
 
@@ -80,8 +81,8 @@ public class EditAdHandler : ICommandHandler<EditAd>
         // get ad model from db
         var adModel = await _context.Ads.FindAsync(request.Id);
          
-        if (adModel is null)
-            throw new NotFoundException("آگهی مورد نظر پیدا نشد");
+        // check for null
+        AdNotFoundException.ThrowIfNull(adModel);
 
         // TODO CHECK USER!!
         // TODO CHECK USER LIMIT & ROLE

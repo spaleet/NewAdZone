@@ -1,4 +1,5 @@
 ﻿using Ad.Application.Dtos;
+using Ad.Application.Exceptions;
 using Ad.Application.Interfaces;
 using AutoMapper;
 using BuildingBlocks.Core.CQRS.Queries;
@@ -39,7 +40,8 @@ public class GetAdHandler : IQueryHandler<GetAd, GetAdResponse>
             .Include(x => x.AdGalleries)
             .FirstOrDefaultAsync(x => x.Slug == request.Slug);
 
-        if (ad is null) throw new NotFoundException("آگهی مورد نظر پیدا نشد");
+        // check for null
+        AdNotFoundException.ThrowIfNull(ad);
 
         return _mapper.Map<GetAdResponse>(ad);
     }

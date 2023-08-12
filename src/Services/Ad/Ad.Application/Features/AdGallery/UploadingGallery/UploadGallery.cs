@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using BuildingBlocks.Core.Utilities.ImageRelated;
 using BuildingBlocks.Core.Exceptions.Base;
+using Ad.Application.Exceptions;
 
 namespace Ad.Application.Features.AdGallery.UploadingGallery;
 
@@ -35,8 +36,8 @@ public class UploadGalleryHandler : ICommandHandler<UploadGallery>
         // get ad model from db
         var adModel = await _context.Ads.FindAsync(request.AdId);
 
-        if (adModel is null)
-            throw new NotFoundException("آگهی مورد نظر پیدا نشد");
+        // check for null
+        AdNotFoundException.ThrowIfNull(adModel);
 
         // upload new image
         string uploadFileName = request.ImageSource.UploadImage("wwwroot/upload/ad_gallery/", width: 500, height: 500);

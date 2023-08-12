@@ -1,4 +1,5 @@
 ﻿using Ad.Application.Dtos;
+using Ad.Application.Exceptions;
 using Ad.Application.Features.Ad.GettingAd;
 using Ad.Application.Interfaces;
 using AutoMapper;
@@ -38,8 +39,8 @@ public class GetRelatedAdsHandler : IQueryHandler<GetRelatedAds, List<AdDto>>
             .FirstOrDefaultAsync(x => x.Slug == request.Slug);
 
         //TODO only select cat id
-
-        if (ad is null) throw new NotFoundException("آگهی مورد نظر پیدا نشد");
+        // check for null
+        AdNotFoundException.ThrowIfNull(ad);
 
         long categoryId = ad.CategoryId;
 
