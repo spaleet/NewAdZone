@@ -19,9 +19,5 @@
     <ProjectReference Include="..\..\..\BuildingBlocks\BuildingBlocks.Core\BuildingBlocks.Core.csproj" />
     <ProjectReference Include="..\Ad.Domain\Ad.Domain.csproj" />
   </ItemGroup>
-	
-  <ItemGroup>
-    <Folder Include="Features\AdGallery\" />
-  </ItemGroup>
 
 </Project>

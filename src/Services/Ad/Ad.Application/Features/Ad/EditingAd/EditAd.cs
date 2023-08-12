@@ -79,6 +79,9 @@ public class EditAdHandler : ICommandHandler<EditAd>
     {
         // get ad model from db
         var adModel = await _context.Ads.FindAsync(request.Id);
+         
+        if (adModel is null)
+            throw new NotFoundException("آگهی مورد نظر پیدا نشد");
 
         // TODO CHECK USER!!
         // TODO CHECK USER LIMIT & ROLE
