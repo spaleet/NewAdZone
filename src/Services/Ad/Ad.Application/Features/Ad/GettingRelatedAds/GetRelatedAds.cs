@@ -36,6 +36,11 @@ public class GetRelatedAdsHandler : IQueryHandler<GetRelatedAds, List<AdDto>>
     {
         var ad = await _context.Ads
             .IgnoreAutoIncludes()
+            .Select(x => new 
+            { 
+                x.Slug,
+                x.CategoryId
+            })
             .FirstOrDefaultAsync(x => x.Slug == request.Slug);
 
         //TODO only select cat id

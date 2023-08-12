@@ -8,7 +8,7 @@ public class AdNotFoundException : NotFoundException
     {
     }
 
-    public static void ThrowIfNull(Domain.Entities.Ad? ad)
+    public static void ThrowIfNull(object? ad)
     {
         if(ad is null)
             throw new AdNotFoundException();
