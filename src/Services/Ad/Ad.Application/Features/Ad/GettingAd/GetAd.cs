@@ -1,11 +1,4 @@
-﻿using Ad.Application.Dtos;
-using Ad.Application.Exceptions;
-using Ad.Application.Interfaces;
-using AutoMapper;
-using BuildingBlocks.Core.CQRS.Queries;
-using BuildingBlocks.Core.Exceptions.Base;
-using FluentValidation;
-using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
 
 namespace Ad.Application.Features.Ad.GettingAd;
 

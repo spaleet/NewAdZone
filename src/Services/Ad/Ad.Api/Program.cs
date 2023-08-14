@@ -2,7 +2,6 @@ using Ad.Api;
 using Ad.Api.Extensions;
 using Ad.Application;
 using Ad.Infrastructure;
-using BuildingBlocks.Core.Web;
 using BuildingBlocks.Logging;
 using Hellang.Middleware.ProblemDetails;
 

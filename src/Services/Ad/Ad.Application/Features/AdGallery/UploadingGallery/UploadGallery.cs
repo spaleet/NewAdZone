@@ -1,12 +1,4 @@
-﻿using Ad.Application.Interfaces;
-using BuildingBlocks.Core.CQRS.Commands;
-using FluentValidation;
-using MediatR;
-using Microsoft.AspNetCore.Http;
-using BuildingBlocks.Core.Utilities.ImageRelated;
-using BuildingBlocks.Core.Exceptions.Base;
-using Ad.Application.Exceptions;
-using Ad.Application.Consts;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace Ad.Application.Features.AdGallery.UploadingGallery;
 
@@ -42,7 +34,7 @@ public class UploadGalleryHandler : ICommandHandler<UploadGallery, UploadGallery
 
         // upload new image
         string uploadFileName = request.ImageSource.UploadImage(AdPathConsts.Gallery, width: 500, height: 500);
-        
+
 
         // save db
         var gallery = new Domain.Entities.AdGallery

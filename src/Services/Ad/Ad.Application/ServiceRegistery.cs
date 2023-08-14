@@ -1,7 +1,4 @@
 ﻿using BuildingBlocks.Core.Validation;
-using FluentValidation;
-using MediatR;
-using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Ad.Application;

@@ -1,15 +1,6 @@
-﻿using BuildingBlocks.Core.Utilities.ImageRelated;
-using Ad.Application.Interfaces;
-using Ad.Domain.Enums;
-using AutoMapper;
-using BuildingBlocks.Core.CQRS.Commands;
+﻿using AutoMapper;
 using BuildingBlocks.Core.Exceptions.Base;
-using FluentValidation;
-using MediatR;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using Ad.Application.Exceptions;
-using Ad.Application.Consts;
 
 namespace Ad.Application.Features.Ad.EditingAd;
 
@@ -81,7 +72,7 @@ public class EditAdHandler : ICommandHandler<EditAd>
     {
         // get ad model from db
         var adModel = await _context.Ads.FindAsync(request.Id);
-         
+
         // check for null
         AdNotFoundException.ThrowIfNull(adModel);
 
@@ -111,7 +102,7 @@ public class EditAdHandler : ICommandHandler<EditAd>
         {
             // delete prevoius image
             ImageHelper.DeleteImage(adModel.MainImage, AdPathConsts.Ad);
-            
+
             // upload new image
             string uploadFileName = request.ImageSource.UploadImage(AdPathConsts.Ad, width: 500, height: 500);
 

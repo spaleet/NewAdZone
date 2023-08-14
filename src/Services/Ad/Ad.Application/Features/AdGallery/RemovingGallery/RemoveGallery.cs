@@ -1,13 +1,4 @@
-﻿using Ad.Application.Interfaces;
-using BuildingBlocks.Core.CQRS.Commands;
-using FluentValidation;
-using MediatR;
-using Microsoft.AspNetCore.Http;
-using BuildingBlocks.Core.Utilities.ImageRelated;
-using BuildingBlocks.Core.Exceptions.Base;
-using Ad.Application.Exceptions;
-using Microsoft.EntityFrameworkCore;
-using Ad.Application.Consts;
+﻿using BuildingBlocks.Core.Exceptions.Base;
 
 namespace Ad.Application.Features.AdGallery.RemovingGallery;
 

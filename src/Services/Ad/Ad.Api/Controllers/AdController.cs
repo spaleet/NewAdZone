@@ -2,8 +2,6 @@
 using Ad.Application.Features.Ad.GettingAd;
 using Ad.Application.Features.Ad.GettingRelatedAds;
 using Ad.Application.Features.Ad.PostingAd;
-using BuildingBlocks.Core.Web;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Ad.Api.Controllers;
 

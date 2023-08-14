@@ -1,8 +1,4 @@
-﻿using Ad.Application.Consts;
-using Ad.Application.Interfaces;
-using BuildingBlocks.Core.CQRS.Queries;
-using BuildingBlocks.Core.Exceptions.Base;
-using FluentValidation;
+﻿using BuildingBlocks.Core.Exceptions.Base;
 
 namespace Ad.Application.Features.AdGallery.GettingGallery;
 
@@ -36,6 +32,6 @@ public class GetGalleryHandler : IQueryHandler<GetGallery, GetGalleryResponse>
 
         string path = Path.Combine(AdPathConsts.Gallery, gallery.ImageSrc);
 
-        return new GetGalleryResponse(path, gallery.ContentType); 
+        return new GetGalleryResponse(path, gallery.ContentType);
     }
 }

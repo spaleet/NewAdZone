@@ -6,14 +6,14 @@ public record GetAdCategoriesResponse(List<AdCategoryOrderedResponse>? Categorie
 
 public record AdCategoryOrderedResponse
 {
-	public AdCategoryOrderedResponse(AdCategoryDto parent, List<AdCategoryDto>? children)
-	{
-		Title = parent.Title;
+    public AdCategoryOrderedResponse(AdCategoryDto parent, List<AdCategoryDto>? children)
+    {
+        Title = parent.Title;
         Slug = parent.Slug;
-		Children = children;
-	}
+        Children = children;
+    }
 
-	public string Title { get; set; }
+    public string Title { get; set; }
 
     public string Slug { get; set; }
 

@@ -19,7 +19,7 @@ public class AdMapper : Profile
             .ForMember(dest => dest.Slug,
                            opt => opt.MapFrom(src => src.Title.ToSlug()));
 
-    
+
         CreateMap<Domain.Entities.Ad, AdDto>()
             .ForMember(dest => dest.Price,
                            opt => opt.MapFrom(src => src.Price.ToMoney()));
@@ -35,7 +35,7 @@ public class AdMapper : Profile
                            opt => opt.MapFrom(src => src.SelectedCategory))
             .ForMember(dest => dest.Slug,
                            opt => opt.MapFrom(src => src.Title.ToSlug()));
-        
+
         CreateMap<EditAd, Domain.Entities.Ad>()
             .ForMember(dest => dest.Id,
                            opt => opt.Ignore())

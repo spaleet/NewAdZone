@@ -1,6 +1,5 @@
 ﻿using Ad.Domain.Entities;
 using BuildingBlocks.Persistence.Ef;
-using Microsoft.EntityFrameworkCore;
 
 namespace Ad.Application.Interfaces;
 

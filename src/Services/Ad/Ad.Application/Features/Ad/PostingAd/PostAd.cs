@@ -1,14 +1,6 @@
-﻿using Ad.Application.Consts;
-using Ad.Application.Interfaces;
-using Ad.Domain.Enums;
-using AutoMapper;
-using BuildingBlocks.Core.CQRS.Commands;
+﻿using AutoMapper;
 using BuildingBlocks.Core.Exceptions.Base;
-using BuildingBlocks.Core.Utilities.ImageRelated;
-using FluentValidation;
-using MediatR;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 
 namespace Ad.Application.Features.Ad.PostingAd;
 
@@ -17,7 +9,7 @@ public record PostAd : ICommand
     public long UserId { get; set; }
 
     public long SelectedCategory { get; set; }
-    
+
     public string Title { get; set; }
 
     public SaleStatus SaleState { get; set; }

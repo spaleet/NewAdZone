@@ -1,9 +1,4 @@
-﻿using Ad.Application.Exceptions;
-using Ad.Application.Interfaces;
-using AutoMapper;
-using BuildingBlocks.Core.CQRS.Commands;
-using FluentValidation;
-using MediatR;
+﻿using AutoMapper;
 
 namespace Ad.Application.Features.AdCategory.CreatingAdCategory;
 

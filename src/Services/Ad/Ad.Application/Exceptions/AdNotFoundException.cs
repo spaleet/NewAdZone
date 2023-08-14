@@ -10,7 +10,7 @@ public class AdNotFoundException : NotFoundException
 
     public static void ThrowIfNull(object? ad)
     {
-        if(ad is null)
+        if (ad is null)
             throw new AdNotFoundException();
     }
 }

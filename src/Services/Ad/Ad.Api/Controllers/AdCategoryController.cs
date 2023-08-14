@@ -1,7 +1,5 @@
 ﻿using Ad.Application.Features.AdCategory.CreatingAdCategory;
 using Ad.Application.Features.AdCategory.GettingAdCategories;
-using BuildingBlocks.Core.Web;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Ad.Api.Controllers;
 

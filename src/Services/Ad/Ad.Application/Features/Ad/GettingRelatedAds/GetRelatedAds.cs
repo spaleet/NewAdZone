@@ -1,12 +1,5 @@
 ﻿using Ad.Application.Dtos;
-using Ad.Application.Exceptions;
-using Ad.Application.Features.Ad.GettingAd;
-using Ad.Application.Interfaces;
 using AutoMapper;
-using BuildingBlocks.Core.CQRS.Queries;
-using BuildingBlocks.Core.Exceptions.Base;
-using FluentValidation;
-using Microsoft.EntityFrameworkCore;
 
 namespace Ad.Application.Features.Ad.GettingRelatedAds;
 
@@ -36,8 +29,8 @@ public class GetRelatedAdsHandler : IQueryHandler<GetRelatedAds, List<AdDto>>
     {
         var ad = await _context.Ads
             .IgnoreAutoIncludes()
-            .Select(x => new 
-            { 
+            .Select(x => new
+            {
                 x.Slug,
                 x.CategoryId
             })

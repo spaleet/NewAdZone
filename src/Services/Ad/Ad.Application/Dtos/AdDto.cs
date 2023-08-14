@@ -1,6 +1,4 @@
-﻿using Ad.Domain.Enums;
-
-namespace Ad.Application.Dtos;
+﻿namespace Ad.Application.Dtos;
 public record AdDto
 {
     public long Id { get; set; }

@@ -1,8 +1,5 @@
 ﻿using Ad.Application.Dtos;
-using Ad.Application.Interfaces;
 using AutoMapper;
-using BuildingBlocks.Core.CQRS.Queries;
-using Microsoft.EntityFrameworkCore;
 
 namespace Ad.Application.Features.AdCategory.GettingAdCategories;
 

@@ -1,10 +1,6 @@
-﻿using Ad.Application.Consts;
-using Ad.Application.Features.AdCategory.CreatingAdCategory;
-using Ad.Application.Features.AdGallery.GettingGallery;
+﻿using Ad.Application.Features.AdGallery.GettingGallery;
 using Ad.Application.Features.AdGallery.RemovingGallery;
 using Ad.Application.Features.AdGallery.UploadingGallery;
-using BuildingBlocks.Core.Web;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Ad.Api.Controllers;
 
