@@ -1,15 +1,5 @@
-﻿using System.Text;
-using AutoMapper;
-using BuildingBlocks.Core.CQRS.Commands;
-using BuildingBlocks.Core.Exceptions.Base;
-using BuildingBlocks.Core.Utilities;
-using FluentValidation;
-using MediatR;
-using Microsoft.AspNetCore.WebUtilities;
+﻿using BuildingBlocks.Core.Utilities;
 using MongoDB.Driver;
-using Plan.Application.Features.CreatingNewPlan;
-using Plan.Domain.Entities;
-using Plan.Infrastructure.Context;
 
 namespace Plan.Application.Features.SubscribingPlan;
 

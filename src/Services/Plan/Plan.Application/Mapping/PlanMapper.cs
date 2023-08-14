@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Plan.Application.Dtos;
+﻿using Plan.Application.Dtos;
 using Plan.Application.Features.CreatingNewPlan;
 
 namespace Plan.Application.Mapping;

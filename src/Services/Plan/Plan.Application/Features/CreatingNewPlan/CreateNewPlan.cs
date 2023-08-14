@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using BuildingBlocks.Core.CQRS.Commands;
-using FluentValidation;
-using MediatR;
-using Plan.Infrastructure.Context;
-
-namespace Plan.Application.Features.CreatingNewPlan;
+﻿namespace Plan.Application.Features.CreatingNewPlan;
 
 public record CreateNewPlan(string Title, int MonthlyQuota, decimal? Price) : ICommand;
 

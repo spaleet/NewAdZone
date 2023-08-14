@@ -1,9 +1,5 @@
-﻿using AutoMapper;
-using BuildingBlocks.Core.CQRS.Queries;
-using FluentValidation;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using Plan.Application.Dtos;
-using Plan.Infrastructure.Context;
 
 namespace Plan.Application.Features.GettingPlans;
 

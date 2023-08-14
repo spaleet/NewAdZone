@@ -1,17 +1,5 @@
 ﻿using System.Globalization;
-using System.Text;
-using AutoMapper;
-using BuildingBlocks.Core.CQRS.Commands;
-using BuildingBlocks.Core.Exceptions.Base;
-using BuildingBlocks.Payment;
-using FluentValidation;
-using MediatR;
-using Microsoft.AspNetCore.WebUtilities;
 using MongoDB.Driver;
-using Plan.Application.Features.CreatingNewPlan;
-using Plan.Application.Features.SubscribingPlan;
-using Plan.Domain.Entities;
-using Plan.Infrastructure.Context;
 
 namespace Plan.Application.Features.InitializingPayment;
 

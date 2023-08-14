@@ -1,7 +1,4 @@
 ﻿using BuildingBlocks.Core.Validation;
-using BuildingBlocks.Payment;
-using FluentValidation;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Plan.Application;
