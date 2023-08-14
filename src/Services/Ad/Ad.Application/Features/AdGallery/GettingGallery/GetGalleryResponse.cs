@@ -1,3 +1,3 @@
 ﻿namespace Ad.Application.Features.AdGallery.GettingGallery;
 
-public record GetGalleryResponse(string ImageSrc);
+public record GetGalleryResponse(string ImageSrc, string ContentType);

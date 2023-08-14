@@ -33,6 +33,6 @@ public class GetGalleryHandler : IQueryHandler<GetGallery, GetGalleryResponse>
         if (gallery is null)
             throw new NotFoundException("گالری پیدا نشد");
 
-        return new GetGalleryResponse(gallery.ImageSrc); 
+        return new GetGalleryResponse(gallery.ImageSrc, gallery.ContentType); 
     }
 }
