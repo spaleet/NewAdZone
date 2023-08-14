@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Ad.Application.Features.AdGallery.RemovingGallery;
 
-public record RemoveGallery(string Id) : ICommand;
+public record RemoveGallery(Guid Id) : ICommand;
 
 public class RemoveGalleryValidator : AbstractValidator<RemoveGallery>
 {
@@ -33,8 +33,7 @@ public class RemoveGalleryHandler : ICommandHandler<RemoveGallery>
 
     public async Task<Unit> Handle(RemoveGallery request, CancellationToken cancellationToken)
     {
-        var galleryId = Guid.Parse(request.Id);
-        var gallery = await _context.AdGalleries.FindAsync(galleryId);
+        var gallery = await _context.AdGalleries.FindAsync(request.Id);
 
         if (gallery is null)
             throw new NotFoundException("گالری پیدا نشد");
