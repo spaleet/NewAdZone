@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ad.Infrastructure.Migrations
 {
     [DbContext(typeof(AdDbContext))]
-    [Migration("20230720213224_mig_init")]
+    [Migration("20230814010800_mig_init")]
     partial class mig_init
     {
         /// <inheritdoc />
@@ -54,13 +54,17 @@ namespace Ad.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<int>("ProductState")
                         .HasColumnType("int");
 
                     b.Property<int>("SaleState")
                         .HasColumnType("int");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tags")
                         .HasColumnType("nvarchar(max)");
@@ -100,6 +104,10 @@ namespace Ad.Infrastructure.Migrations
                     b.Property<long?>("ParentId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -113,11 +121,9 @@ namespace Ad.Infrastructure.Migrations
 
             modelBuilder.Entity("Ad.Domain.Entities.AdGallery", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<long>("AdId")
                         .HasColumnType("bigint");

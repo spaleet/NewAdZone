@@ -51,7 +51,7 @@ namespace Ad.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<int>("ProductState")
                         .HasColumnType("int");
@@ -118,11 +118,9 @@ namespace Ad.Infrastructure.Migrations
 
             modelBuilder.Entity("Ad.Domain.Entities.AdGallery", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<long>("AdId")
                         .HasColumnType("bigint");

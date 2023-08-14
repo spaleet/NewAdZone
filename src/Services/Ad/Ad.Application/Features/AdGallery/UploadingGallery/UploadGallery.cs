@@ -9,7 +9,7 @@ using Ad.Application.Exceptions;
 
 namespace Ad.Application.Features.AdGallery.UploadingGallery;
 
-public record UploadGallery(long AdId, IFormFile ImageSource) : ICommand;
+public record UploadGallery(long AdId, IFormFile ImageSource) : ICommand<UploadGalleryResponse>;
 
 public class UploadGalleryValidator : AbstractValidator<UploadGallery>
 {
@@ -22,7 +22,7 @@ public class UploadGalleryValidator : AbstractValidator<UploadGallery>
     }
 }
 
-public class UploadGalleryHandler : ICommandHandler<UploadGallery>
+public class UploadGalleryHandler : ICommandHandler<UploadGallery, UploadGalleryResponse>
 {
     private readonly IAdDbContext _context;
 
@@ -31,7 +31,7 @@ public class UploadGalleryHandler : ICommandHandler<UploadGallery>
         _context = context;
     }
 
-    public async Task<Unit> Handle(UploadGallery request, CancellationToken cancellationToken)
+    public async Task<UploadGalleryResponse> Handle(UploadGallery request, CancellationToken cancellationToken)
     {
         // get ad model from db
         var adModel = await _context.Ads.FindAsync(request.AdId);
@@ -41,14 +41,18 @@ public class UploadGalleryHandler : ICommandHandler<UploadGallery>
 
         // upload new image
         string uploadFileName = request.ImageSource.UploadImage("wwwroot/upload/ad_gallery/", width: 500, height: 500);
+        
 
-        await _context.AdGalleries.AddAsync(new Domain.Entities.AdGallery
+        // save db
+        var gallery = new Domain.Entities.AdGallery
         {
             AdId = adModel.Id,
-            ImageSrc = uploadFileName,
-        });
+            ImageSrc = uploadFileName
+        };
+
+        await _context.AdGalleries.AddAsync(gallery);
         await _context.SaveChangesAsync();
 
-        return Unit.Value;
+        return new UploadGalleryResponse(gallery.Id.ToString());
     }
 }

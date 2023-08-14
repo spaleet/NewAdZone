@@ -12,8 +12,9 @@ public class GalleryController : BaseController
     [HttpPost]
     public async Task<IActionResult> Upload([FromForm] UploadGallery request, CancellationToken cancellationToken)
     {
-        await Mediator.Send(request, cancellationToken);
-        return Ok();
+        var res = await Mediator.Send(request, cancellationToken);
+
+        return Ok(res);
     }
 
     [HttpDelete("{id}")]
