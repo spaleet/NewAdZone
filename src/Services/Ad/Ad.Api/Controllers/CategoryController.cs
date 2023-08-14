@@ -3,9 +3,9 @@ using Ad.Application.Features.AdCategory.GettingAdCategories;
 
 namespace Ad.Api.Controllers;
 
-public class AdCategoryController : BaseController
+public class CategoryController : BaseController
 {
-    [HttpGet("")]
+    [HttpGet]
     public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
         var categories = await Mediator.Send(new GetAdCategories(), cancellationToken);
