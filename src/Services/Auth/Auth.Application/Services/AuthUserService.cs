@@ -1,13 +1,9 @@
 ﻿using Auth.Application.Exceptions;
 using Auth.Application.Interfaces;
 using Auth.Application.Models;
-using Auth.Domain.Entities;
 using Auth.Domain.Enums;
 using AutoMapper;
 using BuildingBlocks.Core.Exceptions.Base;
-using BuildingBlocks.Security.Interfaces;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace Auth.Application.Services;
 public class AuthUserService : IAuthUserService

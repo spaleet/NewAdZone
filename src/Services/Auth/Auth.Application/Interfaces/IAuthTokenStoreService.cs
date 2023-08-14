@@ -1,6 +1,4 @@
-﻿using Auth.Domain.Entities;
-
-namespace Auth.Application.Interfaces;
+﻿namespace Auth.Application.Interfaces;
 
 public interface IAuthTokenStoreService
 {

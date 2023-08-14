@@ -1,5 +1,4 @@
 ﻿using Auth.Application.Models;
-using Auth.Domain.Entities;
 using AutoMapper;
 
 namespace Auth.Application.Mapping;

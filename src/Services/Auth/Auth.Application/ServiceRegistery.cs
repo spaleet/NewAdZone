@@ -1,7 +1,6 @@
 ﻿using Auth.Application.Interfaces;
 using Auth.Application.Mapping;
 using Auth.Application.Services;
-using BuildingBlocks.Security.Interfaces;
 using BuildingBlocks.Security.Services;
 using Microsoft.Extensions.DependencyInjection;
 

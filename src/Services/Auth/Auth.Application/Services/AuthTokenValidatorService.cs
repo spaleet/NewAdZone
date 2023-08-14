@@ -1,9 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Auth.Application.Interfaces;
-using Auth.Domain.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 
 namespace Auth.Application.Services;
 public class AuthTokenValidatorService : IAuthTokenValidatorService

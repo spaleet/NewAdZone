@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-using System.Text.Json;
 using Auth.Application.Interfaces;
 using Auth.Application.Models;
 using BuildingBlocks.Core.Web;

@@ -1,6 +1,4 @@
-﻿using Auth.Domain.Entities;
-using BuildingBlocks.Persistence.Ef;
-using Microsoft.EntityFrameworkCore;
+﻿using BuildingBlocks.Persistence.Ef;
 
 namespace Auth.Application.Interfaces;
 
