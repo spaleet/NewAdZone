@@ -12,6 +12,8 @@ public class AdGallery : EfEntityBase<Guid>
     [Required]
     public string ImageSrc { get; set; }
 
+    public string ContentType { get; set; }
+
     //================================== Relations
     [ForeignKey(nameof(AdId))]
     public virtual Ad Ad { get; set; }

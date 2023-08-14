@@ -47,7 +47,8 @@ public class UploadGalleryHandler : ICommandHandler<UploadGallery, UploadGallery
         var gallery = new Domain.Entities.AdGallery
         {
             AdId = adModel.Id,
-            ImageSrc = uploadFileName
+            ImageSrc = uploadFileName,
+            ContentType = request.ImageSource.ContentType
         };
 
         await _context.AdGalleries.AddAsync(gallery);
