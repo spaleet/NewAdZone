@@ -9,6 +9,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Ad.Application.Exceptions;
+using Ad.Application.Consts;
 
 namespace Ad.Application.Features.Ad.EditingAd;
 
@@ -109,10 +110,10 @@ public class EditAdHandler : ICommandHandler<EditAd>
         if (request.ImageSource is not null)
         {
             // delete prevoius image
-            ImageHelper.DeleteImage(adModel.MainImage, "wwwroot/upload/ad/");
-
+            ImageHelper.DeleteImage(adModel.MainImage, AdPathConsts.Ad);
+            
             // upload new image
-            string uploadFileName = request.ImageSource.UploadImage("wwwroot/upload/ad/", width: 500, height: 500);
+            string uploadFileName = request.ImageSource.UploadImage(AdPathConsts.Ad, width: 500, height: 500);
 
             adModel.MainImage = uploadFileName;
         }

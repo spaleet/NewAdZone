@@ -1,7 +1,8 @@
-﻿using Ad.Application.Features.AdCategory.CreatingAdCategory;
+﻿using Ad.Application.Consts;
+using Ad.Application.Features.AdCategory.CreatingAdCategory;
+using Ad.Application.Features.AdGallery.GettingGallery;
 using Ad.Application.Features.AdGallery.RemovingGallery;
 using Ad.Application.Features.AdGallery.UploadingGallery;
-using Azure.Core;
 using BuildingBlocks.Core.Web;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,16 @@ namespace Ad.Api.Controllers;
 
 public class GalleryController : BaseController
 {
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Get([FromRoute] string id, CancellationToken cancellationToken)
+    {
+        var galleryId = Guid.Parse(id);
+
+        var res = await Mediator.Send(new GetGallery(galleryId), cancellationToken);
+
+        return PhysicalFile(res.ImagePath, res.ContentType);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Upload([FromForm] UploadGallery request, CancellationToken cancellationToken)
     {
