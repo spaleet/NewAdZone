@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using BuildingBlocks.Core.Utilities.ImageRelated;
 using BuildingBlocks.Core.Exceptions.Base;
 using Ad.Application.Exceptions;
+using Ad.Application.Consts;
 
 namespace Ad.Application.Features.AdGallery.UploadingGallery;
 
@@ -40,7 +41,7 @@ public class UploadGalleryHandler : ICommandHandler<UploadGallery, UploadGallery
         AdNotFoundException.ThrowIfNull(adModel);
 
         // upload new image
-        string uploadFileName = request.ImageSource.UploadImage("wwwroot/upload/ad_gallery/", width: 500, height: 500);
+        string uploadFileName = request.ImageSource.UploadImage(AdPathConsts.Gallery, width: 500, height: 500);
         
 
         // save db

@@ -1,4 +1,5 @@
-﻿using Ad.Application.Interfaces;
+﻿using Ad.Application.Consts;
+using Ad.Application.Interfaces;
 using BuildingBlocks.Core.CQRS.Queries;
 using BuildingBlocks.Core.Exceptions.Base;
 using FluentValidation;
@@ -33,6 +34,8 @@ public class GetGalleryHandler : IQueryHandler<GetGallery, GetGalleryResponse>
         if (gallery is null)
             throw new NotFoundException("گالری پیدا نشد");
 
-        return new GetGalleryResponse(gallery.ImageSrc, gallery.ContentType); 
+        string path = Path.Combine(AdPathConsts.Gallery, gallery.ImageSrc);
+
+        return new GetGalleryResponse(path, gallery.ContentType); 
     }
 }

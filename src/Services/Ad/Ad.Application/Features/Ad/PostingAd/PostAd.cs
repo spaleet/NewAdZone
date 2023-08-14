@@ -1,4 +1,5 @@
-﻿using Ad.Application.Interfaces;
+﻿using Ad.Application.Consts;
+using Ad.Application.Interfaces;
 using Ad.Domain.Enums;
 using AutoMapper;
 using BuildingBlocks.Core.CQRS.Commands;
@@ -88,7 +89,7 @@ public class PostAdHandler : ICommandHandler<PostAd>
         createdAd.Tags = string.Join(",", categories);
 
         // upload image
-        string uploadFileName = request.ImageSource.UploadImage("wwwroot/upload/ad/", width: 500, height: 500);
+        string uploadFileName = request.ImageSource.UploadImage(AdPathConsts.Ad, width: 500, height: 500);
 
         createdAd.MainImage = uploadFileName;
 

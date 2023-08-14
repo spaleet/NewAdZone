@@ -7,6 +7,7 @@ using BuildingBlocks.Core.Utilities.ImageRelated;
 using BuildingBlocks.Core.Exceptions.Base;
 using Ad.Application.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using Ad.Application.Consts;
 
 namespace Ad.Application.Features.AdGallery.RemovingGallery;
 
@@ -38,7 +39,7 @@ public class RemoveGalleryHandler : ICommandHandler<RemoveGallery>
         if (gallery is null)
             throw new NotFoundException("گالری پیدا نشد");
 
-        ImageHelper.DeleteImage(gallery.ImageSrc, "wwwroot/upload/ad_gallery/");
+        ImageHelper.DeleteImage(gallery.ImageSrc, AdPathConsts.Gallery);
 
         _context.AdGalleries.Remove(gallery);
         await _context.SaveChangesAsync();
