@@ -24,7 +24,7 @@ public class AuthUserService : IAuthUserService
         _mapper = mapper;
     }
 
-    public async Task RegisterAsync(RegisterAccountRequest model)
+    public async Task<string> RegisterAsync(RegisterAccountRequest model)
     {
         // Validate Email
         InvalidEmailException.ThrowIfNotValid(model.Email);
@@ -51,6 +51,8 @@ public class AuthUserService : IAuthUserService
             throw new ApiException(result.Errors.First().Description);
 
         await _userManager.AddToRoleAsync(user, Roles.BasicUser.ToString());
+
+        return user.Id.ToString();
     }
 
     public async Task<AuthenticateUserResponse> AuthenticateUserAsync(AuthenticateUserRequest model)

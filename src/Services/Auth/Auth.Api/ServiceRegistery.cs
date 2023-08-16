@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json;
 using Auth.Application.Interfaces;
 using Auth.Domain.Enums;
+using BuildingBlocks.Messaging;
 using BuildingBlocks.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,9 @@ public static class ServiceRegistery
 {
     public static void AddApi(this IServiceCollection services, IConfiguration config)
     {
+        //MassTransit
+        services.AddMessaging(config.GetConnectionString("EventBus") ?? "");
+
         //================================== Swagger
         services.AddEndpointsApiExplorer();
 

@@ -10,6 +10,7 @@ using Plan.Application.Features.GettingPlans;
 using Plan.Application.Features.InitializingPayment;
 using Plan.Application.Features.SubscribingPlan;
 using Plan.Application.Features.VerifyingPayment;
+using Plan.Domain.Enums;
 
 namespace Plan.Api.Controllers;
 

@@ -2,6 +2,8 @@
 using Auth.Application.Interfaces;
 using Auth.Application.Models;
 using BuildingBlocks.Core.Web;
+using BuildingBlocks.Messaging.Events;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Auth.Api.Controllers;
@@ -10,17 +12,24 @@ public class AuthController : BaseControllerLite
 {
     private readonly IAuthTokenStoreService _tokenStoreService;
     private readonly IAuthUserService _userService;
+    private readonly IPublishEndpoint _publisher;
 
-    public AuthController(IAuthUserService userService, IAuthTokenStoreService tokenStoreService)
+    public AuthController(IAuthUserService userService, IAuthTokenStoreService tokenStoreService, IPublishEndpoint publisher)
     {
         _userService = userService;
         _tokenStoreService = tokenStoreService;
+        _publisher = publisher;
     }
 
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterAccountRequest model)
     {
-        await _userService.RegisterAsync(model);
+        string userId = await _userService.RegisterAsync(model);
+
+        // publish user registered event
+        var @event = new UserCreatedEvent(userId);
+
+        await _publisher.Publish<UserCreatedEvent>(@event);
 
         return Ok("User created successfully.");
     }
