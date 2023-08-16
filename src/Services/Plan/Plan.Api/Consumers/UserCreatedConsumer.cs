@@ -20,16 +20,14 @@ public class UserCreatedConsumer : IConsumer<UserCreatedEvent>
 
     public async Task Consume(ConsumeContext<UserCreatedEvent> context)
     {
-        var userId = context.Message.UserId;
-        _logger.LogInformation("Found user by {userId}", userId);
+        string userId = context.Message.UserId;
 
-
+        _logger.LogInformation("Message Recieved: UserCreatedEvent, UId : {userId}", userId);
 
         var plans = await _mediator.Send(new GetPlans());
 
+        // subscribe to BasicPlan
         string planId = plans.Plans.FirstOrDefault(x => x.Title == nameof(PlanNameConsts.BasicPlan)).Id;
-
-        _logger.LogInformation("Found plan by {id}", planId);
 
         await _mediator.Send(new SubscribePlan(planId, userId));
     }
