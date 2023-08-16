@@ -10,6 +10,7 @@ using Plan.Application.Features.GettingPlans;
 using Plan.Application.Features.InitializingPayment;
 using Plan.Application.Features.SubscribingPlan;
 using Plan.Application.Features.VerifyingPayment;
+using Plan.Domain.Enums;
 
 namespace Plan.Api.Controllers;
 
@@ -32,6 +33,10 @@ public class PlanController : BaseController
     [HttpPost]
     public async Task<IActionResult> CreatePlan([FromBody] CreateNewPlan request, CancellationToken cancellationToken)
     {
+        request.Title = nameof(PlanNameConsts.BasicPlan);
+        request.MonthlyQuota = PlanQoutaConsts.BasicPlan;
+        request.Price = 0;
+
         await Mediator.Send(request, cancellationToken);
 
         return Ok();
