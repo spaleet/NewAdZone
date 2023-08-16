@@ -33,10 +33,6 @@ public class PlanController : BaseController
     [HttpPost]
     public async Task<IActionResult> CreatePlan([FromBody] CreateNewPlan request, CancellationToken cancellationToken)
     {
-        request.Title = nameof(PlanNameConsts.BasicPlan);
-        request.MonthlyQuota = PlanQoutaConsts.BasicPlan;
-        request.Price = 0;
-
         await Mediator.Send(request, cancellationToken);
 
         return Ok();

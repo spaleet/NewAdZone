@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\BuildingBlocks.Payment\BuildingBlocks.Payment.csproj" />
     <ProjectReference Include="..\Plan.Domain\Plan.Domain.csproj" />
     <ProjectReference Include="..\Plan.Infrastructure\Plan.Infrastructure.csproj" />
   </ItemGroup>
