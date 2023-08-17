@@ -2,7 +2,7 @@
 
 namespace BuildingBlocks.Core.Utilities.ImageRelated;
 
-public static class MaxFileSizeValidator
+public static class MaxFileSize
 {
     public static bool IsValid(int maxFileSize, object value, bool isRequired = true)
     {
