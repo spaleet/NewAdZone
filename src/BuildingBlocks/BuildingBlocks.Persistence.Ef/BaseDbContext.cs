@@ -1,4 +1,5 @@
-﻿using BuildingBlocks.Persistence.Ef.Base;
+﻿using System.Linq.Expressions;
+using BuildingBlocks.Persistence.Ef.Base;
 using Microsoft.EntityFrameworkCore;
 
 namespace BuildingBlocks.Persistence.Ef;
@@ -48,4 +49,27 @@ public abstract class BaseDbContext : DbContext, IBaseDbContext
 
         return await base.SaveChangesAsync(cancellationToken);
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        // IsDelete Query Filter
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        {
+            var isDeleteProperty = entityType.FindProperty("IsDelete");
+            if (isDeleteProperty != null && isDeleteProperty.ClrType == typeof(bool))
+            {
+                var parameter = Expression.Parameter(entityType.ClrType, "p");
+                var filter = Expression.Lambda(
+                    Expression.Equal(
+                        Expression.Property(parameter, isDeleteProperty.PropertyInfo),
+                        Expression.Constant(false, typeof(bool))
+                    )
+                    , parameter);
+                entityType.SetQueryFilter(filter);
+            }
+        }
+
+        base.OnModelCreating(modelBuilder);
+    }
+
 }
