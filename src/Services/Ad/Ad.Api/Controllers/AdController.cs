@@ -1,4 +1,5 @@
-﻿using Ad.Application.Features.Ad.EditingAd;
+﻿using Ad.Application.Features.Ad.DeletingAd;
+using Ad.Application.Features.Ad.EditingAd;
 using Ad.Application.Features.Ad.GettingAd;
 using Ad.Application.Features.Ad.GettingRelatedAds;
 using Ad.Application.Features.Ad.PostingAd;
@@ -37,5 +38,13 @@ public class AdController : BaseController
         await Mediator.Send(editAd);
 
         return Ok("آگهی با موفقیت ویرایش شد!");
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete([FromRoute] long id)
+    {
+        await Mediator.Send(new DeleteAd(id));
+
+        return Ok("آگهی با موفقیت حذف شد!");
     }
 }
