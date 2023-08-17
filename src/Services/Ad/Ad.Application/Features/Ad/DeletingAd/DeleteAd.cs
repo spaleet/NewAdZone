@@ -7,8 +7,7 @@ public class DeleteAdValidator : AbstractValidator<DeleteAd>
     public DeleteAdValidator()
     {
         RuleFor(x => x.Id)
-            .NotEmpty()
-            .WithMessage("شناسه را وارد کنید");
+            .RequiredValidator("شناسه");
     }
 }
 

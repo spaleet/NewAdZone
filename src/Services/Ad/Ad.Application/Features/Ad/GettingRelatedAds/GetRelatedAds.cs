@@ -10,8 +10,7 @@ public class GetRelatedAdsValidator : AbstractValidator<GetRelatedAds>
     public GetRelatedAdsValidator()
     {
         RuleFor(x => x.Slug)
-            .NotEmpty()
-            .WithMessage("آدرس اسلاگ را وارد کنید");
+            .RequiredValidator("آدرس اسلاگ");
     }
 }
 public class GetRelatedAdsHandler : IQueryHandler<GetRelatedAds, List<AdDto>>
@@ -36,7 +35,6 @@ public class GetRelatedAdsHandler : IQueryHandler<GetRelatedAds, List<AdDto>>
             })
             .FirstOrDefaultAsync(x => x.Slug == request.Slug);
 
-        //TODO only select cat id
         // check for null
         AdNotFoundException.ThrowIfNull(ad);
 

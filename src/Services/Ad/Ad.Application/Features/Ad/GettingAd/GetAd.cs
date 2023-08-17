@@ -9,8 +9,7 @@ public class GetAdValidator : AbstractValidator<GetAd>
     public GetAdValidator()
     {
         RuleFor(x => x.Slug)
-            .NotEmpty()
-            .WithMessage("آدرس اسلاگ را وارد کنید");
+            .RequiredValidator("آدرس اسلاگ");
     }
 }
 

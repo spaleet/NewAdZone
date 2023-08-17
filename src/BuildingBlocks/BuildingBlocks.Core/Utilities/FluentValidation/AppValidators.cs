@@ -23,6 +23,13 @@ public static class AppValidators
                           .WithMessage(string.Format("لطفا {0} را وارد کنید", propertyName));
     }
 
+    public static IRuleBuilder<T, long> RequiredValidator<T>(this IRuleBuilder<T, long> ruleBuilder,
+        string propertyName)
+    {
+        return ruleBuilder.NotEmpty()
+                          .WithMessage(string.Format("لطفا {0} را وارد کنید", propertyName));
+    }
+
     public static IRuleBuilder<T, Guid> RequiredValidator<T>(this IRuleBuilder<T, Guid> ruleBuilder,
         string propertyName)
     {
@@ -69,10 +76,10 @@ public static class AppValidators
     #region MinLengthValidator
 
     public static IRuleBuilder<T, string> MinLengthValidator<T>(this IRuleBuilder<T, string> ruleBuilder,
-        string propertyName, int maxLength)
+        string propertyName, int maxinLength)
     {
-        return ruleBuilder.MinimumLength(maxLength)
-            .WithMessage(string.Format("مقدار {0} نباید کمتر از {1} کاراکتر باشد", propertyName, maxLength));
+        return ruleBuilder.MinimumLength(maxinLength)
+            .WithMessage(string.Format("مقدار {0} نباید کمتر از {1} کاراکتر باشد", propertyName, maxinLength));
     }
 
     #endregion
