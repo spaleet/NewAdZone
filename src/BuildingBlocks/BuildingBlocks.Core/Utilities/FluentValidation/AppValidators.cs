@@ -9,28 +9,7 @@ public static class AppValidators
 {
     #region Required Validator
 
-    public static IRuleBuilder<T, string> RequiredValidator<T>(this IRuleBuilder<T, string> ruleBuilder,
-        string propertyName)
-    {
-        return ruleBuilder.NotEmpty()
-                          .WithMessage(string.Format("لطفا {0} را وارد کنید", propertyName));
-    }
-
-    public static IRuleBuilder<T, decimal> RequiredValidator<T>(this IRuleBuilder<T, decimal> ruleBuilder,
-        string propertyName)
-    {
-        return ruleBuilder.NotEmpty()
-                          .WithMessage(string.Format("لطفا {0} را وارد کنید", propertyName));
-    }
-
-    public static IRuleBuilder<T, long> RequiredValidator<T>(this IRuleBuilder<T, long> ruleBuilder,
-        string propertyName)
-    {
-        return ruleBuilder.NotEmpty()
-                          .WithMessage(string.Format("لطفا {0} را وارد کنید", propertyName));
-    }
-
-    public static IRuleBuilder<T, Guid> RequiredValidator<T>(this IRuleBuilder<T, Guid> ruleBuilder,
+    public static IRuleBuilder<T, TProperty> RequiredValidator<T, TProperty>(this IRuleBuilder<T, TProperty> ruleBuilder,
         string propertyName)
     {
         return ruleBuilder.NotEmpty()

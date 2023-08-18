@@ -9,8 +9,11 @@ public class InitializePaymentValidator : AbstractValidator<InitializePayment>
 {
     public InitializePaymentValidator()
     {
-        RuleFor(x => x.SubId).NotEmpty().WithMessage("آیدی را وارد کنید");
-        RuleFor(x => x.CallBackUrl).NotEmpty().WithMessage("آدرس برگشت را وارد کنید");
+        RuleFor(x => x.SubId)
+            .RequiredValidator("شناسه");
+
+        RuleFor(x => x.CallBackUrl)
+            .RequiredValidator("آدرس برگشت");
     }
 }
 
