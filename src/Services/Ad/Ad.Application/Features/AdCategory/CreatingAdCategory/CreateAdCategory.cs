@@ -9,8 +9,7 @@ public class CreateAdCategoryValidator : AbstractValidator<CreateAdCategory>
     public CreateAdCategoryValidator()
     {
         RuleFor(x => x.Title)
-            .NotEmpty()
-            .WithMessage("عنوان را وارد کنید");
+            .RequiredValidator("عنوان");
     }
 }
 

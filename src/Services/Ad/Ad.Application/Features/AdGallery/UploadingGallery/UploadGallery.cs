@@ -9,9 +9,7 @@ public class UploadGalleryValidator : AbstractValidator<UploadGallery>
     public UploadGalleryValidator()
     {
         RuleFor(x => x.ImageSource)
-            .Must(x => x.IsImage())
-            .WithMessage("لطفا عکس معتبر وارد کنید");
-        //TODO MAX SIZE CHECk
+            .MaxFileSizeValidator(MaxFileSize.Megabyte(2));
     }
 }
 

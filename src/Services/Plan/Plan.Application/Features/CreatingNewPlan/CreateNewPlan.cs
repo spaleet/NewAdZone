@@ -6,10 +6,11 @@ public class CreateNewPlanValidator : AbstractValidator<CreateNewPlan>
 {
     public CreateNewPlanValidator()
     {
-        RuleFor(x => x.Title).NotEmpty().WithMessage("عنوان را وارد کنید");
+        RuleFor(x => x.Title)
+            .RequiredValidator("عنوان");
+
         RuleFor(x => x.MonthlyQuota)
-            .NotEmpty().WithMessage("کوتا ماهانه را وارد کنید")
-            .NotNull().WithMessage("کوتا ماهانه را وارد کنید")
+            .RequiredValidator("کوتا")
             .NotEqual(0).WithMessage("کوتا معتبر وارد کنید");
 
         RuleFor(x => x.Price)

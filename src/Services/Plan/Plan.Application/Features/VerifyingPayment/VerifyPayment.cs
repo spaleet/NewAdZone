@@ -1,6 +1,5 @@
 ﻿using System.Globalization;
 using BuildingBlocks.Core.Utilities;
-using BuildingBlocks.Payment;
 using MongoDB.Driver;
 
 namespace Plan.Application.Features.VerifyingPayment;
@@ -11,8 +10,11 @@ public class VerifyPaymentValidator : AbstractValidator<VerifyPayment>
 {
     public VerifyPaymentValidator()
     {
-        RuleFor(x => x.SubId).NotEmpty().WithMessage("آیدی معتبر وارد کنید");
-        RuleFor(x => x.Authority).NotEmpty().WithMessage("شناسه پرداخت را وارد کنید");
+        RuleFor(x => x.SubId)
+            .RequiredValidator("شناسه");
+
+        RuleFor(x => x.Authority)
+            .RequiredValidator("شناسه پرداخت");
     }
 }
 

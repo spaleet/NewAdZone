@@ -9,8 +9,7 @@ public class RemoveGalleryValidator : AbstractValidator<RemoveGallery>
     public RemoveGalleryValidator()
     {
         RuleFor(x => x.Id)
-            .NotEmpty()
-            .WithMessage("لطفا شناسه وارد کنید");
+            .RequiredValidator("شناسه");
     }
 }
 

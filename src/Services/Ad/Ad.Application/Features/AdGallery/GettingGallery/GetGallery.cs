@@ -9,8 +9,7 @@ public class GetGalleryValidator : AbstractValidator<GetGallery>
     public GetGalleryValidator()
     {
         RuleFor(x => x.Id)
-            .NotEmpty()
-            .WithMessage("لطفا شناسه وارد کنید");
+            .RequiredValidator("شناسه");
     }
 }
 

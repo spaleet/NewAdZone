@@ -9,6 +9,11 @@ public class SubscribePlanValidator : AbstractValidator<SubscribePlan>
 {
     public SubscribePlanValidator()
     {
+        RuleFor(x => x.PlanId)
+            .RequiredValidator("شناسه پلن");
+
+        RuleFor(x => x.UserId)
+            .RequiredValidator("شناسه کاربر");
     }
 }
 

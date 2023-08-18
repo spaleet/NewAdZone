@@ -30,30 +30,18 @@ public class EditAdValidator : AbstractValidator<EditAd>
     public EditAdValidator()
     {
         RuleFor(x => x.Id)
-            .NotEmpty()
-            .WithMessage("شناسه را وارد کنید");
+            .RequiredValidator("شناسه");
 
         RuleFor(x => x.Title)
-            .NotEmpty()
-            .WithMessage("عنوان را وارد کنید")
-            .MaximumLength(75)
-            .WithMessage("عنوان حداکثر 75 کاراکتر است!");
+            .RequiredValidator("عنوان")
+            .MaxLengthValidator("عنوان", 75);
 
         RuleFor(x => x.Description)
-            .MinimumLength(50)
-            .WithMessage("توضیحات حداقل 50 کاراکتر است!")
-            .MaximumLength(1000)
-            .WithMessage("توضیحات حداکثر 1000 کاراکتر است!");
+            .MinLengthValidator("توضیحات", 50)
+            .MinLengthValidator("توضیحات", 1000);
 
         RuleFor(x => x.ImageSource)
-            .Must(x =>
-            {
-                if (x is not null) return x.IsImage();
-
-                return true;
-            })
-            .WithMessage("لطفا عکس معتبر وارد کنید");
-        //TODO MAX SIZE CHECk
+            .MaxFileSizeValidator(MaxFileSize.Megabyte(3), false);
     }
 }
 

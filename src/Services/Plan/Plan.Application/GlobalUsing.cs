@@ -7,5 +7,6 @@ global using FluentValidation;
 global using MediatR;
 global using Plan.Domain.Entities;
 global using Plan.Infrastructure.Context;
+global using BuildingBlocks.Core.Utilities.FluentValidation;
 
 namespace Plan.Application;
