@@ -16,19 +16,19 @@ public class Ticket : MongoEntityBase
     public string Title { get; set; }
 
     [Display(Name = "بخش موردنظر")]
-    [BsonElement("ticketSection")]
+    [BsonElement("department")]
     [BsonRepresentation(BsonType.String)] 
-    public TicketSectionEnum TicketSection { get; set; }
+    public TicketDepartmentEnum Department { get; set; }
 
     [Display(Name = "اولویت")]
-    [BsonElement("ticketPriority")]
+    [BsonElement("priority")]
     [BsonRepresentation(BsonType.String)]
-    public TicketPriorityEnum TicketPriority { get; set; }
+    public TicketPriorityEnum Priority { get; set; }
 
     [Display(Name = "وضعیت")]
-    [BsonElement("ticketState")]
+    [BsonElement("state")]
     [BsonRepresentation(BsonType.String)]
-    public TicketStateEnum TicketState { get; set; }
+    public TicketStateEnum State { get; set; }
 
     [Display(Name = "خوانده شده توسط کاربر")]
     [BsonElement("isReadByUser")]

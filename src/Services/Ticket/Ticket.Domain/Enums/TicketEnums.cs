@@ -2,7 +2,7 @@
 
 namespace Ticket.Domain.Enums;
 
-public enum TicketSectionEnum
+public enum TicketDepartmentEnum
 {
     [Display(Name = "پشتیبانی")]
     Support,

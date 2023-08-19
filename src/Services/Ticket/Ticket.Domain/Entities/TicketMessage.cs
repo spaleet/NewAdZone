@@ -7,11 +7,11 @@ public class TicketMessage : MongoEntityBase
 {
     [Display(Name = "تیکت")]
     [BsonElement("ticketId")]
-    public long TicketId { get; set; }
+    public string TicketId { get; set; }
 
     [Display(Name = "کاربر")]
     [BsonElement("userId")]
-    public long UserId { get; set; }
+    public string UserId { get; set; }
 
     [Display(Name = "متن")]
     [BsonElement("text")]
