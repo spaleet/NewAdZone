@@ -2,9 +2,9 @@
 
 namespace Ad.Application.Features.Ad.GettingAd;
 
-public record GetAd(string Slug) : IQuery<GetAdResponse>;
+public record GetAdDetails(string Slug) : IQuery<GetAdDetailsResponse>;
 
-public class GetAdValidator : AbstractValidator<GetAd>
+public class GetAdValidator : AbstractValidator<GetAdDetails>
 {
     public GetAdValidator()
     {
@@ -14,18 +14,18 @@ public class GetAdValidator : AbstractValidator<GetAd>
 }
 
 
-public class GetAdHandler : IQueryHandler<GetAd, GetAdResponse>
+public class GetAdDetailsHandler : IQueryHandler<GetAdDetails, GetAdDetailsResponse>
 {
     private readonly IAdDbContext _context;
     private readonly IMapper _mapper;
 
-    public GetAdHandler(IAdDbContext context, IMapper mapper)
+    public GetAdDetailsHandler(IAdDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
     }
 
-    public async Task<GetAdResponse> Handle(GetAd request, CancellationToken cancellationToken)
+    public async Task<GetAdDetailsResponse> Handle(GetAdDetails request, CancellationToken cancellationToken)
     {
         var ad = await _context.Ads
             .Include(x => x.AdCategory)
@@ -35,6 +35,6 @@ public class GetAdHandler : IQueryHandler<GetAd, GetAdResponse>
         // check for null
         AdNotFoundException.ThrowIfNull(ad);
 
-        return _mapper.Map<GetAdResponse>(ad);
+        return _mapper.Map<GetAdDetailsResponse>(ad);
     }
 }

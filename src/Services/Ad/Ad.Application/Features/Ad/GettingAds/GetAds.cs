@@ -1,7 +1,5 @@
 ﻿using Ad.Application.Dtos;
-using Ad.Application.Features.Ad.GettingRelatedAds;
 using AutoMapper;
-using BuildingBlocks.Core.CQRS.Queries;
 using BuildingBlocks.Core.Models.Paging;
 
 namespace Ad.Application.Features.Ad.GettingAds;

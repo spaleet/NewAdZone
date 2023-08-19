@@ -22,9 +22,9 @@ public class AdMapper : Profile
 
         CreateMap<Domain.Entities.Ad, AdDto>()
             .ForMember(dest => dest.Price,
-                           opt => opt.MapFrom(src => src.Price.ToMoney()));
+                           opt => opt.MapFrom(src => src.Price == 0 ? "-" : src.Price.ToMoney()));
 
-        CreateMap<Domain.Entities.Ad, GetAdResponse>()
+        CreateMap<Domain.Entities.Ad, GetAdDetailsResponse>()
             .ForMember(dest => dest.Category,
                            opt => opt.MapFrom(src => src.AdCategory))
             .ForMember(dest => dest.Price,

@@ -20,7 +20,7 @@ public class AdController : BaseController
     [HttpGet("{slug}")]
     public async Task<IActionResult> GetAd([FromRoute] string slug)
     {
-        var ad = await Mediator.Send(new GetAd(slug));
+        var ad = await Mediator.Send(new GetAdDetails(slug));
 
         return Ok(ad);
     }
