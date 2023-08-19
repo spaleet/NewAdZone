@@ -21,6 +21,8 @@ public class AdMapper : Profile
 
 
         CreateMap<Domain.Entities.Ad, AdDto>()
+            .ForMember(dest => dest.Description,
+                           opt => opt.MapFrom(src => src.Description.Substring(0, 20) + " ..."))
             .ForMember(dest => dest.Price,
                            opt => opt.MapFrom(src => src.Price == 0 ? "-" : src.Price.ToMoney()));
 
@@ -28,7 +30,7 @@ public class AdMapper : Profile
             .ForMember(dest => dest.Category,
                            opt => opt.MapFrom(src => src.AdCategory))
             .ForMember(dest => dest.Price,
-                           opt => opt.MapFrom(src => src.Price.ToMoney()));
+                           opt => opt.MapFrom(src => src.Price == 0 ? "-" : src.Price.ToMoney()));
 
         CreateMap<PostAd, Domain.Entities.Ad>()
             .ForMember(dest => dest.CategoryId,
