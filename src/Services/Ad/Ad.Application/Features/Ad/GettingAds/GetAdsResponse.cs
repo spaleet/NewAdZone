@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Ad.Application.Dtos;
+using BuildingBlocks.Core.Models.Paging;
 
 namespace Ad.Application.Features.Ad.GettingAds;
-internal class GetAdsResponse
-{
-}
+
+public record GetAdsResponse(PagingModel<AdDto> Ads);
