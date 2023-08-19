@@ -33,7 +33,7 @@ public class AdController : BaseController
         return Ok(ads);
     }
 
-    [HttpPost("post")]
+    [HttpPost]
     public async Task<IActionResult> Post([FromForm] PostAd postAd)
     {
         await Mediator.Send(postAd);

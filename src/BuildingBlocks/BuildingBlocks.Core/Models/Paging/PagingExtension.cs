@@ -23,10 +23,11 @@ public static class PagingExtension
             return PagingModel<T>.Empty;
 
         int totalItems = await collection.CountAsync();
+        int totalPages = (int)Math.Ceiling((decimal)totalItems / pageSize);
 
         var data = await collection.Limit(page, pageSize).ToListAsync();
 
-        return PagingModel<T>.Create(data, totalItems, page, pageSize);
+        return PagingModel<T>.Create(data, totalItems, totalPages, page, pageSize);
     }
 
     // Paging with Mapping
@@ -44,13 +45,14 @@ public static class PagingExtension
             return PagingModel<TOut>.Empty;
 
         int totalItems = await collection.CountAsync();
+        int totalPages = (int)Math.Ceiling((decimal)totalItems / pageSize);
 
         var data = await collection
             .Limit(page, pageSize)
             .ProjectTo<TOut>(configuration) // using automapper
             .ToListAsync();
 
-        return PagingModel<TOut>.Create(data, totalItems, page, pageSize);
+        return PagingModel<TOut>.Create(data, totalItems, totalPages, page, pageSize);
     }
 
     // Simple paging

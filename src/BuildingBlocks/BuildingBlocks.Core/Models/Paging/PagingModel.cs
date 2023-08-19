@@ -1,13 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-
-namespace BuildingBlocks.Core.Models.Paging;
+﻿namespace BuildingBlocks.Core.Models.Paging;
 
 public class PagingModel<T>
 {
-    public PagingModel(List<T> items, int totalItems, int page, int pageSize)
+    public PagingModel(List<T> items, int totalItems, int totalPages, int page, int pageSize)
     {
         Items = items;
         TotalItems = totalItems;
+        TotalPages = totalPages;
         Page = page;
         PageSize = pageSize;
     }
@@ -16,17 +15,16 @@ public class PagingModel<T>
 
     public int PageSize { get; set; }
 
-    [BindNever]
     public List<T> Items { get; set; }
 
-    [BindNever]
     public int TotalItems { get; set; }
+    public int TotalPages { get; set; }
 
     //================================== Methods
-    public static PagingModel<T> Empty => new(Enumerable.Empty<T>().ToList(), 0, 0, 0);
+    public static PagingModel<T> Empty => new(Enumerable.Empty<T>().ToList(), 0, 0, 0, 0);
 
-    public static PagingModel<T> Create(List<T> items, int totalItems = 0, int page = 1, int pageSize = 20)
+    public static PagingModel<T> Create(List<T> items, int totalItems = 0, int totalPages = 0, int page = 1, int pageSize = 20)
     {
-        return new PagingModel<T>(items, totalItems, page, pageSize);
+        return new PagingModel<T>(items, totalItems, totalPages, page, pageSize);
     }
 }
