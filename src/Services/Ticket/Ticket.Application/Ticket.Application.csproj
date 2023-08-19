@@ -17,5 +17,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Ticket.Infrastructure\Ticket.Infrastructure.csproj" />
   </ItemGroup>
+	
+  <ItemGroup>
+    <Folder Include="Features\Admin\" />
+  </ItemGroup>
 
 </Project>

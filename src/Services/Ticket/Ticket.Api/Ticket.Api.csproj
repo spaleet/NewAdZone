@@ -16,5 +16,9 @@
     <ProjectReference Include="..\..\..\BuildingBlocks\BuildingBlocks.Logging\BuildingBlocks.Logging.csproj" />
     <ProjectReference Include="..\Ticket.Application\Ticket.Application.csproj" />
   </ItemGroup>
+	
+  <ItemGroup>
+    <Folder Include="Controllers\Admin\" />
+  </ItemGroup>
 
 </Project>

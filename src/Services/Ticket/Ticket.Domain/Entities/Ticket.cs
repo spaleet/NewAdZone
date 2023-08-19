@@ -37,9 +37,4 @@ public class Ticket : MongoEntityBase
     [Display(Name = "خوانده شده توسط ادمین")]
     [BsonElement("isReadByAdmin")]
     public bool IsReadByAdmin { get; set; }
-
-    //================================== Relations
-
-    [BsonElement("messages")]
-    public List<TicketMessage> Messages { get; set; }
 }

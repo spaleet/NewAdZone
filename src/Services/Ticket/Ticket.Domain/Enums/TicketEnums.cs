@@ -7,7 +7,7 @@ public enum TicketDepartmentEnum
     [Display(Name = "پشتیبانی")]
     Support,
     [Display(Name = "فنی")]
-    Technical
+    Technical 
 }
 
 public enum TicketPriorityEnum

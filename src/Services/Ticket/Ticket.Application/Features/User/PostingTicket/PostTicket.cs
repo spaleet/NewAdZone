@@ -1,4 +1,5 @@
-﻿using Humanizer;
+﻿using System.ComponentModel.DataAnnotations;
+using Humanizer;
 using Ticket.Domain.Enums;
 
 namespace Ticket.Application.Features.User.PostingTicket;
@@ -6,8 +7,13 @@ namespace Ticket.Application.Features.User.PostingTicket;
 public record PostTicket(
     string UserId,
     string Title,
-    TicketDepartmentEnum TicketSection,
-    TicketPriorityEnum TicketPriority,
+
+    [EnumDataType(typeof(TicketDepartmentEnum))]
+    TicketDepartmentEnum Section,
+
+    [EnumDataType(typeof(TicketPriorityEnum))]
+    TicketPriorityEnum Priority,
+
     string Text) : ICommand;
 
 public class PostTicketValidator : AbstractValidator<PostTicket>
@@ -18,11 +24,11 @@ public class PostTicketValidator : AbstractValidator<PostTicket>
             .RequiredValidator("عنوان")
             .MaxLengthValidator("عنوان", 50);
 
-        RuleFor(x => x.TicketSection)
-            .RequiredValidator("بخش");
+        RuleFor(x => x.Section)
+            .IsInEnum();
 
-        RuleFor(x => x.TicketPriority)
-            .RequiredValidator("اولویت");
+        RuleFor(x => x.Priority)
+            .IsInEnum();
 
 
         RuleFor(x => x.Text)
