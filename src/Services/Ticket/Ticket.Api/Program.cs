@@ -12,7 +12,7 @@ builder.AddGeneralConfiguration();
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
-builder.Services.AddApi(builder.Configuration);
+builder.Services.AddApi();
 
 var app = builder.Build();
 
