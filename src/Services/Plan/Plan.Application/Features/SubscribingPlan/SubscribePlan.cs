@@ -35,7 +35,7 @@ public class SubscribePlanHandler : ICommandHandler<SubscribePlan, SubscribePlan
 
         // TODO : check user exists
 
-        var userWithPlan = _context.PlanSubscription.AsQueryable()
+        var userWithPlan = _context.PlanSubscriptions.AsQueryable()
             .Where(x => x.UserId == request.UserId && x.PlanId == request.PlanId)
             .FirstOrDefault();
 
@@ -59,7 +59,7 @@ public class SubscribePlanHandler : ICommandHandler<SubscribePlan, SubscribePlan
             subscription.IssueTrackingNo = Generator.IssueTrackingCode();
         }
 
-        await _context.PlanSubscription.InsertOneAsync(subscription);
+        await _context.PlanSubscriptions.InsertOneAsync(subscription);
 
         return new SubscribePlanResponse(subscription.Id, subscription.Price);
     }

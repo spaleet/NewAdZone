@@ -31,7 +31,7 @@ public class VerifyPaymentHandler : ICommandHandler<VerifyPayment, VerifyPayment
 
     public async Task<VerifyPaymentResponse> Handle(VerifyPayment request, CancellationToken cancellationToken)
     {
-        var subscription = _context.PlanSubscription.AsQueryable().FirstOrDefault(x => x.Id == request.SubId);
+        var subscription = _context.PlanSubscriptions.AsQueryable().FirstOrDefault(x => x.Id == request.SubId);
 
         if (subscription is null)
             throw new NotFoundException("اشتراک مورد نظر پیدا نشد");
@@ -49,7 +49,7 @@ public class VerifyPaymentHandler : ICommandHandler<VerifyPayment, VerifyPayment
         subscription.RefId = verificationResponse.RefID;
         subscription.IssueTrackingNo = Generator.IssueTrackingCode();
 
-        await _context.PlanSubscription.ReplaceOneAsync(
+        await _context.PlanSubscriptions.ReplaceOneAsync(
             Builders<PlanSubscription>.Filter.Eq(x => x.Id, subscription.Id),
             subscription);
 
