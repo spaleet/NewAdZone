@@ -1,7 +1,7 @@
 ﻿using MongoDB.Driver;
 using Ticket.Application.Exceptions;
 
-namespace Ticket.Application.Features.User.DeletingAd;
+namespace Ticket.Application.Features.User.DeletingMessage;
 
 public record DeleteMessage(string MessageId, string UserId) : ICommand;
 

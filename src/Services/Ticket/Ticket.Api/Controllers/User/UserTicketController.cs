@@ -1,6 +1,7 @@
 ﻿using BuildingBlocks.Core.Web;
 using Microsoft.AspNetCore.Mvc;
-using Ticket.Application.Features.User.DeletingAd;
+using Ticket.Application.Features.User.ClosingTicket;
+using Ticket.Application.Features.User.DeletingMessage;
 using Ticket.Application.Features.User.PostingMessage;
 using Ticket.Application.Features.User.PostingTicket;
 
@@ -16,8 +17,8 @@ public class UserTicketController : BaseController
         return Ok();
     }
 
-    [HttpDelete]
-    public async Task<IActionResult> Delete([FromBody] DeleteTicket request, CancellationToken cancellationToken)
+    [HttpDelete("close")]
+    public async Task<IActionResult> Close([FromBody] CloseTicketUser request, CancellationToken cancellationToken)
     {
         await Mediator.Send(request, cancellationToken);
 
