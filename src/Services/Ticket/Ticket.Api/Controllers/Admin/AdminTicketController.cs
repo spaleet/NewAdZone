@@ -7,7 +7,7 @@ namespace Ticket.Api.Controllers.Admin;
 
 public class AdminTicketController : BaseController
 {
-    [HttpPost]
+    [HttpPost("answer")]
     public async Task<IActionResult> Answer([FromBody] AnswerTicketRequest request, CancellationToken cancellationToken)
     {
         var answerCommand = new AnswerTicket(request);

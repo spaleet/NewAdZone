@@ -27,7 +27,7 @@ public static class DateConvertors
         var pc = new PersianCalendar();
         var pd = new PersianDateShamsi();
         return
-            $"{pc.GetHour(value)} {pd.GetShamsiDayName(value)} {pd.GetShamsiDay(value)} {pd.GetShamsiMonthName(value)} {pd.GetShamsiYear(value)}";
+            $"{pc.GetHour(value)}:{pc.GetMinute(value)} {pd.GetShamsiDayName(value)} {pd.GetShamsiDay(value)} {pd.GetShamsiMonthName(value)} {pd.GetShamsiYear(value)}";
     }
 
     #endregion

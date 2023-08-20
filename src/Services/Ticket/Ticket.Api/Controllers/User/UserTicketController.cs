@@ -9,7 +9,7 @@ namespace Ticket.Api.Controllers.User;
 
 public class UserTicketController : BaseController
 {
-    [HttpPost]
+    [HttpPost("post")]
     public async Task<IActionResult> PostTicket([FromBody] PostTicket request, CancellationToken cancellationToken)
     {
         await Mediator.Send(request, cancellationToken);
@@ -25,7 +25,7 @@ public class UserTicketController : BaseController
         return NoContent();
     }
 
-    [HttpPost("message")]
+    [HttpPost("message/post")]
     public async Task<IActionResult> PostMessage([FromBody] PostMessage request, CancellationToken cancellationToken)
     {
         await Mediator.Send(request, cancellationToken);
@@ -33,7 +33,7 @@ public class UserTicketController : BaseController
         return Ok();
     }
 
-    [HttpDelete("message")]
+    [HttpDelete("message/close")]
     public async Task<IActionResult> DeleteMessage([FromBody] DeleteMessage request, CancellationToken cancellationToken)
     {
         await Mediator.Send(request, cancellationToken);
