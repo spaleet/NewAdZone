@@ -13,7 +13,7 @@ public static class GeneralConfiguration
     {
         builder.Services.AddRouting(options => options.LowercaseUrls = true);
         builder.Services.AddCustomProblemDetails();
-        builder.Services.AddControllers();
+
         builder.Services.AddControllers(options =>
         {
             options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
