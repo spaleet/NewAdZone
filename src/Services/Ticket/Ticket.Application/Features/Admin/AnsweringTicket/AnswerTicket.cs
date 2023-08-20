@@ -1,14 +1,32 @@
-﻿using MongoDB.Driver;
+﻿using System.Text.Json.Serialization;
+using MongoDB.Driver;
 using Ticket.Application.Exceptions;
 
 namespace Ticket.Application.Features.Admin.AnsweringTicket;
 
-public record AnswerTicket(string AdminId, string TicketId, string Text) : ICommand;
+public class AnswerTicket : ICommand
+{
+    public AnswerTicket(AnswerTicketRequest request)
+    {
+        TicketId = request.TicketId;
+        Text = request.Text;
+    }
+
+    [JsonIgnore]
+    public string AdminId { get; set; }
+
+    public string TicketId { get; set; }
+
+    public string Text { get; set; }
+}
 
 public class AnswerTicketValidator : AbstractValidator<AnswerTicket>
 {
     public AnswerTicketValidator()
     {
+        RuleFor(x => x.AdminId)
+            .RequiredValidator("ادمین");
+
         RuleFor(x => x.TicketId)
             .RequiredValidator("شناسه");
 
