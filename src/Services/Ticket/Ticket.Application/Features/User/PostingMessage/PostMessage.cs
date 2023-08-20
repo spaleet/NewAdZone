@@ -1,6 +1,5 @@
 ﻿using MongoDB.Driver;
 using Ticket.Application.Exceptions;
-using Ticket.Domain.Enums;
 
 namespace Ticket.Application.Features.User.PostingMessage;
 public record PostMessage(string UserId, string TicketId, string Text) : ICommand;
@@ -25,12 +24,9 @@ public class PostMessageValidator : AbstractValidator<PostMessage>
 public class PostMessageHandler : ICommandHandler<PostMessage>
 {
     private readonly TicketDbContext _context;
-    private readonly IMapper _mapper;
-
-    public PostMessageHandler(TicketDbContext context, IMapper mapper)
+    public PostMessageHandler(TicketDbContext context)
     {
         _context = context;
-        _mapper = mapper;
     }
 
     public async Task<Unit> Handle(PostMessage request, CancellationToken cancellationToken)
