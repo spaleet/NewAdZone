@@ -1,5 +1,6 @@
 ﻿using BuildingBlocks.Core.Web;
 using Microsoft.AspNetCore.Mvc;
+using Ticket.Application.Features.User.DeletingAd;
 using Ticket.Application.Features.User.PostingMessage;
 using Ticket.Application.Features.User.PostingTicket;
 
@@ -11,8 +12,16 @@ public class UserTicketController : BaseController
     public async Task<IActionResult> PostTicket([FromBody] PostTicket request, CancellationToken cancellationToken)
     {
         await Mediator.Send(request, cancellationToken);
-
+        
         return Ok();
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> Delete([FromBody] DeleteAd request, CancellationToken cancellationToken)
+    {
+        await Mediator.Send(request, cancellationToken);
+
+        return NoContent();
     }
 
     [HttpPost("message")]

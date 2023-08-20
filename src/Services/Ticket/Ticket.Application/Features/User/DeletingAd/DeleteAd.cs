@@ -33,6 +33,7 @@ public class DeleteAdHandler : ICommandHandler<DeleteAd>
             throw new InvalidTicketException();
 
         ticket.State = Domain.Enums.TicketStateEnum.Closed;
+        ticket.IsDeleted = true;
 
         var filter = Builders<Domain.Entities.Ticket>.Filter.Eq(x => x.Id, ticket.Id);
 
