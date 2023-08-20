@@ -30,7 +30,7 @@ public class InitializePaymentHandler : ICommandHandler<InitializePayment, Initi
 
     public async Task<InitializePaymentResponse> Handle(InitializePayment request, CancellationToken cancellationToken)
     {
-        var planSub = _context.PlanSubscription.AsQueryable().FirstOrDefault(x => x.Id == request.SubId);
+        var planSub = _context.PlanSubscriptions.AsQueryable().FirstOrDefault(x => x.Id == request.SubId);
 
         if (planSub is null)
             throw new NotFoundException("اشتراک مورد نظر پیدا نشد");
