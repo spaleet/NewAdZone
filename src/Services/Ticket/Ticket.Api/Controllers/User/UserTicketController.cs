@@ -17,7 +17,7 @@ public class UserTicketController : BaseController
     }
 
     [HttpDelete]
-    public async Task<IActionResult> Delete([FromBody] DeleteAd request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Delete([FromBody] DeleteTicket request, CancellationToken cancellationToken)
     {
         await Mediator.Send(request, cancellationToken);
 
@@ -30,5 +30,13 @@ public class UserTicketController : BaseController
         await Mediator.Send(request, cancellationToken);
 
         return Ok();
+    }
+
+    [HttpDelete("message")]
+    public async Task<IActionResult> DeleteMessage([FromBody] DeleteMessage request, CancellationToken cancellationToken)
+    {
+        await Mediator.Send(request, cancellationToken);
+
+        return NoContent();
     }
 }

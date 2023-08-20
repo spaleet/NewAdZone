@@ -3,11 +3,11 @@ using Ticket.Application.Exceptions;
 
 namespace Ticket.Application.Features.User.DeletingAd;
 
-public record DeleteAd(string UserId, string TicketId) : ICommand;
+public record DeleteTicket(string UserId, string TicketId) : ICommand;
 
-public class DeleteAdValidator : AbstractValidator<DeleteAd>
+public class DeleteTicketValidator : AbstractValidator<DeleteTicket>
 {
-    public DeleteAdValidator()
+    public DeleteTicketValidator()
     {
         RuleFor(x => x.UserId)
             .RequiredValidator("شناسه کاربری");
@@ -17,15 +17,15 @@ public class DeleteAdValidator : AbstractValidator<DeleteAd>
     }
 }
 
-public class DeleteAdHandler : ICommandHandler<DeleteAd>
+public class DeleteTicketHandler : ICommandHandler<DeleteTicket>
 {
     private readonly TicketDbContext _context;
-    public DeleteAdHandler(TicketDbContext context)
+    public DeleteTicketHandler(TicketDbContext context)
     {
         _context = context;
     }
 
-    public async Task<Unit> Handle(DeleteAd request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(DeleteTicket request, CancellationToken cancellationToken)
     {
         var ticket = _context.Tickets.AsQueryable().FirstOrDefault(x => x.Id == request.TicketId);
 
