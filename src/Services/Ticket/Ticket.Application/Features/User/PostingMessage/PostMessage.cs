@@ -51,6 +51,13 @@ public class PostMessageHandler : ICommandHandler<PostMessage>
 
         await _context.TicketMessages.InsertOneAsync(ticketMessage);
 
+        ticket.IsReadByAdmin = false;
+        ticket.IsReadByUser = true;
+
+        var filter = Builders<Domain.Entities.Ticket>.Filter.Eq(x => x.Id, ticket.Id);
+
+        await _context.Tickets.ReplaceOneAsync(filter, ticket);
+
         return Unit.Value;
     }
 }
