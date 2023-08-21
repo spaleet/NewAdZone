@@ -11,7 +11,7 @@ builder.AddCustomSerilog();
 builder.AddGeneralConfiguration();
 
 builder.Services.AddApplication();
-builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("SqlConnection"));
+builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApi();
 
 var app = builder.Build();
