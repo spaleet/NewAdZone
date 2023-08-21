@@ -1,4 +1,5 @@
-﻿using Ticket.Domain.Enums;
+﻿using System.Text.Json.Serialization;
+using Ticket.Domain.Enums;
 
 namespace Ticket.Application.Dtos;
 public class TicketDto
@@ -18,6 +19,9 @@ public class TicketDto
     public bool IsReadByUser { get; set; }
 
     public bool IsReadByAdmin { get; set; }
+
+    [JsonIgnore]
+    public DateTime CreationDate { get; set; }
 
     public string SentDate { get; set; }
 
