@@ -1,5 +1,6 @@
 ﻿using BuildingBlocks.Core.Utilities;
 using Ticket.Application.Dtos;
+using Ticket.Application.Features.Admin.GettingDetails;
 using Ticket.Application.Features.User.GettingDetails;
 using Ticket.Application.Features.User.PostingTicket;
 
@@ -11,14 +12,21 @@ public class TicketMapper : Profile
     {
         CreateMap<PostTicket, Domain.Entities.Ticket>();
 
+        CreateMap<TicketMessage, TicketMessageDto>()
+            .ForMember(dest => dest.SentDate,
+                           opt => opt.MapFrom(src => src.CreationDate.ToLongShamsi()));
+
         CreateMap<Domain.Entities.Ticket, GetTicketDetailsUserResponse>()
             .ForMember(dest => dest.Messages,
                            opt => opt.Ignore())
             .ForMember(dest => dest.SentDate,
                            opt => opt.MapFrom(src => src.CreationDate.ToLongShamsi()));
-
-        CreateMap<TicketMessage, TicketMessageDto>()
+        
+        CreateMap<Domain.Entities.Ticket, GetTicketDetailsAdminResponse>()
+            .ForMember(dest => dest.Messages,
+                           opt => opt.Ignore())
             .ForMember(dest => dest.SentDate,
                            opt => opt.MapFrom(src => src.CreationDate.ToLongShamsi()));
+
     }
 }
