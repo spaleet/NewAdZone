@@ -1,6 +1,8 @@
 ﻿using Ad.Application.Interfaces;
 using Ad.Infrastructure.Context;
 using Ad.Infrastructure.Seed;
+using Ad.Infrastructure.Settings;
+using BuildingBlocks.Core.Web.Extenions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,5 +20,7 @@ public static class ServiceRegistery
         services.AddScoped<IAdDbContext>(provider => provider.GetService<AdDbContext>());
 
         services.AddScoped<AdDbInitializer>();
+
+        services.AddValidatedOptions<UserClientOptions>(nameof(UserClientOptions));
     }
 }
