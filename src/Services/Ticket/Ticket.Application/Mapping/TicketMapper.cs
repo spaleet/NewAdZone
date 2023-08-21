@@ -12,6 +12,10 @@ public class TicketMapper : Profile
     {
         CreateMap<PostTicket, Domain.Entities.Ticket>();
 
+        CreateMap<TicketMessage, TicketDto>()
+            .ForMember(dest => dest.SentDate,
+                           opt => opt.MapFrom(src => src.CreationDate.ToLongShamsi()));
+
         CreateMap<TicketMessage, TicketMessageDto>()
             .ForMember(dest => dest.SentDate,
                            opt => opt.MapFrom(src => src.CreationDate.ToLongShamsi()));
