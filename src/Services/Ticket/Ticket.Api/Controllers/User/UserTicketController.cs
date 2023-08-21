@@ -11,8 +11,8 @@ namespace Ticket.Api.Controllers.User;
 
 public class UserTicketController : BaseController
 {
-    [HttpGet("")]
-    public async Task<IActionResult> GetAds([FromQuery] GetTicketsUser request)
+    [HttpGet("filter")]
+    public async Task<IActionResult> Filter([FromQuery] GetTicketsUser request)
     {
         var tickets = await Mediator.Send(request);
 

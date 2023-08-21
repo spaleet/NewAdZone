@@ -3,11 +3,21 @@ using Microsoft.AspNetCore.Mvc;
 using Ticket.Application.Features.Admin.AnsweringTicket;
 using Ticket.Application.Features.Admin.ClosingTicket;
 using Ticket.Application.Features.Admin.GettingDetails;
+using Ticket.Application.Features.Admin.GettingTickets;
 
 namespace Ticket.Api.Controllers.Admin;
 
 public class AdminTicketController : BaseController
 {
+    [HttpGet("filter")]
+    public async Task<IActionResult> Filter([FromQuery] GetTicketsAdmin
+        request)
+    {
+        var tickets = await Mediator.Send(request);
+
+        return Ok(tickets);
+    }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetDetails([FromRoute] string id, CancellationToken cancellationToken)
     {

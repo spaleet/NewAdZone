@@ -8,7 +8,7 @@ using Ticket.Application.Extensions;
 
 namespace Ticket.Application.Features.User.GettingTickets;
 
-public record GetTicketsUser(string UserId, string? Search) : PagingQuery<GetTicketsUserResponse>;
+public record GetTicketsUser(string UserId, string? ByTitle) : PagingQuery<GetTicketsUserResponse>;
 
 public class GetTicketsUserValidator : AbstractValidator<GetTicketsUser>
 {
@@ -38,8 +38,8 @@ public class GetTicketsUserHandler : IQueryHandler<GetTicketsUser, GetTicketsUse
                                         .AsQueryable();
 
         // search by title
-        if (!string.IsNullOrEmpty(request.Search))
-            query = query.Where(x => x.Title.Contains(request.Search));
+        if (!string.IsNullOrEmpty(request.ByTitle))
+            query = query.Where(x => x.Title.Contains(request.ByTitle));
 
         // apply paging
         var tickets = query.ApplyPagingSync<Domain.Entities.Ticket, TicketDto>(

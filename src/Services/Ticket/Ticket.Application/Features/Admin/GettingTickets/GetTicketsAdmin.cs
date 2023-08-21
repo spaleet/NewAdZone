@@ -9,7 +9,7 @@ using Ticket.Application.Extensions;
 
 namespace Ticket.Application.Features.Admin.GettingTickets;
 
-public record GetTicketsAdmin(string? Title, string? UserId) : PagingQuery<GetTicketsAdminResponse>;
+public record GetTicketsAdmin(string? ByTitle, string? ByUserId) : PagingQuery<GetTicketsAdminResponse>;
 
 public class GetTicketsAdminHandler : IQueryHandler<GetTicketsAdmin, GetTicketsAdminResponse>
 {
