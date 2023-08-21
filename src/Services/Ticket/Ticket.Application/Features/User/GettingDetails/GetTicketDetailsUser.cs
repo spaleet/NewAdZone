@@ -41,7 +41,7 @@ public class GetTicketDetailsUserHandler : IQueryHandler<GetTicketDetailsUser, G
             .Find(x => x.TicketId == ticket.Id)
             .ToListAsync();
 
-        var result = _mapper.Map<GetTicketDetailsUserResponse>(ticket);
+        var result = _mapper.Map(ticket, new GetTicketDetailsUserResponse());
 
         result.Messages = messages.Select(x => _mapper.Map(x, new TicketMessageDto()))
                                   .ToArray();

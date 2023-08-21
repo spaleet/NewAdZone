@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 
 namespace BuildingBlocks.Core.Utilities;
 
@@ -26,8 +21,8 @@ public static class DateConvertors
     {
         var pc = new PersianCalendar();
         var pd = new PersianDateShamsi();
-        return
-            $"{pc.GetHour(value)}:{pc.GetMinute(value)} {pd.GetShamsiDayName(value)} {pd.GetShamsiDay(value)} {pd.GetShamsiMonthName(value)} {pd.GetShamsiYear(value)}";
+
+        return $"{pc.GetHour(value)}:{pc.GetMinute(value)} {pd.GetShamsiDayName(value)} {pd.GetShamsiDay(value)} {pd.GetShamsiMonthName(value)} {pd.GetShamsiYear(value)}";
     }
 
     #endregion
@@ -66,24 +61,14 @@ public class PersianDateShamsi
 {
     #region Constants
 
-    private readonly PersianCalendar persianCalendar;
-    private readonly string[] DaysOfWeek;
-    private readonly string[] DaysOfWeekShort;
-    private readonly string[] Months;
-    private readonly string[] Pn;
-    private readonly string[] En;
-
-    public PersianDateShamsi()
-    {
-        persianCalendar = new PersianCalendar();
-        DaysOfWeek = new[] { "شنبه", "يكشنبه", "دوشنبه", "سه شنبه", "چهارشنبه", "پنجشنبه", "جمعه" };
-        DaysOfWeekShort = new[] { "ش", "ي", "د", "س", "چ", "پ", "ج" };
-        Months = new[] {
+    private PersianCalendar persianCalendar = new PersianCalendar();
+    private string[] DaysOfWeek = new[] { "شنبه", "يكشنبه", "دوشنبه", "سه شنبه", "چهارشنبه", "پنجشنبه", "جمعه" };
+    private string[] DaysOfWeekShort = new[] { "ش", "ي", "د", "س", "چ", "پ", "ج" };
+    private string[] Months = new[] {
             "فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"
         };
-        Pn = new[] { "۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹" };
-        En = new[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-    }
+    private string[] Pn = new[] { "۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹" };
+    private string[] En = new[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
     #endregion
 
@@ -195,7 +180,12 @@ public class PersianDateShamsi
     /// <returns></returns>
     public string GetShamsiDayName(DateTime dateTime)
     {
-        return DaysOfWeek[(int)persianCalendar.GetDayOfWeek(dateTime) + 1];
+        int dw = (int)persianCalendar.GetDayOfWeek(dateTime);
+
+        if (dw == 6)
+            return DaysOfWeek[0]; //saturday
+
+        return DaysOfWeek[dw + 1];
     }
 
     /// <summary>
@@ -205,7 +195,12 @@ public class PersianDateShamsi
     /// <returns></returns>
     public string GetShamsiDayShortName(DateTime dateTime)
     {
-        return DaysOfWeekShort[(int)persianCalendar.GetDayOfWeek(dateTime) + 1];
+        int dw = (int)persianCalendar.GetDayOfWeek(dateTime);
+
+        if (dw == 6)
+            return DaysOfWeekShort[0]; //saturday
+
+        return DaysOfWeekShort[dw + 1];
     }
 
     #endregion
