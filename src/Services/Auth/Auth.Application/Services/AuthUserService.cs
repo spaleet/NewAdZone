@@ -110,4 +110,16 @@ public class AuthUserService : IAuthUserService
 
         return new AuthenticateUserResponse(jwtResult);
     }
+
+    public async Task<bool> IsVerifiedRole(string userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+
+        if (user is null)
+            throw new NotFoundException("No user was found.");
+
+        bool isInRole = await _userManager.IsInRoleAsync(user, Roles.VerifiedUser.ToString());
+
+        return isInRole;
+    }
 }
