@@ -3,4 +3,4 @@ using Ticket.Application.Dtos;
 
 namespace Ticket.Application.Features.User.GettingTickets;
 
-public record GetTicketsUserResponse(PagingModel<TicketDto> Ads);
+public record GetTicketsUserResponse(PagingModel<TicketDto> Tickets);

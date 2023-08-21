@@ -4,6 +4,7 @@ using BuildingBlocks.Core.Utilities;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 using Ticket.Application.Dtos;
+using Ticket.Application.Extensions;
 
 namespace Ticket.Application.Features.User.GettingTickets;
 
@@ -32,7 +33,9 @@ public class GetTicketsUserHandler : IQueryHandler<GetTicketsUser, GetTicketsUse
     public async Task<GetTicketsUserResponse> Handle(GetTicketsUser request, CancellationToken cancellationToken)
     {
         var query = _context.Tickets.AsQueryable()
-                                        .Where(x => x.UserId == request.UserId).AsQueryable();
+                                        .Where(x => x.UserId == request.UserId)
+                                        .OrderByDescending(x => x.CreationDate)
+                                        .AsQueryable();
 
         // search by title
         if (!string.IsNullOrEmpty(request.Search))
@@ -43,12 +46,7 @@ public class GetTicketsUserHandler : IQueryHandler<GetTicketsUser, GetTicketsUse
                                                                           _mapper.ConfigurationProvider,
                                                                           request.Page,
                                                                           request.PageSize);
-
-        // manually map SentDate because mongo doesnt support complex queries
-        for (int i = 0; i < tickets.Items.Count; i++)
-        {
-            tickets.Items[i].SentDate = tickets.Items[i].CreationDate.ToLongShamsi();
-        }
+        tickets.MapTicketsDate();
 
         return new GetTicketsUserResponse(tickets);
     }
