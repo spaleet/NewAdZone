@@ -55,6 +55,56 @@ public static class PagingExtension
         return PagingModel<TOut>.Create(data, totalItems, totalPages, page, pageSize);
     }
 
+    // ------- Syncs Methods:
+
+    // Paging
+    public static PagingModel<T> ApplyPagingSync<T>(this IQueryable<T> collection, 
+        int page = 1, int pageSize = 10) where T : notnull
+    {
+        if (page <= 0)
+            page = 1;
+
+        if (pageSize <= 0)
+            pageSize = 10;
+
+        bool isEmpty = collection.Any() == false;
+
+        if (isEmpty)
+            return PagingModel<T>.Empty;
+
+        int totalItems = collection.Count();
+        int totalPages = (int)Math.Ceiling((decimal)totalItems / pageSize);
+
+        var data = collection.Limit(page, pageSize).ToList();
+
+        return PagingModel<T>.Create(data, totalItems, totalPages, page, pageSize);
+    }
+
+    // Paging with Mapping
+    public static PagingModel<TOut> ApplyPagingSync<TIn, TOut>(this IQueryable<TIn> collection,
+       AutoMapper.IConfigurationProvider configuration, int page = 1, int pageSize = 10) where TOut : notnull
+    {
+        if (page <= 0)
+            page = 1;
+
+        if (pageSize <= 0)
+            pageSize = 10;
+
+        bool isEmpty = collection.Any() == false;
+        if (isEmpty)
+            return PagingModel<TOut>.Empty;
+
+        int totalItems = collection.Count();
+        int totalPages = (int)Math.Ceiling((decimal)totalItems / pageSize);
+
+        var data = collection
+            .Limit(page, pageSize)
+            .ProjectTo<TOut>(configuration) // using automapper
+            .ToList();
+
+        return PagingModel<TOut>.Create(data, totalItems, totalPages, page, pageSize);
+    }
+
     // Simple paging
     public static IQueryable<TEntity> ApplyPaging<TEntity>(this IQueryable<TEntity> source, int page, int size)
        where TEntity : class

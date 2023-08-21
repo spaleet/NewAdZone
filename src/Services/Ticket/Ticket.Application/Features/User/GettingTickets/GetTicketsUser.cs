@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BuildingBlocks.Core.Models.Paging;
+using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 using Ticket.Application.Dtos;
 
@@ -11,6 +12,8 @@ public class GetTicketsUserValidator : AbstractValidator<GetTicketsUser>
 {
     public GetTicketsUserValidator()
     {
+        RuleFor(x => x.UserId)
+            .RequiredValidator("شناسه");
     }
 }
 
@@ -28,16 +31,10 @@ public class GetTicketsUserHandler : IQueryHandler<GetTicketsUser, GetTicketsUse
     public async Task<GetTicketsUserResponse> Handle(GetTicketsUser request, CancellationToken cancellationToken)
     {
         var query = _context.Tickets.AsQueryable()
-                                                    .Where(x => x.UserId == request.UserId)
-                                                    .OrderByDescending(x => x.CreationDate)
-                                                    .AsQueryable();
-
-        // search by title
-        if (!string.IsNullOrEmpty(request.Search))
-            query = query.Where(x => x.Title.Contains(request.Search));
+                                        .Where(x => x.UserId == request.UserId).AsQueryable();
 
         // apply paging
-        var tickets = await query.ApplyPagingAsync<Domain.Entities.Ticket, TicketDto>(
+        var tickets = query.ApplyPagingSync<Domain.Entities.Ticket, TicketDto>(
                                                                           _mapper.ConfigurationProvider,
                                                                           request.Page,
                                                                           request.PageSize);

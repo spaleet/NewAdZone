@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Ticket.Application.Features.User.ClosingTicket;
 using Ticket.Application.Features.User.DeletingMessage;
 using Ticket.Application.Features.User.GettingDetails;
+using Ticket.Application.Features.User.GettingTickets;
 using Ticket.Application.Features.User.PostingMessage;
 using Ticket.Application.Features.User.PostingTicket;
 
@@ -10,6 +11,14 @@ namespace Ticket.Api.Controllers.User;
 
 public class UserTicketController : BaseController
 {
+    [HttpGet("")]
+    public async Task<IActionResult> GetAds([FromQuery] GetTicketsUser request)
+    {
+        var tickets = await Mediator.Send(request);
+
+        return Ok(tickets);
+    }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetDetails([FromRoute] string id, [FromQuery] string uId, CancellationToken cancellationToken)
     {
