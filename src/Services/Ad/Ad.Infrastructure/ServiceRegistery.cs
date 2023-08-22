@@ -29,7 +29,12 @@ public static class ServiceRegistery
 
         services.AddHttpClient<IPlanClient, PlanClient>(client =>
         {
-            client.BaseAddress = new Uri(configuration["UserClientOptions:UserPlanUrl"]);
+            client.BaseAddress = new Uri(configuration["UserClientOptions:UserPlanUrl"]!);
+        });
+
+        services.AddHttpClient<IUserClient, UserClient>(client =>
+        {
+            client.BaseAddress = new Uri(configuration["UserClientOptions:UserRoleUrl"]!);
         });
     }
 }

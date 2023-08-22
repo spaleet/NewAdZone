@@ -2,16 +2,16 @@
 using Microsoft.AspNetCore.WebUtilities;
 
 namespace Ad.Infrastructure.Clients;
-public class PlanClient : IPlanClient
+public class UserClient : IUserClient
 {
     private readonly HttpClient _client;
 
-    public PlanClient(HttpClient httpClient)
+    public UserClient(HttpClient httpClient)
     {
         _client = httpClient;
     }
 
-    public async Task<bool> VerifyPlanLimit(string userId)
+    public async Task<bool> VerifyRole(string userId)
     {
         if (string.IsNullOrEmpty(userId))
             throw new ArgumentNullException(nameof(userId));
