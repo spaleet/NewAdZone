@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Ad.Application.Clients;
+using AutoMapper;
 using BuildingBlocks.Core.Exceptions.Base;
 using Microsoft.AspNetCore.Http;
 
@@ -6,7 +7,7 @@ namespace Ad.Application.Features.Ad.PostingAd;
 
 public record PostAd : ICommand
 {
-    public long UserId { get; set; }
+    public string UserId { get; set; }
 
     public long SelectedCategory { get; set; }
 
@@ -44,17 +45,24 @@ public class PostAdHandler : ICommandHandler<PostAd>
 {
     private readonly IAdDbContext _context;
     private readonly IMapper _mapper;
+    private readonly IPlanClient _planClient;
 
-    public PostAdHandler(IAdDbContext context, IMapper mapper)
+    public PostAdHandler(IAdDbContext context, IMapper mapper, IPlanClient planClient)
     {
         _context = context;
         _mapper = mapper;
+        _planClient = planClient;
     }
 
     public async Task<Unit> Handle(PostAd request, CancellationToken cancellationToken)
     {
         // TODO CHECK USER!!
-        // TODO CHECK USER LIMIT & ROLE
+
+        // check user plan limit
+        bool verifyPlan = await _planClient.VerifyPlanLimit(request.UserId);
+
+        if (!verifyPlan)
+            throw new BadRequestException("شما بیشتر از حداکثر تعداد آگهی در پلن انتخاب شده، آگهی ثبت کرده اید! پلن را ارتقا دهید ");
 
         // if ad is paid but price not entered!
         if (request.SaleState == SaleStatus.Paid && request.Price == 0)

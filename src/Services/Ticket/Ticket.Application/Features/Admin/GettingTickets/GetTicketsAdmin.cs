@@ -28,12 +28,12 @@ public class GetTicketsAdminHandler : IQueryHandler<GetTicketsAdmin, GetTicketsA
             .OrderByDescending(x => x.CreationDate).AsQueryable();
 
         // search by userId
-        if (!string.IsNullOrEmpty(request.UserId))
-            query = query.Where(x => x.UserId == request.UserId);
+        if (!string.IsNullOrEmpty(request.ByUserId))
+            query = query.Where(x => x.UserId == request.ByUserId);
 
         // search by title
-        if (!string.IsNullOrEmpty(request.Title))
-            query = query.Where(x => x.Title.Contains(request.Title));
+        if (!string.IsNullOrEmpty(request.ByTitle))
+            query = query.Where(x => x.Title.Contains(request.ByTitle));
 
         // apply paging
         var tickets = query.ApplyPagingSync<Domain.Entities.Ticket, TicketDto>(
