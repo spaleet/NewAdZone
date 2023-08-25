@@ -45,19 +45,25 @@ public class PostAdHandler : ICommandHandler<PostAd>
 {
     private readonly IAdDbContext _context;
     private readonly IMapper _mapper;
+    private readonly IUserClient _userClient;
     private readonly IPlanClient _planClient;
 
-    public PostAdHandler(IAdDbContext context, IMapper mapper, IPlanClient planClient)
+    public PostAdHandler(IAdDbContext context, IMapper mapper, IPlanClient planClient, IUserClient userClient)
     {
         _context = context;
         _mapper = mapper;
+        _userClient = userClient;
         _planClient = planClient;
     }
 
     public async Task<Unit> Handle(PostAd request, CancellationToken cancellationToken)
     {
-        // TODO CHECK USER!!
+        // check user role
+        bool verifyRole = await _planClient.VerifyPlanLimit(request.UserId);
 
+        if (!verifyRole)
+            throw new BadRequestException("اطلاعات حساب کاربری شما کامل نیست");
+        
         // check user plan limit
         bool verifyPlan = await _planClient.VerifyPlanLimit(request.UserId);
 
