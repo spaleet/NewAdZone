@@ -115,6 +115,14 @@ public static class ServiceRegistery
             options.AddPolicy(nameof(Roles.VerifiedUser), policy => policy.RequireRole(nameof(Roles.VerifiedUser)));
             options.AddPolicy(nameof(Roles.BasicUser), policy => policy.RequireRole(nameof(Roles.BasicUser)));
         });
+
+
+        //================================== CORS
+
+        services.AddCors(x => x.AddPolicy("CORS_POLICY", opt =>
+        {
+            opt.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+        }));
     }
 
     private static string ProduceUnAuthorizedResponse()

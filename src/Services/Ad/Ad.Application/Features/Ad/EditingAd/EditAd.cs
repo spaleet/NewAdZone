@@ -1,6 +1,8 @@
-﻿using AutoMapper;
+﻿using Ad.Application.Extensions;
+using AutoMapper;
 using BuildingBlocks.Core.Exceptions.Base;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Ad.Application.Features.Ad.EditingAd;
 
@@ -74,16 +76,8 @@ public class EditAdHandler : ICommandHandler<EditAd>
         // if title changed set tags again
         if (adModel.CategoryId != request.SelectedCategory)
         {
-            // map Tags based on categories
-            // get category and parent category titles to an string array splitted by space
-            string[] categories = await _context.AdCategories
-                .Include(x => x.ParentCategory)
-                .Where(x => x.Id == request.SelectedCategory)
-                .Select(x => $"{x.Title} {x.ParentCategory.Title ?? string.Empty}".Trim().Split())
-                .FirstOrDefaultAsync();
-
-            // seperate titles by comma
-            adModel.Tags = string.Join(",", categories);
+            // join new tags
+            adModel.Tags = await _context.AdCategories.JoinTags(request.SelectedCategory);
         }
 
         if (request.ImageSource is not null)

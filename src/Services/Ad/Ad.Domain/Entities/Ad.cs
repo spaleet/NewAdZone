@@ -8,7 +8,7 @@ namespace Ad.Domain.Entities;
 public class Ad : EfEntityBase<long>
 {
     [Display(Name = "آگهی دهنده")]
-    public long UserId { get; set; }
+    public string UserId { get; set; }
 
     [Display(Name = "دسته بندی")]
     public long CategoryId { get; set; }

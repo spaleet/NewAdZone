@@ -21,6 +21,7 @@ app.UseProblemDetails();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.UseCors("CORS_POLICY");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
