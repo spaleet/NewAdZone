@@ -12,6 +12,7 @@ public static class ServiceRegistery
         //================================== Services
         services.AddAutoMapper(typeof(AuthMappers));
 
+        services.AddTransient<IAccountService, AccountService>();
         services.AddTransient<IAuthUserService, AuthUserService>();
         services.AddTransient<IJwtTokenFactory, JwtTokenFactory>();
         services.AddTransient<IAuthTokenStoreService, AuthTokenStoreService>();
