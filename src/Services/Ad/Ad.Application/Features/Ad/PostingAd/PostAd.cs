@@ -3,6 +3,7 @@ using AutoMapper;
 using BuildingBlocks.Core.Exceptions.Base;
 using Microsoft.AspNetCore.Http;
 using Ad.Application.Extensions;
+using Microsoft.Extensions.Logging;
 
 namespace Ad.Application.Features.Ad.PostingAd;
 
@@ -48,13 +49,15 @@ public class PostAdHandler : ICommandHandler<PostAd>
     private readonly IMapper _mapper;
     private readonly IUserClient _userClient;
     private readonly IPlanClient _planClient;
+    private readonly ILogger<PostAdHandler> _logger;
 
-    public PostAdHandler(IAdDbContext context, IMapper mapper, IPlanClient planClient, IUserClient userClient)
+    public PostAdHandler(IAdDbContext context, IMapper mapper, IPlanClient planClient, IUserClient userClient, ILogger<PostAdHandler> logger)
     {
         _context = context;
         _mapper = mapper;
         _userClient = userClient;
         _planClient = planClient;
+        _logger = logger;
     }
 
     public async Task<Unit> Handle(PostAd request, CancellationToken cancellationToken)
@@ -62,11 +65,15 @@ public class PostAdHandler : ICommandHandler<PostAd>
         // check user role
         bool verifyRole = await _userClient.VerifyRole(request.UserId);
 
+        _logger.LogInformation("Verify Role result: {0} for user Id : {1}", verifyRole, request.UserId);
+
         if (!verifyRole)
             throw new BadRequestException("اطلاعات حساب کاربری شما کامل نیست");
         
         // check user plan limit
         bool verifyPlan = await _planClient.VerifyPlanLimit(request.UserId);
+
+        _logger.LogInformation("Verify Plan result: {0} for user Id : {1}", verifyRole, request.UserId);
 
         if (!verifyPlan)
             throw new BadRequestException("شما بیشتر از حداکثر تعداد آگهی در پلن انتخاب شده، آگهی ثبت کرده اید! پلن را ارتقا دهید ");
