@@ -2,18 +2,21 @@
 using Auth.Application.Models;
 using AutoMapper;
 using BuildingBlocks.Core.Exceptions.Base;
+using Microsoft.Extensions.Logging;
 
 namespace Auth.Application.Services;
 
 public class AccountService : IAccountService
 {
+    private readonly ILogger<AccountService> _log;
     private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
 
-    public AccountService(UserManager<User> userManager, IMapper mapper)
+    public AccountService(UserManager<User> userManager, IMapper mapper, ILogger<AccountService> log)
     {
         _userManager = userManager;
         _mapper = mapper;
+        _log = log;
     }
 
     public async Task<UserProfileDto> GetUserProfile(string id)
