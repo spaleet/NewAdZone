@@ -2,6 +2,7 @@
 using AutoMapper;
 using BuildingBlocks.Core.Exceptions.Base;
 using Microsoft.AspNetCore.Http;
+using Ad.Application.Extensions;
 
 namespace Ad.Application.Features.Ad.PostingAd;
 
@@ -59,7 +60,7 @@ public class PostAdHandler : ICommandHandler<PostAd>
     public async Task<Unit> Handle(PostAd request, CancellationToken cancellationToken)
     {
         // check user role
-        bool verifyRole = await _planClient.VerifyPlanLimit(request.UserId);
+        bool verifyRole = await _userClient.VerifyRole(request.UserId);
 
         if (!verifyRole)
             throw new BadRequestException("اطلاعات حساب کاربری شما کامل نیست");
@@ -77,16 +78,8 @@ public class PostAdHandler : ICommandHandler<PostAd>
         // map ad model
         var createdAd = _mapper.Map<Domain.Entities.Ad>(request);
 
-        // map Tags based on categories
-        // get category and parent category titles to an string array splitted by space
-        string[] categories = await _context.AdCategories
-            .Include(x => x.ParentCategory)
-            .Where(x => x.Id == createdAd.CategoryId)
-            .Select(x => $"{x.Title} {x.ParentCategory.Title ?? string.Empty}".Trim().Split())
-            .FirstOrDefaultAsync();
-
-        // seperate titles by comma
-        createdAd.Tags = string.Join(",", categories);
+        // join tags
+        createdAd.Tags = await _context.AdCategories.JoinTags(createdAd.CategoryId);
 
         // upload image
         string uploadFileName = request.ImageSource.UploadImage(AdPathConsts.Ad, width: 500, height: 500);
