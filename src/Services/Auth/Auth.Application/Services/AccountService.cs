@@ -33,4 +33,21 @@ public class AccountService : IAccountService
 
         return mappedUser;
     }
+
+    public async Task EditUserProfile(EditProfileRequest model)
+    {
+        // TODO validation
+        var user = await _userManager.FindByIdAsync(model.Id);
+
+        if (user is null)
+            throw new NotFoundException("User not found!");
+
+        _mapper.Map(model, user);
+
+        var res = await _userManager.UpdateAsync(user);
+
+        if (!res.Succeeded)
+            throw new BadRequestException(res.Errors.FirstOrDefault().Description);
+
+    }
 }
