@@ -9,3 +9,15 @@ public record AuthenticateUserRequest
     [JsonPropertyName("password")]
     public string Password { get; set; }
 }
+
+public class AuthenticateUserRequestValidator : AbstractValidator<AuthenticateUserRequest>
+{
+    public AuthenticateUserRequestValidator()
+    {
+        RuleFor(x => x.Email)
+            .RequiredValidator("ایمیل");
+
+        RuleFor(x => x.Password)
+            .RequiredValidator("رمز عبور");
+    }
+}

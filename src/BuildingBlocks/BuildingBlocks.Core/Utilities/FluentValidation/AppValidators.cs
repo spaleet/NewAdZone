@@ -55,10 +55,10 @@ public static class AppValidators
     #region MinLengthValidator
 
     public static IRuleBuilder<T, string> MinLengthValidator<T>(this IRuleBuilder<T, string> ruleBuilder,
-        string propertyName, int maxinLength)
+        string propertyName, int minLength)
     {
-        return ruleBuilder.MinimumLength(maxinLength)
-            .WithMessage(string.Format("مقدار {0} نباید کمتر از {1} کاراکتر باشد", propertyName, maxinLength));
+        return ruleBuilder.MinimumLength(minLength)
+            .WithMessage(string.Format("مقدار {0} نباید کمتر از {1} کاراکتر باشد", propertyName, minLength));
     }
 
     #endregion

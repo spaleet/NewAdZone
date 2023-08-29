@@ -40,6 +40,9 @@ public class AccountService : IAccountService
 
     public async Task EditUserProfile(EditProfileRequest model)
     {
+        EditProfileRequestValidator validator = new();
+        validator.Validate(model);
+
         // TODO validation
         var user = await _userManager.FindByIdAsync(model.Id);
 

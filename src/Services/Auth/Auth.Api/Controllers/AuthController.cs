@@ -12,13 +12,13 @@ public class AuthController : BaseControllerLite
 {
     private readonly IAuthTokenStoreService _tokenStoreService;
     private readonly IAuthUserService _userService;
-    private readonly IPublishEndpoint _publisher;
+    //private readonly IPublishEndpoint _publisher;
 
-    public AuthController(IAuthUserService userService, IAuthTokenStoreService tokenStoreService, IPublishEndpoint publisher)
+    public AuthController(IAuthUserService userService, IAuthTokenStoreService tokenStoreService)/*, IPublishEndpoint publisher)*/
     {
         _userService = userService;
         _tokenStoreService = tokenStoreService;
-        _publisher = publisher;
+        //_publisher = publisher;
     }
 
     [HttpPost("register")]
@@ -29,7 +29,7 @@ public class AuthController : BaseControllerLite
         // publish user registered event
         var @event = new UserCreatedEvent(userId);
 
-        await _publisher.Publish<UserCreatedEvent>(@event);
+        //await _publisher.Publish<UserCreatedEvent>(@event);
 
         return Ok("User created successfully.");
     }

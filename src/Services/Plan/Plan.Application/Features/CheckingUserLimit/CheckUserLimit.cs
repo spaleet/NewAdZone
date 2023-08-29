@@ -32,7 +32,7 @@ public class CheckUserLimitHandler : IQueryHandler<CheckUserLimit, bool>
 
         if (plan is null) return false;
 
-        if (plan.MonthlyQuota <= request.AdsPostedCount)
+        if (plan.MonthlyQuota <= request.UsedQuota)
             return false;
 
         return true;

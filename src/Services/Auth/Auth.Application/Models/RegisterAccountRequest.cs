@@ -1,23 +1,39 @@
 ﻿using System.Text.Json.Serialization;
+using BuildingBlocks.Core.Utilities.ImageRelated;
 
 namespace Auth.Application.Models;
 public record RegisterAccountRequest
 {
-    [JsonPropertyName("username")]
     public string Username { get; set; }
 
-    [JsonPropertyName("email")]
     public string Email { get; set; }
 
-    [JsonPropertyName("phoneNumber")]
     public string PhoneNumber { get; set; }
 
-    [JsonPropertyName("password")]
     public string Password { get; set; }
 
-    [JsonPropertyName("firstName")]
     public string FirstName { get; set; }
 
-    [JsonPropertyName("lastName")]
     public string LastName { get; set; }
+}
+
+public class RegisterAccountRequestValidator : AbstractValidator<RegisterAccountRequest>
+{
+    public RegisterAccountRequestValidator()
+    {
+        RuleFor(x => x.Username)
+            .RequiredValidator("نام کاربری");
+
+        RuleFor(x => x.PhoneNumber)
+            .RequiredValidator("ایمیل");
+        
+        RuleFor(x => x.Password)
+            .RequiredValidator("رمز عبور");
+
+        RuleFor(x => x.FirstName)
+            .RequiredValidator("نام");
+
+        RuleFor(x => x.LastName)
+            .RequiredValidator("نام خانوادگی");
+    }
 }
