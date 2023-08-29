@@ -3,7 +3,7 @@ using BuildingBlocks.Core.Utilities.ImageRelated;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 
-namespace BuildingBlocks.Core.Utilities.FluentValidation;
+namespace BuildingBlocks.Core.Validation;
 
 public static class AppValidators
 {

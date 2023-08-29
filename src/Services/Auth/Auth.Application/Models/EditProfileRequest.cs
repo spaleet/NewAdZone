@@ -1,4 +1,5 @@
 ﻿using BuildingBlocks.Core.Utilities.ImageRelated;
+using BuildingBlocks.Core.Validation;
 using Microsoft.AspNetCore.Http;
 
 namespace Auth.Application.Models;
@@ -31,8 +32,11 @@ public class EditProfileRequestValidator : AbstractValidator<EditProfileRequest>
         RuleFor(x => x.Username)
             .RequiredValidator("نام کاربری");
 
+        RuleFor(x => x.Email)
+            .CustomEmailAddressValidator();
+
         RuleFor(x => x.PhoneNumber)
-            .RequiredValidator("ایمیل");
+            .MobileValidator();
 
         RuleFor(x => x.FirstName)
             .RequiredValidator("نام");

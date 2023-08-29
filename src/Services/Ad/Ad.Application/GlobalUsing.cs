@@ -8,6 +8,6 @@ global using BuildingBlocks.Core.Utilities.ImageRelated;
 global using FluentValidation;
 global using MediatR;
 global using Microsoft.EntityFrameworkCore;
-global using BuildingBlocks.Core.Utilities.FluentValidation;
+global using BuildingBlocks.Core.Validation;
 
 namespace Ad.Application;

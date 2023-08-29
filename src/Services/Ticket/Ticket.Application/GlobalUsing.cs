@@ -6,6 +6,6 @@ global using FluentValidation;
 global using MediatR;
 global using Ticket.Domain.Entities;
 global using Ticket.Infrastructure.Context;
-global using BuildingBlocks.Core.Utilities.FluentValidation;
+global using BuildingBlocks.Core.Validation;
 
 namespace Ticket.Application;

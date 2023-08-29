@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using BuildingBlocks.Core.Validation;
 
 namespace Auth.Application.Models;
 public record AuthenticateUserRequest
@@ -15,7 +16,7 @@ public class AuthenticateUserRequestValidator : AbstractValidator<AuthenticateUs
     public AuthenticateUserRequestValidator()
     {
         RuleFor(x => x.Email)
-            .RequiredValidator("ایمیل");
+            .CustomEmailAddressValidator();
 
         RuleFor(x => x.Password)
             .RequiredValidator("رمز عبور");

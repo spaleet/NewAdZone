@@ -24,8 +24,11 @@ public class RegisterAccountRequestValidator : AbstractValidator<RegisterAccount
         RuleFor(x => x.Username)
             .RequiredValidator("نام کاربری");
 
+        RuleFor(x => x.Email)
+            .CustomEmailAddressValidator();
+
         RuleFor(x => x.PhoneNumber)
-            .RequiredValidator("ایمیل");
+            .MobileValidator();
         
         RuleFor(x => x.Password)
             .RequiredValidator("رمز عبور");
