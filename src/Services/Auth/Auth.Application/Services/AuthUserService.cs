@@ -5,6 +5,7 @@ using Auth.Application.Models;
 using Auth.Domain.Enums;
 using AutoMapper;
 using BuildingBlocks.Core.Exceptions.Base;
+using BuildingBlocks.Core.Validation;
 
 namespace Auth.Application.Services;
 public class AuthUserService : IAuthUserService
@@ -27,6 +28,10 @@ public class AuthUserService : IAuthUserService
 
     public async Task<string> RegisterAsync(RegisterAccountRequest model)
     {
+        // validation
+        RegisterAccountRequestValidator validator = new();
+        validator.ValidateWithResponse(model);
+
         // Validate Email
         InvalidEmailException.ThrowIfNotValid(model.Email);
 
@@ -58,6 +63,10 @@ public class AuthUserService : IAuthUserService
 
     public async Task<AuthenticateUserResponse> AuthenticateUserAsync(AuthenticateUserRequest model)
     {
+        // validation
+        AuthenticateUserRequestValidator validator = new();
+        validator.ValidateWithResponse(model);
+
         var user = await _userManager.FindByEmailAsync(model.Email);
 
         if (user is null)
@@ -83,8 +92,9 @@ public class AuthUserService : IAuthUserService
 
     public async Task<AuthenticateUserResponse> RevokeTokenAsync(RevokeRefreshTokenRequest model)
     {
-        if (string.IsNullOrWhiteSpace(model.RefreshToken))
-            throw new InvalidTokenException();
+        // validation
+        RevokeRefreshTokenRequestValidator validator = new();
+        validator.ValidateWithResponse(model);
 
         var token = await _authTokenStore.FindToken(model.RefreshToken);
 

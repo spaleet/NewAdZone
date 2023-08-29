@@ -41,11 +41,10 @@ public class AccountService : IAccountService
 
     public async Task EditUserProfile(EditProfileRequest model)
     {
+        // validation
         EditProfileRequestValidator validator = new();
-        var validationRes = validator.Validate(model);
-        validationRes.ApiValidation();
+        validator.ValidateWithResponse(model);
 
-        // TODO validation
         var user = await _userManager.FindByIdAsync(model.Id);
 
         if (user is null)
@@ -77,6 +76,10 @@ public class AccountService : IAccountService
 
     public async Task ChangePassword(ChangePasswordRequest model)
     {
+        // validation
+        ChangePasswordRequestValidator validator = new();
+        validator.ValidateWithResponse(model);
+
         var user = await _userManager.FindByIdAsync(model.Id);
 
         if (user is null)
