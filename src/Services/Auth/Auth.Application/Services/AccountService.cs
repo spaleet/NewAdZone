@@ -4,6 +4,7 @@ using Auth.Application.Models;
 using AutoMapper;
 using BuildingBlocks.Core.Exceptions.Base;
 using BuildingBlocks.Core.Utilities.ImageRelated;
+using BuildingBlocks.Core.Validation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -41,7 +42,8 @@ public class AccountService : IAccountService
     public async Task EditUserProfile(EditProfileRequest model)
     {
         EditProfileRequestValidator validator = new();
-        validator.Validate(model);
+        var validationRes = validator.Validate(model);
+        validationRes.ApiValidation();
 
         // TODO validation
         var user = await _userManager.FindByIdAsync(model.Id);
