@@ -26,7 +26,7 @@ public class AccountController : BaseControllerLite
     }
     
     [HttpPost("edit")]
-    public async Task<IActionResult> EditProfile([FromBody] EditProfileRequest req)
+    public async Task<IActionResult> EditProfile([FromForm] EditProfileRequest req)
     {
         await _accountService.EditUserProfile(req);
 
