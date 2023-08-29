@@ -5,6 +5,7 @@ using AutoMapper;
 using BuildingBlocks.Core.Exceptions.Base;
 using BuildingBlocks.Core.Utilities.ImageRelated;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 
 namespace Auth.Application.Services;
@@ -67,5 +68,18 @@ public class AccountService : IAccountService
         if (!res.Succeeded)
             throw new BadRequestException(res.Errors.FirstOrDefault().Description);
 
+    }
+
+    public async Task ChangePassword(ChangePasswordRequest model)
+    {
+        var user = await _userManager.FindByIdAsync(model.Id);
+
+        if (user is null)
+            throw new NotFoundException("User not found!");
+
+        var res = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+
+        if (!res.Succeeded)
+            throw new BadRequestException(res.Errors.FirstOrDefault().Description);
     }
 }
