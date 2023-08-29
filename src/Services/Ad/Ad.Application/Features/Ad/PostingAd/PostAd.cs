@@ -69,9 +69,11 @@ public class PostAdHandler : ICommandHandler<PostAd>
 
         if (!verifyRole)
             throw new BadRequestException("اطلاعات حساب کاربری شما کامل نیست");
-        
+
+        int adsPosted = await _context.Ads.CountAsync(x => x.UserId == request.UserId);
+
         // check user plan limit
-        bool verifyPlan = await _planClient.VerifyPlanLimit(request.UserId);
+        bool verifyPlan = await _planClient.VerifyPlanLimit(request.UserId, adsPosted);
 
         _logger.LogInformation("Verify Plan result: {0} for user Id : {1}", verifyRole, request.UserId);
 

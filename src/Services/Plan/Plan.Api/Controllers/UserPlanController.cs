@@ -7,9 +7,9 @@ namespace Plan.Api.Controllers;
 public class UserPlanController : BaseController
 {
     [HttpGet("verify")]
-    public async Task<IActionResult> VerifiedUser([FromQuery(Name = "uid")] string uid)
+    public async Task<IActionResult> VerifiedUser([FromQuery(Name = "uid")] string uid, [FromQuery(Name = "usedQuota")] int usedQuota)
     {
-        bool res = await Mediator.Send(new CheckUserLimit(uid));
+        bool res = await Mediator.Send(new CheckUserLimit(uid, usedQuota));
 
         return res ? Ok("با موفقیت اشتراک دارید!") : BadRequest("اشتراک فعالی ندارید!");
     }

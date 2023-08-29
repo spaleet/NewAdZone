@@ -11,14 +11,15 @@ public class PlanClient : IPlanClient
         _client = httpClient;
     }
 
-    public async Task<bool> VerifyPlanLimit(string userId)
+    public async Task<bool> VerifyPlanLimit(string userId, int usedQuota)
     {
         if (string.IsNullOrEmpty(userId))
             throw new ArgumentNullException(nameof(userId));
 
         var query = new Dictionary<string, string>()
         {
-            ["uid"] = userId
+            ["uid"] = userId,
+            ["usedQuota"] = usedQuota.ToString()
         };
 
         string uri = QueryHelpers.AddQueryString("", query);

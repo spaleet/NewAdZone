@@ -2,7 +2,7 @@
 
 namespace Plan.Application.Features.CheckingUserLimit;
 
-public record CheckUserLimit(string UserId) : IQuery<bool>;
+public record CheckUserLimit(string UserId, int UsedQuota) : IQuery<bool>;
 
 public class CheckUserLimitValidator : AbstractValidator<CheckUserLimit>
 {
@@ -26,6 +26,15 @@ public class CheckUserLimitHandler : IQueryHandler<CheckUserLimit, bool>
         var planSub = _context.PlanSubscriptions.Find(x => x.UserId == request.UserId)
             .FirstOrDefault();
 
-        return planSub is not null;
+        if (planSub is null) return false;
+
+        var plan = _context.Plans.Find(x => x.Id == planSub.Id).FirstOrDefault();
+
+        if (plan is null) return false;
+
+        if (plan.MonthlyQuota <= request.AdsPostedCount)
+            return false;
+
+        return true;
     }
 }
