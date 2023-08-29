@@ -1,4 +1,5 @@
-﻿using Auth.Application.Exceptions;
+﻿using Auth.Application.Consts;
+using Auth.Application.Exceptions;
 using Auth.Application.Interfaces;
 using Auth.Application.Models;
 using Auth.Domain.Enums;
@@ -43,7 +44,7 @@ public class AuthUserService : IAuthUserService
             throw new InvalidPhoneNumberException(model.PhoneNumber);
 
         var user = _mapper.Map<User>(model);
-        user.Avatar = "default-avatar.png";
+        user.Avatar = AuthPathConsts.DefaultAvatar;
 
         var result = await _userManager.CreateAsync(user, model.Password);
 
