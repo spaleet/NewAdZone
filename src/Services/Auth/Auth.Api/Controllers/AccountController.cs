@@ -25,11 +25,19 @@ public class AccountController : BaseControllerLite
         return Ok(res);
     }
     
-    [HttpPost("edit")]
+    [HttpPut("edit")]
     public async Task<IActionResult> EditProfile([FromForm] EditProfileRequest req)
     {
         await _accountService.EditUserProfile(req);
 
-        return Ok();
+        return Ok("حساب شما با موفقیت ویرایش شد!");
+    }
+
+    [HttpPut("change-password")]
+    public async Task<IActionResult> EditProfile([FromBody] ChangePasswordRequest req)
+    {
+        await _accountService.ChangePassword(req);
+
+        return Ok("رمز با موفقیت تغییر یافت!");
     }
 }
