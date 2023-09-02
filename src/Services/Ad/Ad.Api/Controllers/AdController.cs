@@ -49,7 +49,7 @@ public class AdController : BaseController
         return Ok("آگهی با موفقیت ویرایش شد!");
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id}/delete")]
     public async Task<IActionResult> Delete([FromRoute] long id)
     {
         await Mediator.Send(new DeleteAd(id));

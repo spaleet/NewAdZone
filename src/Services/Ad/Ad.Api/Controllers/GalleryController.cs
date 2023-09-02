@@ -24,7 +24,7 @@ public class GalleryController : BaseController
         return Ok(res);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id}/remove")]
     public async Task<IActionResult> Remove([FromRoute] string id, CancellationToken cancellationToken)
     {
         var galleryId = Guid.Parse(id);

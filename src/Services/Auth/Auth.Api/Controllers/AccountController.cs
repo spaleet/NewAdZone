@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Auth.Api.Controllers;
 
+[Authorize(Policy = nameof(Roles.BasicUser))]
 public class AccountController : BaseControllerLite
 {
     private readonly IAccountService _accountService;
@@ -16,7 +17,6 @@ public class AccountController : BaseControllerLite
         _accountService = accountService;
     }
 
-    //[Authorize(Policy = nameof(Roles.BasicUser))]
     [HttpGet("profile/{id}")]
     public async Task<IActionResult> GetProfile([FromRoute] string id)
     {

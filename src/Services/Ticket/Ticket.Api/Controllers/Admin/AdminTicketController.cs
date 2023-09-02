@@ -38,7 +38,7 @@ public class AdminTicketController : BaseController
         return Ok();
     }
 
-    [HttpDelete("close/{id}")]
+    [HttpDelete("{id}/close")]
     public async Task<IActionResult> Close([FromRoute] string id, CancellationToken cancellationToken)
     {
         await Mediator.Send(new CloseTicketAdmin(id), cancellationToken);
