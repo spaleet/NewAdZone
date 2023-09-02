@@ -23,7 +23,7 @@ public class PlanController : BaseController
     }
 
     [HttpGet("")]
-    public async Task<IActionResult> GetPlans(CancellationToken cancellationToken)
+    public async Task<ActionResult<GetPlansResponse>> GetPlans(CancellationToken cancellationToken)
     {
         var plans = await Mediator.Send(new GetPlans(), cancellationToken);
 
@@ -39,7 +39,7 @@ public class PlanController : BaseController
     }
 
     [HttpPost("subscribe")]
-    public async Task<IActionResult> SubscribeToPlan([FromBody] SubscribePlan request, CancellationToken cancellationToken)
+    public async Task<ActionResult<InitializePaymentResponse>> SubscribeToPlan([FromBody] SubscribePlan request, CancellationToken cancellationToken)
     {
         // add subscription in db
         var subscribeResult = await Mediator.Send(request, cancellationToken);
@@ -63,7 +63,7 @@ public class PlanController : BaseController
     }
 
     [HttpGet("verify")]
-    public async Task<IActionResult> VerifyPayment([FromQuery] string subId,
+    public async Task<ActionResult<VerifyPaymentResponse>> VerifyPayment([FromQuery] string subId,
                                                    [FromQuery(Name = "Authority")] string authority,
                                                    [FromQuery(Name = "Status")] string status,
                                                    CancellationToken cancellationToken)
