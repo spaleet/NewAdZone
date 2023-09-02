@@ -8,7 +8,7 @@ public static class ServiceRegistery
     {
         services.AddControllers()
             .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
-        
+
         //================================== Swagger
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();

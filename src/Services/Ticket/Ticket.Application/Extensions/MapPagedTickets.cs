@@ -1,7 +1,6 @@
 ﻿using BuildingBlocks.Core.Models.Paging;
 using BuildingBlocks.Core.Utilities;
 using Ticket.Application.Dtos;
-using Ticket.Domain.Entities;
 
 namespace Ticket.Application.Extensions;
 public static class MapPagedTickets

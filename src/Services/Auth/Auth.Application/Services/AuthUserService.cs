@@ -5,7 +5,6 @@ using Auth.Application.Models;
 using Auth.Domain.Enums;
 using AutoMapper;
 using BuildingBlocks.Core.Exceptions.Base;
-using BuildingBlocks.Core.Validation;
 
 namespace Auth.Application.Services;
 public class AuthUserService : IAuthUserService

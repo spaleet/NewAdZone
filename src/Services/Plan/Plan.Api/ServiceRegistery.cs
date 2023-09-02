@@ -1,8 +1,4 @@
-﻿using BuildingBlocks.Messaging;
-using MassTransit;
-using Plan.Api.Consumers;
-
-namespace Plan.Api;
+﻿namespace Plan.Api;
 
 public static class ServiceRegistery
 {

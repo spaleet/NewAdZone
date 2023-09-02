@@ -1,6 +1,4 @@
 ﻿using Ad.Domain.Entities;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore;
 
 namespace Ad.Application.Extensions;
 public static class AdCategoryExtension

@@ -1,5 +1,4 @@
 ﻿using BuildingBlocks.Core.Utilities.ImageRelated;
-using BuildingBlocks.Core.Validation;
 using Microsoft.AspNetCore.Http;
 
 namespace Auth.Application.Models;

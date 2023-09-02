@@ -1,8 +1,6 @@
-﻿using System.Text.RegularExpressions;
-using BuildingBlocks.Core.Web.Extenions;
+﻿using BuildingBlocks.Core.Web.Extenions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BuildingBlocks.Core.Web;

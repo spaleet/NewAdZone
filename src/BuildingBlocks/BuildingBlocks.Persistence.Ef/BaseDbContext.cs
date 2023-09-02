@@ -10,7 +10,7 @@ public interface IBaseDbContext
 }
 
 
-public abstract class BaseDbContext : DbContext, IBaseDbContext 
+public abstract class BaseDbContext : DbContext, IBaseDbContext
 {
     public BaseDbContext(DbContextOptions options) : base(options)
     {

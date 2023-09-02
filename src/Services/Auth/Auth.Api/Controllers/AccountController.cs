@@ -24,7 +24,7 @@ public class AccountController : BaseControllerLite
 
         return Ok(res);
     }
-    
+
     [HttpPut("edit")]
     public async Task<IActionResult> EditProfile([FromForm] EditProfileRequest req)
     {

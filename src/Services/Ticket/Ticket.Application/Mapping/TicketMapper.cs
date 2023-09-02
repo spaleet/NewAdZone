@@ -25,7 +25,7 @@ public class TicketMapper : Profile
                            opt => opt.Ignore())
             .ForMember(dest => dest.SentDate,
                            opt => opt.MapFrom(src => src.CreationDate.ToLongShamsi()));
-        
+
         CreateMap<Domain.Entities.Ticket, GetTicketDetailsAdminResponse>()
             .ForMember(dest => dest.Messages,
                            opt => opt.Ignore())

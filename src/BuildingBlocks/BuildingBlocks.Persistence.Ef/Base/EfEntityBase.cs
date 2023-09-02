@@ -5,7 +5,7 @@ namespace BuildingBlocks.Persistence.Ef.Base;
 
 public interface AuditableBase
 {
-    public DateTime CreateDate { get; set; } 
+    public DateTime CreateDate { get; set; }
 
     public DateTime LastUpdateDate { get; set; }
 }

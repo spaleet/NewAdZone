@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.IO;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Http;
 
 namespace BuildingBlocks.Core.Utilities.ImageRelated;
 

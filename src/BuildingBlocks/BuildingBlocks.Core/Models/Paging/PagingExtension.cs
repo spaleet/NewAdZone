@@ -1,14 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
+﻿using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace BuildingBlocks.Core.Models.Paging;
 
 public static class PagingExtension
 {
     // Paging
-    public static async Task<PagingModel<T>> ApplyPagingAsync<T>(this IQueryable<T> collection, 
+    public static async Task<PagingModel<T>> ApplyPagingAsync<T>(this IQueryable<T> collection,
         int page = 1, int pageSize = 10) where T : notnull
     {
         if (page <= 0)
@@ -58,7 +56,7 @@ public static class PagingExtension
     // ------- Syncs Methods:
 
     // Paging
-    public static PagingModel<T> ApplyPagingSync<T>(this IQueryable<T> collection, 
+    public static PagingModel<T> ApplyPagingSync<T>(this IQueryable<T> collection,
         int page = 1, int pageSize = 10) where T : notnull
     {
         if (page <= 0)

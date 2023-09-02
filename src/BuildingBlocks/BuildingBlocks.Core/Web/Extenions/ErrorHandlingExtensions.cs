@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-using BuildingBlocks.Core.Exceptions.Base;
+﻿using BuildingBlocks.Core.Exceptions.Base;
 using BuildingBlocks.Core.Exceptions.ExpandedProblemDetails;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Http;
@@ -67,7 +65,7 @@ public static class ErrorHandlingExtensions
                     Status = StatusCodes.Status400BadRequest,
                     Detail = ex.Message,
                     Type = "https://somedomain/bad-request-error",
-            });
+                });
 
             x.Map<BadRequestException>(
                 ex =>

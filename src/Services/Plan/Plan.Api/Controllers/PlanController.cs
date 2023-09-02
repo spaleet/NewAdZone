@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using BuildingBlocks.Core.Web;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
@@ -10,7 +9,6 @@ using Plan.Application.Features.GettingPlans;
 using Plan.Application.Features.InitializingPayment;
 using Plan.Application.Features.SubscribingPlan;
 using Plan.Application.Features.VerifyingPayment;
-using Plan.Domain.Enums;
 
 namespace Plan.Api.Controllers;
 

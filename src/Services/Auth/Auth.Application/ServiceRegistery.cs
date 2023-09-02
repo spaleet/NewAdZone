@@ -1,14 +1,9 @@
 ﻿using Auth.Application.Interfaces;
 using Auth.Application.Mapping;
+using Auth.Application.Models;
 using Auth.Application.Services;
 using BuildingBlocks.Security.Services;
 using Microsoft.Extensions.DependencyInjection;
-using FluentValidation;
-using Auth.Application.Models;
-using BuildingBlocks.Core.Validation;
-using MediatR;
-using System.Reflection;
-using Microsoft.AspNetCore.Identity;
 
 namespace Auth.Application;
 public static class ServiceRegistery

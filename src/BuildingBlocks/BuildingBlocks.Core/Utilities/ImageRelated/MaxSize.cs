@@ -4,7 +4,7 @@ namespace BuildingBlocks.Core.Utilities.ImageRelated;
 
 public static class MaxFileSize
 {
-    public static int Megabyte(int meg = 1) 
+    public static int Megabyte(int meg = 1)
     {
         return meg * 1024 * 1024;
     }

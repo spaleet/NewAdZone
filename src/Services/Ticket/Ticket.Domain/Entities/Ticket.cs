@@ -17,7 +17,7 @@ public class Ticket : MongoEntityBase
 
     [Display(Name = "بخش موردنظر")]
     [BsonElement("department")]
-    [BsonRepresentation(BsonType.String)] 
+    [BsonRepresentation(BsonType.String)]
     public TicketDepartmentEnum Department { get; set; }
 
     [Display(Name = "اولویت")]

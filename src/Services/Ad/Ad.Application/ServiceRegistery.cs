@@ -1,5 +1,4 @@
-﻿using BuildingBlocks.Core.Validation;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace Ad.Application;
 public static class ServiceRegistery

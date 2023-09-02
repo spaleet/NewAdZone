@@ -18,7 +18,7 @@ public class CategoryController : BaseController
     public async Task<ActionResult<AdCategoryDto>> Create([FromBody] CreateAdCategory request, CancellationToken cancellationToken)
     {
         var res = await Mediator.Send(request, cancellationToken);
-        
+
         return Ok(res);
     }
 }

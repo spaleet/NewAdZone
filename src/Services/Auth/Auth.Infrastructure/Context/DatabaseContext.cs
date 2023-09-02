@@ -1,6 +1,5 @@
 ﻿using Auth.Application.Interfaces;
 using Auth.Domain.Entities;
-using BuildingBlocks.Persistence.Ef;
 using BuildingBlocks.Persistence.Ef.Base;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

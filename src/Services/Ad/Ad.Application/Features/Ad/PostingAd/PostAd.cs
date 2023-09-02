@@ -1,10 +1,10 @@
 ﻿using Ad.Application.Clients;
+using Ad.Application.Dtos;
+using Ad.Application.Extensions;
 using AutoMapper;
 using BuildingBlocks.Core.Exceptions.Base;
 using Microsoft.AspNetCore.Http;
-using Ad.Application.Extensions;
 using Microsoft.Extensions.Logging;
-using Ad.Application.Dtos;
 
 namespace Ad.Application.Features.Ad.PostingAd;
 

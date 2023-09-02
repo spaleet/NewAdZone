@@ -3,7 +3,6 @@ using System.Text;
 using System.Text.Json;
 using Auth.Application.Interfaces;
 using Auth.Domain.Enums;
-using BuildingBlocks.Messaging;
 using BuildingBlocks.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;

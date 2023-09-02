@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using BuildingBlocks.Core.CQRS.Commands;
+﻿using BuildingBlocks.Core.CQRS.Commands;
 using BuildingBlocks.Core.Exceptions.Base;
 using FluentValidation;
 using MediatR;

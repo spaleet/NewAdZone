@@ -1,6 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.Net.Http;
-using System.Text;
+﻿using System.Text;
+using Newtonsoft.Json;
 
 namespace BuildingBlocks.Payment;
 
@@ -32,7 +31,8 @@ public class ZarinPalFactory : IZarinPalFactory
 
         using (var httpClient = new HttpClient())
         {
-            string content = JsonConvert.SerializeObject(new PaymentRequest {
+            string content = JsonConvert.SerializeObject(new PaymentRequest
+            {
                 Email = email,
                 Mobile = "09123456789",
                 CallbackURL = $"{callBackUrl}",
@@ -56,8 +56,11 @@ public class ZarinPalFactory : IZarinPalFactory
 
         using (var httpClient = new HttpClient())
         {
-            string content = JsonConvert.SerializeObject(new VerificationRequest {
-                MerchantID = MerchantId, Amount = finalAmount, Authority = authority
+            string content = JsonConvert.SerializeObject(new VerificationRequest
+            {
+                MerchantID = MerchantId,
+                Amount = finalAmount,
+                Authority = authority
             });
 
             using (var httpResponseMessage = await httpClient.PostAsync(

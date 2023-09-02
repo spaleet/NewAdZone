@@ -1,7 +1,5 @@
 ﻿using BuildingBlocks.Core.Exceptions.Base;
-using BuildingBlocks.Core.Utilities.ImageRelated;
 using Microsoft.AspNetCore.Http;
-using System.IO;
 
 namespace BuildingBlocks.Core.Utilities.ImageRelated;
 
@@ -44,7 +42,8 @@ public static class ImageHelper
             }
 
             return fileName;
-        } else
+        }
+        else
         {
             // create temp upload path
             string tempPath = path + "temp" + fileName;

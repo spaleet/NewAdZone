@@ -42,7 +42,7 @@ public class AdminTicketController : BaseController
     public async Task<IActionResult> Close([FromRoute] string id, CancellationToken cancellationToken)
     {
         await Mediator.Send(new CloseTicketAdmin(id), cancellationToken);
-        
+
         return Ok();
     }
 }

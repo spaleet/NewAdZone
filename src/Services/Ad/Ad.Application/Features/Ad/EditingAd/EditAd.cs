@@ -2,7 +2,6 @@
 using AutoMapper;
 using BuildingBlocks.Core.Exceptions.Base;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Ad.Application.Features.Ad.EditingAd;
 

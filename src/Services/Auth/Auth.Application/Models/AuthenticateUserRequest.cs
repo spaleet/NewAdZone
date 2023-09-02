@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using BuildingBlocks.Core.Validation;
 
 namespace Auth.Application.Models;
 public record AuthenticateUserRequest

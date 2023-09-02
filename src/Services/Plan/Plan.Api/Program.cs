@@ -1,9 +1,9 @@
 using BuildingBlocks.Core.Web;
 using BuildingBlocks.Logging;
 using Hellang.Middleware.ProblemDetails;
-using Plan.Infrastructure;
-using Plan.Application;
 using Plan.Api;
+using Plan.Application;
+using Plan.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 

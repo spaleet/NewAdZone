@@ -1,9 +1,9 @@
 using BuildingBlocks.Core.Web;
 using BuildingBlocks.Logging;
 using Hellang.Middleware.ProblemDetails;
-using Ticket.Infrastructure;
-using Ticket.Application;
 using Ticket.Api;
+using Ticket.Application;
+using Ticket.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 

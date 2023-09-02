@@ -1,7 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using BuildingBlocks.Core.Utilities.ImageRelated;
-
-namespace Auth.Application.Models;
+﻿namespace Auth.Application.Models;
 public record RegisterAccountRequest
 {
     public string Username { get; set; }
@@ -29,7 +26,7 @@ public class RegisterAccountRequestValidator : AbstractValidator<RegisterAccount
 
         RuleFor(x => x.PhoneNumber)
             .MobileValidator();
-        
+
         RuleFor(x => x.Password)
             .RequiredValidator("رمز عبور");
 

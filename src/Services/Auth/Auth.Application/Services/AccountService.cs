@@ -4,9 +4,6 @@ using Auth.Application.Models;
 using AutoMapper;
 using BuildingBlocks.Core.Exceptions.Base;
 using BuildingBlocks.Core.Utilities.ImageRelated;
-using BuildingBlocks.Core.Validation;
-using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 
 namespace Auth.Application.Services;
@@ -55,7 +52,7 @@ public class AccountService : IAccountService
         // update image
         if (model.AvatarSource is not null)
         {
-            if(user.Avatar != AuthPathConsts.DefaultAvatar)
+            if (user.Avatar != AuthPathConsts.DefaultAvatar)
             {
                 // delete prevoius image
                 ImageHelper.DeleteImage(user.Avatar, AuthPathConsts.Avatar);

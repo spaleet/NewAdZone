@@ -24,7 +24,7 @@ public class UserTicketController : BaseController
     public async Task<ActionResult<GetTicketDetailsUserResponse>> GetTicketDetailsUser([FromRoute] string id, [FromQuery] string uId, CancellationToken cancellationToken)
     {
         var res = await Mediator.Send(new GetTicketDetailsUser(id, uId), cancellationToken);
-        
+
         return Ok(res);
     }
 
@@ -32,7 +32,7 @@ public class UserTicketController : BaseController
     public async Task<ActionResult<TicketDto>> PostTicket([FromBody] PostTicket request, CancellationToken cancellationToken)
     {
         var res = await Mediator.Send(request, cancellationToken);
-        
+
         return CreatedAtRoute(nameof(GetTicketDetailsUser), new { id = res.Id, uId = res.UserId }, res);
     }
 
