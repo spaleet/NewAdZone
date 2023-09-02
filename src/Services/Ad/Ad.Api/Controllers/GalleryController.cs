@@ -6,8 +6,8 @@ namespace Ad.Api.Controllers;
 
 public class GalleryController : BaseController
 {
-    [HttpGet("{id}")]
-    public async Task<IActionResult> Get([FromRoute] string id, CancellationToken cancellationToken)
+    [HttpGet("{id}", Name = "GetGallery")]
+    public async Task<IActionResult> GetGallery([FromRoute] string id, CancellationToken cancellationToken)
     {
         var galleryId = Guid.Parse(id);
 
@@ -21,7 +21,7 @@ public class GalleryController : BaseController
     {
         var res = await Mediator.Send(request, cancellationToken);
 
-        return Ok(res);
+        return CreatedAtRoute(nameof(GetGallery), new { id = res.Id }, res);
     }
 
     [HttpDelete("{id}/remove")]
