@@ -18,7 +18,7 @@ public class AccountController : BaseControllerLite
     }
 
     [HttpGet("profile/{id}")]
-    public async Task<IActionResult> GetProfile([FromRoute] string id)
+    public async Task<ActionResult<UserProfileDto>> GetProfile([FromRoute] string id)
     {
         var res = await _accountService.GetUserProfile(id);
 

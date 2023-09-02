@@ -35,7 +35,7 @@ public class AuthController : BaseControllerLite
     }
 
     [HttpPost("sign-in")]
-    public async Task<IActionResult> SignIn([FromBody] AuthenticateUserRequest login)
+    public async Task<ActionResult<AuthenticateUserResponse>> SignIn([FromBody] AuthenticateUserRequest login)
     {
         var authenticateResult = await _userService.AuthenticateUserAsync(login);
 
@@ -54,7 +54,7 @@ public class AuthController : BaseControllerLite
     }
 
     [HttpPost("refresh-token")]
-    public async Task<IActionResult> RefreshToken([FromBody] RevokeRefreshTokenRequest token)
+    public async Task<ActionResult<AuthenticateUserResponse>> RefreshToken([FromBody] RevokeRefreshTokenRequest token)
     {
         var refreshTokenResult = await _userService.RevokeTokenAsync(token);
 

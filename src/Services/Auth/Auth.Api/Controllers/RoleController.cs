@@ -13,7 +13,7 @@ public class RoleController : BaseControllerLite
     }
 
     [HttpGet("verify")]
-    public async Task<IActionResult> VerifiedUser([FromQuery(Name = "uid")] string uid)
+    public async Task<ActionResult<bool>> VerifiedUser([FromQuery(Name = "uid")] string uid)
     {
         bool res = await _userService.IsVerifiedRole(uid);
 
