@@ -1,4 +1,6 @@
-﻿using BuildingBlocks.Core.Exceptions.Base;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using BuildingBlocks.Core.Exceptions.Base;
 using BuildingBlocks.Core.Exceptions.ExpandedProblemDetails;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Http;
@@ -46,18 +48,26 @@ public static class ErrorHandlingExtensions
                     }
             );
 
-            // TODO : Add FluentValidation
+            x.Map<FormatException>(
+                ex =>
+                    new ProblemDetails
+                    {
+                        Title = ex.GetType().Name,
+                        Status = StatusCodes.Status400BadRequest,
+                        Detail = ex.Message,
+                        Type = "https://somedomain/bad-request-error"
+                    }
+            );
+
             // Exception will produce and returns from our FluentValidation RequestValidationBehavior
-            //x.Map<ValidationException>(
-            //    ex =>
-            //        new ProblemDetails
-            //        {
-            //            Title = ex.GetType().Name,
-            //            Status = StatusCodes.Status400BadRequest,
-            //            Detail = JsonConvert.SerializeObject(ex.ValidationResultModel.Errors),
-            //            Type = "https://somedomain/input-validation-rules-error"
-            //        }
-            //);
+            x.Map<FluentValidation.ValidationException>(
+                ex => new ProblemDetails
+                {
+                    Title = ex.GetType().Name,
+                    Status = StatusCodes.Status400BadRequest,
+                    Detail = ex.Message,
+                    Type = "https://somedomain/bad-request-error",
+            });
 
             x.Map<BadRequestException>(
                 ex =>
