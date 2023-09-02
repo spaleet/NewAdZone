@@ -17,7 +17,7 @@ public class GalleryController : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> Upload([FromForm] UploadGallery request, CancellationToken cancellationToken)
+    public async Task<ActionResult<UploadGalleryResponse>> Upload([FromForm] UploadGallery request, CancellationToken cancellationToken)
     {
         var res = await Mediator.Send(request, cancellationToken);
 

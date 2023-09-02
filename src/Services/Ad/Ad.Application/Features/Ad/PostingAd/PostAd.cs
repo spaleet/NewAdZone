@@ -4,10 +4,11 @@ using BuildingBlocks.Core.Exceptions.Base;
 using Microsoft.AspNetCore.Http;
 using Ad.Application.Extensions;
 using Microsoft.Extensions.Logging;
+using Ad.Application.Dtos;
 
 namespace Ad.Application.Features.Ad.PostingAd;
 
-public record PostAd : ICommand
+public record PostAd : ICommand<AdDto>
 {
     public string UserId { get; set; }
 
@@ -43,7 +44,7 @@ public class PostAdValidator : AbstractValidator<PostAd>
     }
 }
 
-public class PostAdHandler : ICommandHandler<PostAd>
+public class PostAdHandler : ICommandHandler<PostAd, AdDto>
 {
     private readonly IAdDbContext _context;
     private readonly IMapper _mapper;
@@ -60,7 +61,7 @@ public class PostAdHandler : ICommandHandler<PostAd>
         _logger = logger;
     }
 
-    public async Task<Unit> Handle(PostAd request, CancellationToken cancellationToken)
+    public async Task<AdDto> Handle(PostAd request, CancellationToken cancellationToken)
     {
         // check user role
         bool verifyRole = await _userClient.VerifyRole(request.UserId);
@@ -102,6 +103,6 @@ public class PostAdHandler : ICommandHandler<PostAd>
         await _context.Ads.AddAsync(createdAd);
         await _context.SaveChangesAsync();
 
-        return Unit.Value;
+        return _mapper.Map<AdDto>(createdAd);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Ad.Application.Features.Ad.DeletingAd;
+﻿using Ad.Application.Dtos;
+using Ad.Application.Features.Ad.DeletingAd;
 using Ad.Application.Features.Ad.EditingAd;
 using Ad.Application.Features.Ad.GettingAd;
 using Ad.Application.Features.Ad.GettingAds;
@@ -9,16 +10,16 @@ namespace Ad.Api.Controllers;
 
 public class AdController : BaseController
 {
-    [HttpGet("")]
-    public async Task<IActionResult> GetAds([FromQuery] GetAds request)
+    [HttpGet]
+    public async Task<ActionResult<GetAdsResponse>> GetAds([FromQuery] GetAds request)
     {
         var ads = await Mediator.Send(request);
 
         return Ok(ads);
     }
 
-    [HttpGet("{slug}")]
-    public async Task<IActionResult> GetAd([FromRoute] string slug)
+    [HttpGet("{slug}", Name = "GetAd")]
+    public async Task<ActionResult<GetAdDetailsResponse>> GetAd([FromRoute] string slug)
     {
         var ad = await Mediator.Send(new GetAdDetails(slug));
 
@@ -26,7 +27,7 @@ public class AdController : BaseController
     }
 
     [HttpGet("{slug}/related")]
-    public async Task<IActionResult> GetRelated([FromRoute] string slug)
+    public async Task<ActionResult<List<AdDto>>> GetRelated([FromRoute] string slug)
     {
         var ads = await Mediator.Send(new GetRelatedAds(slug));
 
@@ -34,11 +35,11 @@ public class AdController : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromForm] PostAd postAd)
+    public async Task<ActionResult<AdDto>> Post([FromForm] PostAd postAd)
     {
-        await Mediator.Send(postAd);
+        var res = await Mediator.Send(postAd);
 
-        return Ok("آگهی با موفقیت ساخته شد!");
+        return CreatedAtRoute(nameof(GetAd), new { slug = res.Slug }, res);
     }
 
     [HttpPut]
@@ -49,7 +50,7 @@ public class AdController : BaseController
         return Ok("آگهی با موفقیت ویرایش شد!");
     }
 
-    [HttpDelete("{id}/delete")]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> Delete([FromRoute] long id)
     {
         await Mediator.Send(new DeleteAd(id));

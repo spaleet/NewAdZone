@@ -1,8 +1,9 @@
-﻿using AutoMapper;
+﻿using Ad.Application.Dtos;
+using AutoMapper;
 
 namespace Ad.Application.Features.AdCategory.CreatingAdCategory;
 
-public record CreateAdCategory(string Title, long? ParentId) : ICommand;
+public record CreateAdCategory(string Title, long? ParentId) : ICommand<AdCategoryDto>;
 
 public class CreateAdCategoryValidator : AbstractValidator<CreateAdCategory>
 {
@@ -13,7 +14,7 @@ public class CreateAdCategoryValidator : AbstractValidator<CreateAdCategory>
     }
 }
 
-public class CreateAdCategoryHandler : ICommandHandler<CreateAdCategory>
+public class CreateAdCategoryHandler : ICommandHandler<CreateAdCategory, AdCategoryDto>
 {
     private readonly IAdDbContext _context;
     private readonly IMapper _mapper;
@@ -24,7 +25,7 @@ public class CreateAdCategoryHandler : ICommandHandler<CreateAdCategory>
         _mapper = mapper;
     }
 
-    public async Task<Unit> Handle(CreateAdCategory request, CancellationToken cancellationToken)
+    public async Task<AdCategoryDto> Handle(CreateAdCategory request, CancellationToken cancellationToken)
     {
         // map request to AdCategory
         // make slug from provided title
@@ -45,6 +46,6 @@ public class CreateAdCategoryHandler : ICommandHandler<CreateAdCategory>
         await _context.AdCategories.AddAsync(category);
         await _context.SaveChangesAsync();
 
-        return Unit.Value;
+        return _mapper.Map<AdCategoryDto>(category);
     }
 }

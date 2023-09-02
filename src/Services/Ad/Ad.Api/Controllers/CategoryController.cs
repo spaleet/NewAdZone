@@ -1,4 +1,5 @@
-﻿using Ad.Application.Features.AdCategory.CreatingAdCategory;
+﻿using Ad.Application.Dtos;
+using Ad.Application.Features.AdCategory.CreatingAdCategory;
 using Ad.Application.Features.AdCategory.GettingAdCategories;
 
 namespace Ad.Api.Controllers;
@@ -6,7 +7,7 @@ namespace Ad.Api.Controllers;
 public class CategoryController : BaseController
 {
     [HttpGet]
-    public async Task<IActionResult> Get(CancellationToken cancellationToken)
+    public async Task<ActionResult<GetAdCategoriesResponse>> Get(CancellationToken cancellationToken)
     {
         var categories = await Mediator.Send(new GetAdCategories(), cancellationToken);
 
@@ -14,9 +15,10 @@ public class CategoryController : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateAdCategory request, CancellationToken cancellationToken)
+    public async Task<ActionResult<AdCategoryDto>> Create([FromBody] CreateAdCategory request, CancellationToken cancellationToken)
     {
-        await Mediator.Send(request, cancellationToken);
-        return Ok();
+        var res = await Mediator.Send(request, cancellationToken);
+        
+        return Ok(res);
     }
 }
