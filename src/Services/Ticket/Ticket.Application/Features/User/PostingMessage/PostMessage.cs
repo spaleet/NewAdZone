@@ -1,8 +1,9 @@
 ﻿using MongoDB.Driver;
+using Ticket.Application.Dtos;
 using Ticket.Application.Exceptions;
 
 namespace Ticket.Application.Features.User.PostingMessage;
-public record PostMessage(string UserId, string TicketId, string Text) : ICommand;
+public record PostMessage(string UserId, string TicketId, string Text) : ICommand<TicketDto>;
 
 public class PostMessageValidator : AbstractValidator<PostMessage>
 {
@@ -16,20 +17,23 @@ public class PostMessageValidator : AbstractValidator<PostMessage>
 
         RuleFor(x => x.Text)
             .RequiredValidator("متن")
-            .MinLengthValidator("متن", 50)
+            .MinLengthValidator("متن", 15)
             .MaxLengthValidator("متن", 1000);
     }
 }
 
-public class PostMessageHandler : ICommandHandler<PostMessage>
+public class PostMessageHandler : ICommandHandler<PostMessage, TicketDto>
 {
     private readonly TicketDbContext _context;
-    public PostMessageHandler(TicketDbContext context)
+    private readonly IMapper _mapper;
+
+    public PostMessageHandler(TicketDbContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
-    public async Task<Unit> Handle(PostMessage request, CancellationToken cancellationToken)
+    public async Task<TicketDto> Handle(PostMessage request, CancellationToken cancellationToken)
     {
         var ticket = _context.Tickets.AsQueryable().FirstOrDefault(x => x.Id == request.TicketId);
 
@@ -54,6 +58,6 @@ public class PostMessageHandler : ICommandHandler<PostMessage>
 
         await _context.Tickets.ReplaceOneAsync(filter, ticket);
 
-        return Unit.Value;
+        return _mapper.Map<TicketDto>(ticket);
     }
 }

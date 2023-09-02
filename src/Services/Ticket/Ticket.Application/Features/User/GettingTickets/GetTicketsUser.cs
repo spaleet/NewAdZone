@@ -1,7 +1,4 @@
-﻿using AutoMapper;
-using BuildingBlocks.Core.Models.Paging;
-using BuildingBlocks.Core.Utilities;
-using Microsoft.EntityFrameworkCore;
+﻿using BuildingBlocks.Core.Models.Paging;
 using MongoDB.Driver;
 using Ticket.Application.Dtos;
 using Ticket.Application.Extensions;

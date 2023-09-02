@@ -1,10 +1,11 @@
 ﻿using System.Text.Json.Serialization;
 using MongoDB.Driver;
+using Ticket.Application.Dtos;
 using Ticket.Application.Exceptions;
 
 namespace Ticket.Application.Features.Admin.AnsweringTicket;
 
-public class AnswerTicket : ICommand
+public class AnswerTicket : ICommand<TicketDto>
 {
     public AnswerTicket(AnswerTicketRequest request)
     {
@@ -32,20 +33,23 @@ public class AnswerTicketValidator : AbstractValidator<AnswerTicket>
 
         RuleFor(x => x.Text)
             .RequiredValidator("متن")
-            .MinLengthValidator("متن", 50)
+            .MinLengthValidator("متن", 15)
             .MaxLengthValidator("متن", 1000);
     }
 }
 
-public class AnswerTicketHandler : ICommandHandler<AnswerTicket>
+public class AnswerTicketHandler : ICommandHandler<AnswerTicket, TicketDto>
 {
     private readonly TicketDbContext _context;
-    public AnswerTicketHandler(TicketDbContext context)
+    private readonly IMapper _mapper;
+
+    public AnswerTicketHandler(TicketDbContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
-    public async Task<Unit> Handle(AnswerTicket request, CancellationToken cancellationToken)
+    public async Task<TicketDto> Handle(AnswerTicket request, CancellationToken cancellationToken)
     {
         var ticket = _context.Tickets.AsQueryable().FirstOrDefault(x => x.Id == request.TicketId);
 
@@ -70,7 +74,7 @@ public class AnswerTicketHandler : ICommandHandler<AnswerTicket>
 
         await _context.Tickets.ReplaceOneAsync(filter, ticket);
 
-        return Unit.Value;
+        return _mapper.Map<TicketDto>(ticket);
     }
 }
 

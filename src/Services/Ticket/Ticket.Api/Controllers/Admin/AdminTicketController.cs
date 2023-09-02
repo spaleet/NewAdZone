@@ -1,5 +1,6 @@
 ﻿using BuildingBlocks.Core.Web;
 using Microsoft.AspNetCore.Mvc;
+using Ticket.Application.Dtos;
 using Ticket.Application.Features.Admin.AnsweringTicket;
 using Ticket.Application.Features.Admin.ClosingTicket;
 using Ticket.Application.Features.Admin.GettingDetails;
@@ -10,16 +11,15 @@ namespace Ticket.Api.Controllers.Admin;
 public class AdminTicketController : BaseController
 {
     [HttpGet("filter")]
-    public async Task<IActionResult> Filter([FromQuery] GetTicketsAdmin
-        request)
+    public async Task<ActionResult<GetTicketsAdminResponse>> Filter([FromQuery] GetTicketsAdmin request)
     {
         var tickets = await Mediator.Send(request);
 
         return Ok(tickets);
     }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetDetails([FromRoute] string id, CancellationToken cancellationToken)
+    [HttpGet("{id}", Name = "GetTicketDetailsAdmin")]
+    public async Task<ActionResult<GetTicketDetailsAdminResponse>> GetTicketDetailsAdmin([FromRoute] string id, CancellationToken cancellationToken)
     {
         var res = await Mediator.Send(new GetTicketDetailsAdmin(id), cancellationToken);
 
@@ -27,15 +27,15 @@ public class AdminTicketController : BaseController
     }
 
     [HttpPost("answer")]
-    public async Task<IActionResult> Answer([FromBody] AnswerTicketRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<TicketDto>> Answer([FromBody] AnswerTicketRequest request, CancellationToken cancellationToken)
     {
         var answerCommand = new AnswerTicket(request);
 
         answerCommand.AdminId = "10000"; // TODO Auth
 
-        await Mediator.Send(answerCommand, cancellationToken);
-        
-        return Ok();
+        var res = await Mediator.Send(answerCommand, cancellationToken);
+
+        return CreatedAtRoute(nameof(GetTicketDetailsAdmin), new { id = res.Id }, res);
     }
 
     [HttpDelete("{id}/close")]

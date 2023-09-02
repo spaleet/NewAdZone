@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Humanizer;
+using Ticket.Application.Dtos;
 using Ticket.Domain.Enums;
 
 namespace Ticket.Application.Features.User.PostingTicket;
@@ -14,7 +15,7 @@ public record PostTicket(
     [EnumDataType(typeof(TicketPriorityEnum))]
     TicketPriorityEnum Priority,
 
-    string Text) : ICommand;
+    string Text) : ICommand<TicketDto>;
 
 public class PostTicketValidator : AbstractValidator<PostTicket>
 {
@@ -38,7 +39,7 @@ public class PostTicketValidator : AbstractValidator<PostTicket>
     }
 }
 
-public class PostTicketHandler : ICommandHandler<PostTicket>
+public class PostTicketHandler : ICommandHandler<PostTicket, TicketDto>
 {
     private readonly TicketDbContext _context;
     private readonly IMapper _mapper;
@@ -49,7 +50,7 @@ public class PostTicketHandler : ICommandHandler<PostTicket>
         _mapper = mapper;
     }
 
-    public async Task<Unit> Handle(PostTicket request, CancellationToken cancellationToken)
+    public async Task<TicketDto> Handle(PostTicket request, CancellationToken cancellationToken)
     {
         var ticket = _mapper.Map(request, new Domain.Entities.Ticket());
 
@@ -69,6 +70,6 @@ public class PostTicketHandler : ICommandHandler<PostTicket>
 
         await _context.TicketMessages.InsertOneAsync(ticketMessage);
 
-        return Unit.Value;
+        return _mapper.Map<TicketDto>(ticket);
     }
 }
