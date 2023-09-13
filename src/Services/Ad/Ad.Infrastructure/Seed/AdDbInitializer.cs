@@ -22,6 +22,7 @@ public class AdDbInitializer
             if (_context.Database.IsSqlServer())
             {
                 await _context.Database.MigrateAsync();
+                _logger.LogInformation("Successfully initialized Ad Db!");
             }
         }
         catch (Exception ex)

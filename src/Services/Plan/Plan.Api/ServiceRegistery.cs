@@ -1,23 +1,26 @@
-﻿namespace Plan.Api;
+﻿using MassTransit;
+using Plan.Api.Consumers;
+
+namespace Plan.Api;
 
 public static class ServiceRegistery
 {
     public static void AddApi(this IServiceCollection services, IConfiguration configuration)
     {
         // MassTransit
-        //string connection = configuration.GetConnectionString("EventBus");
+        string connection = configuration.GetConnectionString("EventBus");
 
-        //services.AddMassTransit(busConfig =>
-        //{
-        //    busConfig.AddConsumer<UserCreatedConsumer>();
+        services.AddMassTransit(busConfig =>
+        {
+            busConfig.AddConsumer<UserCreatedConsumer>();
 
-        //    busConfig.UsingRabbitMq((context, cfg) =>
-        //    {
-        //        cfg.Host(connection);
+            busConfig.UsingRabbitMq((context, cfg) =>
+            {
+                cfg.Host(connection);
 
-        //        cfg.ConfigureEndpoints(context);
-        //    });
-        //});
+                cfg.ConfigureEndpoints(context);
+            });
+        });
 
         //================================== Swagger
         services.AddEndpointsApiExplorer();

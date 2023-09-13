@@ -6,6 +6,18 @@ namespace Plan.Domain.Entities;
 
 public class Plan : MongoEntityBase
 {
+    public Plan()
+    {
+
+    }
+
+    public Plan(string title, int monthlyQuota, decimal price)
+    {
+        Title = title;
+        MonthlyQuota = monthlyQuota;
+        Price = price;
+    }
+
     [Display(Name = "نام پلن")]
     [BsonElement("title")]
     [Required]
