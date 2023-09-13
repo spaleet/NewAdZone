@@ -10,6 +10,5 @@ public static class MiddlewareExtensions
         var initializer = scope.ServiceProvider.GetRequiredService<AuthDbInitializer>();
 
         await initializer.InitializeAsync();
-        await initializer.SeedAsync();
     }
 }

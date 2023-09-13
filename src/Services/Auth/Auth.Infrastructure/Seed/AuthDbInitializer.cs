@@ -5,6 +5,7 @@ using BuildingBlocks.Core.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Auth.Application.Consts;
 
 namespace Auth.Infrastructure.Seed;
 public class AuthDbInitializer
@@ -34,6 +35,8 @@ public class AuthDbInitializer
 
             await SeedRolesAsync();
             await SeedUsersAsync();
+
+            _logger.LogError("Successfully initialized Auth Db!");
         }
         catch (Exception ex)
         {
@@ -84,7 +87,8 @@ public class AuthDbInitializer
                 FirstName = "ادمین",
                 LastName = "ادمینی",
                 PhoneNumber = "09123456789",
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                Avatar = AuthPathConsts.DefaultAvatar
             };
 
             await _userManager.CreateAsync(adminUser, "123Pa$$word!");
@@ -100,7 +104,8 @@ public class AuthDbInitializer
                 FirstName = "کاربر فعال",
                 LastName = "کاربری",
                 PhoneNumber = "09987654321",
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                Avatar = AuthPathConsts.DefaultAvatar
             };
 
             await _userManager.CreateAsync(verifiedUser, "123Pa$$word!");
@@ -116,7 +121,8 @@ public class AuthDbInitializer
                 FirstName = "کاربر",
                 LastName = "کاربری",
                 PhoneNumber = "09321651789",
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                Avatar = AuthPathConsts.DefaultAvatar
             };
 
             await _userManager.CreateAsync(basicUser, "123Pa$$word!");

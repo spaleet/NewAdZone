@@ -1,0 +1,87 @@
+version: '3.4'
+
+services:
+
+  rabbit.mq:
+    container_name: rabbit.mq
+    image: rabbitmq:3-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  mongo.db:
+    container_name: mongo.db
+    image: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    ports:
+      - "27017:27017"
+
+  sql.db:
+    container_name: sql.db
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    restart: always
+    environment:
+      - "ACCEPT_EULA=Y"
+      - "SA_PASSWORD=Pass@word"
+      - "MSSQL_PID=Developer"
+    ports:
+      - "1400:1433"
+
+  ad.api:
+    container_name: ad.api
+    image: ${DOCKER_REGISTRY-}ad.api
+    build:
+      context: .
+      dockerfile: src/Services/Ad/Ad.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__SqlConnection=Server=sql.db;Database=NewAdZone;User Id=sa;Password=Pass@word;Encrypt=False
+      - UserClientOptions__UserRoleUrl=http://auth.api/api/role/verify
+      - UserClientOptions__UserPlanUrl=http://plan.api/api/user-plan/verify
+    ports:
+      - "3200:80"
+      - "3201:443"
+  
+  auth.api:
+    container_name: auth.api
+    image: ${DOCKER_REGISTRY-}auth.api
+    build:
+      context: .
+      dockerfile: src/Services/Auth/Auth.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__SqlConnection=Server=sql.db;Database=NewAdZone;User Id=sa;Password=Pass@word;Encrypt=False
+      - ConnectionStrings__EventBus=amqp://guest:guest@rabbit.mq:5672
+    ports:
+      - "3100:80"
+      - "3101:443"
+
+  plan.api:
+    container_name: plan.api
+    image: ${DOCKER_REGISTRY-}plan.api
+    build:
+      context: .
+      dockerfile: src/Services/Plan/Plan.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__EventBus=amqp://guest:guest@rabbit.mq:5672
+      - MongoOptions__ConnectionString=mongodb://admin:admin@mongo.db:27017
+    ports:
+      - "3200:80"
+      - "3201:443"
+
+  ticket.api:
+    container_name: ticket.api
+    image: ${DOCKER_REGISTRY-}ticket.api
+    build:
+      context: .
+      dockerfile: src/Services/Ticket/Ticket.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - MongoOptions__ConnectionString=mongodb://admin:admin@mongo.db:27017
+    ports:
+      - "3300:80"
+      - "3301:443"
