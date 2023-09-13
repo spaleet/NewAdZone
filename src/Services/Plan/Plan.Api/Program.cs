@@ -2,6 +2,7 @@ using BuildingBlocks.Core.Web;
 using BuildingBlocks.Logging;
 using Hellang.Middleware.ProblemDetails;
 using Plan.Api;
+using Plan.Api.Extensions;
 using Plan.Application;
 using Plan.Infrastructure;
 
@@ -15,6 +16,8 @@ builder.Services.AddInfrastructure();
 builder.Services.AddApi(builder.Configuration);
 
 var app = builder.Build();
+
+await app.UseDbInitializer();
 
 app.UseProblemDetails();
 

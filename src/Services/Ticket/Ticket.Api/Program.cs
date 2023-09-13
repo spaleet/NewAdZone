@@ -2,6 +2,7 @@ using BuildingBlocks.Core.Web;
 using BuildingBlocks.Logging;
 using Hellang.Middleware.ProblemDetails;
 using Ticket.Api;
+using Ticket.Api.Extensions;
 using Ticket.Application;
 using Ticket.Infrastructure;
 
@@ -15,6 +16,8 @@ builder.Services.AddInfrastructure();
 builder.Services.AddApi();
 
 var app = builder.Build();
+
+app.UseDbInitializer();
 
 app.UseProblemDetails();
 

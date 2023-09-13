@@ -19,6 +19,8 @@ public class PlanDbInitializer
     {
         try
         {
+            _context.CheckIfAlive();
+
             bool seedExists = _context.Plans.Find(_ => true).Any();
 
             if (!seedExists)

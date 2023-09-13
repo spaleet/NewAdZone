@@ -3,7 +3,7 @@ using MongoDB.Driver;
 
 namespace BuildingBlocks.Persistence.Mongo.DbContext;
 
-public class MongoDbContext : IMongoDbContext
+public abstract class MongoDbContext : IMongoDbContext
 {
     public IClientSessionHandle? Session { get; set; }
     public IMongoDatabase Database { get; }
@@ -13,7 +13,7 @@ public class MongoDbContext : IMongoDbContext
     public MongoDbContext(MongoOptions options)
     {
         MongoClient = new MongoClient(options.ConnectionString);
-        var databaseName = options.DatabaseName;
+        string databaseName = options.DatabaseName;
         Database = MongoClient.GetDatabase(databaseName);
 
         // Every command will be stored and it'll be processed at SaveChanges
@@ -24,6 +24,9 @@ public class MongoDbContext : IMongoDbContext
     {
         return Database.GetCollection<T>(name ?? typeof(T).Name.ToLower());
     }
+
+    // check if connected
+    public abstract void CheckIfAlive();
 
     public void Dispose()
     {
