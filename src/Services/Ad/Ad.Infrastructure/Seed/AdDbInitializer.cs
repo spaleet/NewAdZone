@@ -41,6 +41,7 @@ public class AdDbInitializer
     {
         if (!await _context.AdCategories.AnyAsync())
         {
+<<<<<<< HEAD
             var mobileCategory = new AdCategory("موبایل");
 
             await _context.AdCategories.AddAsync(mobileCategory);
@@ -68,6 +69,23 @@ public class AdDbInitializer
 
                 new ("ایرپاد", parentId: headphoneCategory.Id),
                 new ("گلکسی بادز", parentId: headphoneCategory.Id),
+=======
+            List<AdCategory> seeds = new List<AdCategory>
+            {
+                new(1000, "موبایل"),
+                new ("آیفون", parentId: 1000),
+                new ("سامسونگ", parentId: 1000),
+                new ("شیائومی", parentId: 1000),
+
+                new(1100, "لپتاپ"),
+                new ("مکبوک", parentId: 1100),
+                new ("لنوو", parentId: 1100),
+                new ("ایسوس", parentId: 1100),
+
+                new(1200, "هدفون"),
+                new ("ایرپاد", parentId: 1200),
+                new ("گلکسی بادز", parentId: 1200),
+>>>>>>> f785175039d7361e07f32d6347cc57cf5d33c76f
             };
 
             await _context.AdCategories.AddRangeAsync(seeds);
