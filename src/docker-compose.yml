@@ -38,12 +38,17 @@ services:
       dockerfile: src/Services/Ad/Ad.Api/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
       - ConnectionStrings__SqlConnection=Server=sql.db;Database=NewAdZone;User Id=sa;Password=Pass@word;Encrypt=False
       - UserClientOptions__UserRoleUrl=http://auth.api/api/role/verify
       - UserClientOptions__UserPlanUrl=http://plan.api/api/user-plan/verify
     ports:
-      - "3200:80"
-      - "3201:443"
+      - "3000:80"
+      - "3001:443"
+    depends_on:
+      - sql.db
+      - auth.api
+      - plan.api
   
   auth.api:
     container_name: auth.api
@@ -53,11 +58,15 @@ services:
       dockerfile: src/Services/Auth/Auth.Api/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
       - ConnectionStrings__SqlConnection=Server=sql.db;Database=NewAdZone;User Id=sa;Password=Pass@word;Encrypt=False
       - ConnectionStrings__EventBus=amqp://guest:guest@rabbit.mq:5672
     ports:
       - "3100:80"
       - "3101:443"
+    depends_on:
+      - sql.db
+      - rabbit.mq
 
   plan.api:
     container_name: plan.api
@@ -67,11 +76,15 @@ services:
       dockerfile: src/Services/Plan/Plan.Api/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
       - ConnectionStrings__EventBus=amqp://guest:guest@rabbit.mq:5672
       - MongoOptions__ConnectionString=mongodb://admin:admin@mongo.db:27017
     ports:
       - "3200:80"
       - "3201:443"
+    depends_on:
+      - mongo.db
+      - rabbit.mq
 
   ticket.api:
     container_name: ticket.api
@@ -81,7 +94,10 @@ services:
       dockerfile: src/Services/Ticket/Ticket.Api/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
       - MongoOptions__ConnectionString=mongodb://admin:admin@mongo.db:27017
     ports:
       - "3300:80"
       - "3301:443"
+    depends_on:
+      - mongo.db
