@@ -1,0 +1,23 @@
+{
+  "Routes": [
+
+    // 
+    {
+      "UpstreamPathTemplate": "/api/Customer",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "customerapi",
+          "Port": 80
+        }
+      ],
+
+      "DownstreamPathTemplate": "/api/Customer"
+    },
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:7900"
+  }
+}
+
