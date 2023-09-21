@@ -12,17 +12,6 @@ public class AdCategory : EfEntityBase<long>
 
     }
 
-<<<<<<< HEAD
-=======
-    public AdCategory(long id, string title, long? parentId = null)
-    {
-        Id = id;
-        Title = title;
-        ParentId = parentId;
-        Slug = title.ToSlug();
-    }
-
->>>>>>> f785175039d7361e07f32d6347cc57cf5d33c76f
     public AdCategory(string title, long? parentId = null)
     {
         Title = title;

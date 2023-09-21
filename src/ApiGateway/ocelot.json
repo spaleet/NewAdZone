@@ -1,23 +1,123 @@
 {
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:7900"
+  },
+
   "Routes": [
 
-    // 
+    //================================== Ad Service
+
+    // Ad Controller
     {
-      "UpstreamPathTemplate": "/api/Customer",
+      "UpstreamPathTemplate": "/api/ad",
       "UpstreamHttpMethod": [ "Get", "Post", "Put" ],
+
+      "DownstreamPathTemplate": "/api/ad",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "customerapi",
+          "Host": "ad.api",
           "Port": 80
         }
-      ],
-
-      "DownstreamPathTemplate": "/api/Customer"
+      ]
     },
-  ],
-  "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:7900"
-  }
+    {
+      "UpstreamPathTemplate": "/api/ad/{slug}",
+      "UpstreamHttpMethod": [ "Get" ],
+
+      "DownstreamPathTemplate": "/api/ad/{slug}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "ad.api",
+          "Port": 80
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/ad/{slug}/related",
+      "UpstreamHttpMethod": [ "Get" ],
+
+      "DownstreamPathTemplate": "/api/ad/{slug}/related",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "ad.api",
+          "Port": 80
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/ad/{id}",
+      "UpstreamHttpMethod": [ "Delete" ],
+
+      "DownstreamPathTemplate": "/api/ad/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "ad.api",
+          "Port": 80
+        }
+      ]
+    },
+
+    // Ad Category Controller
+    {
+      "UpstreamPathTemplate": "/api/category",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+
+      "DownstreamPathTemplate": "/api/category",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "ad.api",
+          "Port": 80
+        }
+      ]
+    },
+
+    // Ad Gallery Controller
+    {
+      "UpstreamPathTemplate": "/api/gallery/{id}",
+      "UpstreamHttpMethod": [ "Get" ],
+
+      "DownstreamPathTemplate": "/api/gallery/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "ad.api",
+          "Port": 80
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/gallery",
+      "UpstreamHttpMethod": [ "Post" ],
+
+      "DownstreamPathTemplate": "/api/gallery",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "ad.api",
+          "Port": 80
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/gallery/{id}/remove",
+      "UpstreamHttpMethod": [ "Delete" ],
+
+      "DownstreamPathTemplate": "/api/gallery/{id}/remove",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "ad.api",
+          "Port": 80
+        }
+      ]
+    }
+
+
+  ]
 }
 
