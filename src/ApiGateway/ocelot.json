@@ -5,7 +5,7 @@
 
   "Routes": [
 
-    //================================== Ad Service
+    //================================== Ad Service START
 
     // Ad Controller
     {
@@ -116,8 +116,10 @@
         }
       ]
     },
+    //================================== Ad Service END
 
-    //================================== Auth Service
+
+    //================================== Auth Service START
 
     // Account Controller
     {
@@ -296,7 +298,67 @@
         }
       ]
     },
+    //================================== Auth Service END
 
+
+    //================================== Plan Service START
+
+    // Plan Controller
+    {
+      "UpstreamPathTemplate": "/api/plan",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+
+      "DownstreamPathTemplate": "/api/plan",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "plan.api",
+          "Port": 80
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/plan/subscribe",
+      "UpstreamHttpMethod": [ "Post" ],
+
+      "DownstreamPathTemplate": "/api/plan/subscribe",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "plan.api",
+          "Port": 80
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/plan/verify",
+      "UpstreamHttpMethod": [ "Get" ],
+
+      "DownstreamPathTemplate": "/api/plan/verify",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "plan.api",
+          "Port": 80
+        }
+      ]
+    },
+
+    // UserPlan Controller
+    {
+      "UpstreamPathTemplate": "/api/user-plan/verify",
+      "UpstreamHttpMethod": [ "Get" ],
+
+      "DownstreamPathTemplate": "/api/user-plan/verify",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "plan.api",
+          "Port": 80
+        }
+      ]
+    }
+    //================================== Plan Service END
 
   ]
 }
