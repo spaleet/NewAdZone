@@ -12,7 +12,7 @@ namespace Ticket.Api.Controllers.User;
 
 public class UserTicketController : BaseController
 {
-    [HttpGet("filter")]
+    [HttpGet]
     public async Task<ActionResult<GetTicketsUserResponse>> Filter([FromQuery] GetTicketsUser request)
     {
         var tickets = await Mediator.Send(request);

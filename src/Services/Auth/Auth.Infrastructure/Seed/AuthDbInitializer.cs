@@ -36,7 +36,7 @@ public class AuthDbInitializer
             await SeedRolesAsync();
             await SeedUsersAsync();
 
-            _logger.LogError("Successfully initialized Auth Db!");
+            _logger.LogInformation("Successfully initialized Auth Db!");
         }
         catch (Exception ex)
         {
