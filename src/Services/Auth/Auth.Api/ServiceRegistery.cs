@@ -1,10 +1,10 @@
 ﻿using System.Net;
 using System.Text;
 using System.Text.Json;
-using Auth.Application.Interfaces;
 using Auth.Domain.Enums;
 using BuildingBlocks.Messaging;
 using BuildingBlocks.Security;
+using BuildingBlocks.Security.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -57,57 +57,7 @@ public static class ServiceRegistery
 
         services.Configure<BearerTokenSettings>(config.GetSection("BearerTokenSettings"));
 
-        services
-            .AddAuthentication(options =>
-            {
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(cfg =>
-            {
-                cfg.RequireHttpsMetadata = false;
-                cfg.SaveToken = true;
-                cfg.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidIssuer = bearerTokenSettings?.Issuer,
-                    ValidateIssuer = true,
-                    ValidAudience = bearerTokenSettings?.Audiance,
-                    ValidateAudience = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(bearerTokenSettings.Secret)),
-                    ValidateIssuerSigningKey = true,
-                    ValidateLifetime = true,
-                    ClockSkew = TimeSpan.Zero
-                };
-                cfg.Events = new JwtBearerEvents
-                {
-                    OnAuthenticationFailed = context =>
-                    {
-                        context.Response.StatusCode = 401;
-                        context.Response.ContentType = "application/json";
-                        return context.Response.WriteAsync(ProduceUnAuthorizedResponse());
-                    },
-                    OnTokenValidated = context =>
-                    {
-                        var tokenValidatorService =
-                            context.HttpContext.RequestServices.GetRequiredService<IAuthTokenValidatorService>();
-                        return tokenValidatorService.ValidateAsync(context);
-                    },
-                    OnMessageReceived = context => { return Task.CompletedTask; },
-                    OnChallenge = context =>
-                    {
-                        context.HandleResponse();
-                        context.Response.StatusCode = 401;
-                        context.Response.ContentType = "application/json";
-                        return context.Response.WriteAsync(ProduceUnAuthorizedResponse());
-                    },
-                    OnForbidden = context =>
-                    {
-                        context.Response.StatusCode = 403;
-                        context.Response.ContentType = "application/json";
-                        return context.Response.WriteAsync(ProduceAccessDeniedResponse());
-                    }
-                };
-            });
+        services.AddServiceJwtAuthentication(config);
 
         services.AddAuthorization(options =>
         {
@@ -116,36 +66,11 @@ public static class ServiceRegistery
             options.AddPolicy(nameof(Roles.BasicUser), policy => policy.RequireRole(nameof(Roles.BasicUser)));
         });
 
-
         //================================== CORS
 
         services.AddCors(x => x.AddPolicy("CORS_POLICY", opt =>
         {
             opt.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
         }));
-    }
-
-    private static string ProduceUnAuthorizedResponse()
-    {
-        var problemDetails = new ProblemDetails
-        {
-            Type = "https://tools.ietf.org/html/rfc7231#section-6.6.1",
-            Title = "Un Authorized",
-            Status = (int)HttpStatusCode.Unauthorized,
-            Detail = "Un Authorized!"
-        };
-        return JsonSerializer.Serialize(problemDetails);
-    }
-
-    private static string ProduceAccessDeniedResponse()
-    {
-        var problemDetails = new ProblemDetails
-        {
-            Type = "https://tools.ietf.org/html/rfc7231#section-6.6.1",
-            Title = "Access Denied",
-            Status = (int)HttpStatusCode.Forbidden,
-            Detail = "Access Denied!"
-        };
-        return JsonSerializer.Serialize(problemDetails);
     }
 }

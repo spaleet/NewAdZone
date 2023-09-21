@@ -1,17 +1,23 @@
-﻿namespace BuildingBlocks.Security;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BuildingBlocks.Security;
 public class BearerTokenSettings
 {
-    public string Secret { set; get; } = default!;
+    [Required]
+    public string Secret { set; get; }
 
-    public string Issuer { set; get; } = default!;
+    [Required]
+    public string Issuer { set; get; }
 
-    public string Audiance { set; get; } = default!;
-
+    [Required]
     public int AccessTokenExpirationMinutes { set; get; }
 
+    [Required]
     public int RefreshTokenExpirationHours { set; get; }
 
+    [Required]
     public bool AllowMultipleLoginsFromTheSameUser { set; get; }
 
+    [Required]
     public bool AllowSignoutAllUserActiveClients { set; get; }
 }

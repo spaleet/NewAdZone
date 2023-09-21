@@ -5,12 +5,14 @@ using Ad.Application.Features.Ad.GettingAd;
 using Ad.Application.Features.Ad.GettingAds;
 using Ad.Application.Features.Ad.GettingRelatedAds;
 using Ad.Application.Features.Ad.PostingAd;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Ad.Api.Controllers;
 
 public class AdController : BaseController
 {
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<GetAdsResponse>> GetAds([FromQuery] GetAds request)
     {
         var ads = await Mediator.Send(request);

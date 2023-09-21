@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 
-namespace Auth.Application.Interfaces;
+namespace BuildingBlocks.Security.Interfaces;
 public interface IAuthTokenValidatorService
 {
     Task ValidateAsync(TokenValidatedContext context);

@@ -115,7 +115,6 @@ public class JwtTokenFactory : IJwtTokenFactory
 
         var token = new JwtSecurityToken(
             issuer: _tokenSettings.Issuer,
-            audience: _tokenSettings.Audiance,
             claims: claims,
             notBefore: now,
             expires: expireTime,
@@ -152,7 +151,6 @@ public class JwtTokenFactory : IJwtTokenFactory
 
         var token = new JwtSecurityToken(
             issuer: _tokenSettings.Issuer,
-            audience: _tokenSettings.Audiance,
             claims: claims,
             notBefore: now,
             expires: now.AddHours(_tokenSettings.RefreshTokenExpirationHours),
