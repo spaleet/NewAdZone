@@ -10,7 +10,7 @@ namespace Ticket.Api.Controllers.Admin;
 
 public class AdminTicketController : BaseController
 {
-    [HttpGet("filter")]
+    [HttpGet]
     public async Task<ActionResult<GetTicketsAdminResponse>> Filter([FromQuery] GetTicketsAdmin request)
     {
         var tickets = await Mediator.Send(request);
