@@ -17,7 +17,7 @@ public static class ServiceRegistery
     public static void AddApi(this IServiceCollection services, IConfiguration config)
     {
         //MassTransit
-        services.AddMessaging(config.GetConnectionString("EventBus") ?? "");
+        //services.AddMessaging(config.GetConnectionString("EventBus") ?? "");
 
         //================================== Swagger
         services.AddEndpointsApiExplorer();
