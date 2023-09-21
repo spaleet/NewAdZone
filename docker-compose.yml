@@ -39,6 +39,25 @@ services:
     networks:
       - backend
 
+  api.gateway:
+    container_name: api.gateway
+    image: ${DOCKER_REGISTRY-}api.gateway
+    build:
+      context: .
+      dockerfile: src/ApiGateway/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "7900:80"
+    depends_on:
+      - ad.api
+      - auth.api
+      - plan.api
+      - ticket.api
+    networks:
+      - backend
+
   ad.api:
     container_name: ad.api
     image: ${DOCKER_REGISTRY-}ad.api
@@ -53,7 +72,6 @@ services:
       - UserClientOptions__UserPlanUrl=http://plan.api/api/user-plan/verify
     ports:
       - "3000:80"
-      - "3001:443"
     depends_on:
       - sql.db
       - auth.api
@@ -74,7 +92,6 @@ services:
       - ConnectionStrings__EventBus=amqp://guest:guest@rabbit.mq:5672
     ports:
       - "3100:80"
-      - "3101:443"
     depends_on:
       - sql.db
       - rabbit.mq
@@ -94,7 +111,6 @@ services:
       - MongoOptions__ConnectionString=mongodb://admin:admin@mongo.db:27017
     ports:
       - "3200:80"
-      - "3201:443"
     depends_on:
       - mongo.db
       - rabbit.mq
@@ -113,7 +129,6 @@ services:
       - MongoOptions__ConnectionString=mongodb://admin:admin@mongo.db:27017
     ports:
       - "3300:80"
-      - "3301:443"
     depends_on:
       - mongo.db
     networks:
