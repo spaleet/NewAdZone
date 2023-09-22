@@ -19,7 +19,14 @@
           "Host": "ad.api",
           "Port": 80
         }
-      ]
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "role": "Admin"
+      }
     },
     {
       "UpstreamPathTemplate": "/api/ad/{slug}",
@@ -73,7 +80,14 @@
           "Host": "ad.api",
           "Port": 80
         }
-      ]
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "role": "User"
+      }
     },
 
     // Ad Gallery Controller

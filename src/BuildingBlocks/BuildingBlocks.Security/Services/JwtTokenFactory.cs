@@ -102,10 +102,14 @@ public class JwtTokenFactory : IJwtTokenFactory
         };
 
         // User Roles
-        if (rolesClaims?.Any() is true)
+         if (rolesClaims?.Any() is true)
         {
             foreach (string role in rolesClaims)
+            {
                 claims.Add(new Claim(ClaimTypes.Role, role));
+                claims.Add(new Claim("Role", role));
+
+            }
         }
 
         var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenSettings.Secret));

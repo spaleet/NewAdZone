@@ -1,13 +1,5 @@
-﻿using System.Net;
-using System.Text;
-using System.Text.Json;
-using Auth.Domain.Enums;
-using BuildingBlocks.Messaging;
+﻿using BuildingBlocks.Messaging;
 using BuildingBlocks.Security;
-using BuildingBlocks.Security.Interfaces;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace Auth.Api;
@@ -52,19 +44,7 @@ public static class ServiceRegistery
         });
 
         //================================== Auth
-        var bearerTokenSettings =
-            config.GetSection("BearerTokenSettings").Get(typeof(BearerTokenSettings)) as BearerTokenSettings;
-
-        services.Configure<BearerTokenSettings>(config.GetSection("BearerTokenSettings"));
-
         services.AddServiceJwtAuthentication(config);
-
-        services.AddAuthorization(options =>
-        {
-            options.AddPolicy(nameof(Roles.Admin), policy => policy.RequireRole(nameof(Roles.Admin)));
-            options.AddPolicy(nameof(Roles.VerifiedUser), policy => policy.RequireRole(nameof(Roles.VerifiedUser)));
-            options.AddPolicy(nameof(Roles.BasicUser), policy => policy.RequireRole(nameof(Roles.BasicUser)));
-        });
 
         //================================== CORS
 

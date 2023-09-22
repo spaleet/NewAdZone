@@ -8,7 +8,7 @@ using System.Net;
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using BuildingBlocks.Security.Interfaces;
-using Auth.Application.Services;
+using BuildingBlocks.Security.Services;
 
 namespace BuildingBlocks.Security;
 
@@ -80,6 +80,14 @@ public static class ServiceRegistery
                     }
                 };
             });
+
+        // authorization
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy(nameof(RolesEnum.Admin), policy => policy.RequireRole(nameof(RolesEnum.Admin)));
+            options.AddPolicy(nameof(RolesEnum.VerifiedUser), policy => policy.RequireRole(nameof(RolesEnum.VerifiedUser)));
+            options.AddPolicy(nameof(RolesEnum.BasicUser), policy => policy.RequireRole(nameof(RolesEnum.BasicUser)));
+        });
     }
 
     private static string ProduceUnAuthorizedResponse()

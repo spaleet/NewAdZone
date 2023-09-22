@@ -2,7 +2,7 @@
 using BuildingBlocks.Security.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
-namespace Auth.Application.Services;
+namespace BuildingBlocks.Security.Services;
 public class AuthTokenValidatorService : IAuthTokenValidatorService
 {
     //private readonly IAuthTokenStoreService _authTokenStoreService;
