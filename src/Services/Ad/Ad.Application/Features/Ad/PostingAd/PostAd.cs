@@ -1,15 +1,19 @@
-﻿using Ad.Application.Clients;
+﻿using System.Text.Json.Serialization;
+using Ad.Application.Clients;
 using Ad.Application.Dtos;
 using Ad.Application.Extensions;
 using AutoMapper;
 using BuildingBlocks.Core.Exceptions.Base;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 
 namespace Ad.Application.Features.Ad.PostingAd;
 
 public record PostAd : ICommand<AdDto>
 {
+    [JsonIgnore]
+    [BindNever]
     public string UserId { get; set; }
 
     public long SelectedCategory { get; set; }

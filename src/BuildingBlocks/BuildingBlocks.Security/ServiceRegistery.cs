@@ -11,6 +11,10 @@ using BuildingBlocks.Security.Interfaces;
 using BuildingBlocks.Security.Services;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Text.Json.Serialization;
 
 namespace BuildingBlocks.Security;
 
@@ -121,6 +125,8 @@ public static class ServiceRegistery
                     new List<string>()
                 }
             });
+
+            c.OperationFilter<IgnorePropertyFilter>();
         });
     }
 
@@ -146,5 +152,47 @@ public static class ServiceRegistery
             Detail = "Access Denied!"
         };
         return JsonSerializer.Serialize(problemDetails);
+    }
+
+    public class IgnorePropertyFilter : IOperationFilter
+    {
+        public void Apply(OpenApiOperation operation, OperationFilterContext context)
+        {
+
+            var excludedProperties = context.ApiDescription.ParameterDescriptions.Where(p =>
+                p.Source.Equals(BindingSource.Form));
+
+            if (excludedProperties.Any())
+            {
+
+                foreach (var excludedPropertie in excludedProperties)
+                {
+                    foreach (var customAttribute in excludedPropertie.CustomAttributes())
+                    {
+                        if (customAttribute.GetType() == typeof(JsonIgnoreAttribute))
+                        {
+                            for (int i = 0; i < operation.RequestBody.Content.Values.Count; i++)
+                            {
+                                for (int j = 0; j < operation.RequestBody.Content.Values.ElementAt(i).Encoding.Count; j++)
+                                {
+                                    if (operation.RequestBody.Content.Values.ElementAt(i).Encoding.ElementAt(j).Key ==
+                                        excludedPropertie.Name)
+                                    {
+                                        operation.RequestBody.Content.Values.ElementAt(i).Encoding
+                                            .Remove(operation.RequestBody.Content.Values.ElementAt(i).Encoding
+                                                .ElementAt(j));
+                                        operation.RequestBody.Content.Values.ElementAt(i).Schema.Properties.Remove(excludedPropertie.Name);
+
+
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+
+            }
+        }
     }
 }
