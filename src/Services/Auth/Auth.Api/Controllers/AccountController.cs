@@ -2,12 +2,13 @@
 using Auth.Application.Models;
 using Auth.Domain.Enums;
 using BuildingBlocks.Core.Web;
+using BuildingBlocks.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Auth.Api.Controllers;
 
-[Authorize(Policy = nameof(Roles.BasicUser))]
+[Authorize(Policy = AuthConsts.BasicUser)]
 public class AccountController : BaseControllerLite
 {
     private readonly IAccountService _accountService;

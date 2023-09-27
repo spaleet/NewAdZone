@@ -1,9 +1,12 @@
 ﻿using Auth.Application.Interfaces;
 using BuildingBlocks.Core.Web;
+using BuildingBlocks.Security;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Auth.Api.Controllers;
 
+[Authorize(Policy = AuthConsts.BasicUser)]
 public class RoleController : BaseControllerLite
 {
     private readonly IAuthUserService _userService;

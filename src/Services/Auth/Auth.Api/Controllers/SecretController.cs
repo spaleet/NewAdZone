@@ -1,5 +1,6 @@
 ﻿using Auth.Domain.Enums;
 using BuildingBlocks.Core.Web;
+using BuildingBlocks.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,21 +15,21 @@ public class SecretController : BaseControllerLite
         return Ok("You can access all secret!");
     }
 
-    [Authorize(Policy = nameof(Roles.BasicUser))]
+    [Authorize(Policy = AuthConsts.BasicUser)]
     [HttpGet("user")]
     public IActionResult UserSecret()
     {
         return Ok("You can access user secret!");
     }
 
-    [Authorize(Policy = nameof(Roles.VerifiedUser))]
+    [Authorize(Policy = AuthConsts.VerifiedUser)]
     [HttpGet("verified-user")]
     public IActionResult VerifiedUserSecret()
     {
         return Ok("You can access verified user secret!");
     }
 
-    [Authorize(Policy = nameof(Roles.Admin))]
+    [Authorize(Policy = AuthConsts.Admin)]
     [HttpGet("admin")]
     public IActionResult AdminSecret()
     {
