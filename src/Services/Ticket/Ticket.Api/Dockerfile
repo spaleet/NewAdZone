@@ -9,6 +9,7 @@ COPY ["src/BuildingBlocks/BuildingBlocks.Logging/BuildingBlocks.Logging.csproj",
 COPY ["src/BuildingBlocks/BuildingBlocks.Core/BuildingBlocks.Core.csproj", "src/BuildingBlocks/BuildingBlocks.Core/"]
 COPY ["src/Services/Ticket/Ticket.Application/Ticket.Application.csproj", "src/Services/Ticket/Ticket.Application/"]
 COPY ["src/Services/Ticket/Ticket.Infrastructure/Ticket.Infrastructure.csproj", "src/Services/Ticket/Ticket.Infrastructure/"]
+COPY ["src/BuildingBlocks/BuildingBlocks.Security/BuildingBlocks.Security.csproj", "src/BuildingBlocks/BuildingBlocks.Security/"]
 COPY ["src/BuildingBlocks/BuildingBlocks.Persistence.Mongo/BuildingBlocks.Persistence.Mongo.csproj", "src/BuildingBlocks/BuildingBlocks.Persistence.Mongo/"]
 COPY ["src/Services/Ticket/Ticket.Domain/Ticket.Domain.csproj", "src/Services/Ticket/Ticket.Domain/"]
 RUN dotnet restore "src/Services/Ticket/Ticket.Api/Ticket.Api.csproj"

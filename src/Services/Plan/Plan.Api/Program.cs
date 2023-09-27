@@ -22,10 +22,14 @@ await app.UseDbInitializer();
 app.UseProblemDetails();
 
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Auth Api");
+});
 
 app.UseCors("CORS_POLICY");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
