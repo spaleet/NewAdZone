@@ -1,6 +1,8 @@
 ﻿using Ad.Application.Dtos;
 using Ad.Application.Features.AdCategory.CreatingAdCategory;
 using Ad.Application.Features.AdCategory.GettingAdCategories;
+using BuildingBlocks.Security;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Ad.Api.Controllers;
 
@@ -15,6 +17,7 @@ public class CategoryController : BaseController
     }
 
     [HttpPost]
+    [Authorize(Policy = AuthConsts.Admin)]
     public async Task<ActionResult<AdCategoryDto>> Create([FromBody] CreateAdCategory request, CancellationToken cancellationToken)
     {
         var res = await Mediator.Send(request, cancellationToken);

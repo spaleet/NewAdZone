@@ -68,13 +68,11 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:80
       - ConnectionStrings__SqlConnection=Server=sql.db;Database=NewAdZone;User Id=sa;Password=Pass@word;Encrypt=False
-      - UserClientOptions__UserRoleUrl=http://auth.api/api/role/verify
       - UserClientOptions__UserPlanUrl=http://plan.api/api/user-plan/verify
     ports:
       - "3000:80"
     depends_on:
       - sql.db
-      - auth.api
       - plan.api
     networks:
       - backend

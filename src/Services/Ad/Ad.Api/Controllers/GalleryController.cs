@@ -1,6 +1,7 @@
 ﻿using Ad.Application.Features.AdGallery.GettingGallery;
 using Ad.Application.Features.AdGallery.RemovingGallery;
 using Ad.Application.Features.AdGallery.UploadingGallery;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Ad.Api.Controllers;
 
@@ -17,6 +18,7 @@ public class GalleryController : BaseController
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<ActionResult<UploadGalleryResponse>> Upload([FromForm] UploadGallery request, CancellationToken cancellationToken)
     {
         var res = await Mediator.Send(request, cancellationToken);
@@ -25,6 +27,7 @@ public class GalleryController : BaseController
     }
 
     [HttpDelete("{id}/remove")]
+    [Authorize]
     public async Task<IActionResult> Remove([FromRoute] string id, CancellationToken cancellationToken)
     {
         var galleryId = Guid.Parse(id);

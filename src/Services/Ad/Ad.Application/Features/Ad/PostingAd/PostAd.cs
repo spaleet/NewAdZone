@@ -48,35 +48,25 @@ public class PostAdHandler : ICommandHandler<PostAd, AdDto>
 {
     private readonly IAdDbContext _context;
     private readonly IMapper _mapper;
-    private readonly IUserClient _userClient;
     private readonly IPlanClient _planClient;
     private readonly ILogger<PostAdHandler> _logger;
 
-    public PostAdHandler(IAdDbContext context, IMapper mapper, IPlanClient planClient, IUserClient userClient, ILogger<PostAdHandler> logger)
+    public PostAdHandler(IAdDbContext context, IMapper mapper, IPlanClient planClient, ILogger<PostAdHandler> logger)
     {
         _context = context;
         _mapper = mapper;
-        _userClient = userClient;
         _planClient = planClient;
         _logger = logger;
     }
 
     public async Task<AdDto> Handle(PostAd request, CancellationToken cancellationToken)
     {
-        // check user role
-        bool verifyRole = await _userClient.VerifyRole(request.UserId);
-
-        _logger.LogInformation("Verify Role result: {0} for user Id : {1}", verifyRole, request.UserId);
-
-        if (!verifyRole)
-            throw new BadRequestException("اطلاعات حساب کاربری شما کامل نیست");
-
         int adsPosted = await _context.Ads.CountAsync(x => x.UserId == request.UserId);
 
         // check user plan limit
         bool verifyPlan = await _planClient.VerifyPlanLimit(request.UserId, adsPosted);
 
-        _logger.LogInformation("Verify Plan result: {0} for user Id : {1}", verifyRole, request.UserId);
+        _logger.LogInformation("Verify Plan result: {0} for user Id : {1}", verifyPlan, request.UserId);
 
         if (!verifyPlan)
             throw new BadRequestException("شما بیشتر از حداکثر تعداد آگهی در پلن انتخاب شده، آگهی ثبت کرده اید! پلن را ارتقا دهید ");

@@ -31,10 +31,5 @@ public static class ServiceRegistery
         {
             client.BaseAddress = new Uri(configuration["UserClientOptions:UserPlanUrl"]!);
         });
-
-        services.AddHttpClient<IUserClient, UserClient>(client =>
-        {
-            client.BaseAddress = new Uri(configuration["UserClientOptions:UserRoleUrl"]!);
-        });
     }
 }
