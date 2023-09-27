@@ -86,9 +86,6 @@ public class JwtTokenFactory : IJwtTokenFactory
             // Unique Id for all Jwt tokes
             new(JwtRegisteredClaimNames.Jti, SecurityUtilities.CreateCryptographicallySecureGuid().ToString()),
 
-            // Issuer
-            new(JwtRegisteredClaimNames.Iss, _tokenSettings.Issuer),
-
             // Issued at
             new(JwtRegisteredClaimNames.Iat, now.ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture)),
 
@@ -102,15 +99,8 @@ public class JwtTokenFactory : IJwtTokenFactory
         };
 
         // User Roles
-         if (rolesClaims?.Any() is true)
-        {
-            foreach (string role in rolesClaims)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, role));
-                claims.Add(new Claim("Role", role));
-
-            }
-        }
+        claims.AddRange(rolesClaims.Select(role => new Claim(ClaimTypes.Role, role)));
+        claims.AddRange(rolesClaims.Select(role => new Claim("Role", role)));
 
         var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenSettings.Secret));
         var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
@@ -118,7 +108,6 @@ public class JwtTokenFactory : IJwtTokenFactory
         var expireTime = now.AddMinutes(_tokenSettings.AccessTokenExpirationMinutes);
 
         var token = new JwtSecurityToken(
-            issuer: _tokenSettings.Issuer,
             claims: claims,
             notBefore: now,
             expires: expireTime,
@@ -140,9 +129,6 @@ public class JwtTokenFactory : IJwtTokenFactory
             // Unique Id for all Jwt tokes
             new(JwtRegisteredClaimNames.Jti, SecurityUtilities.CreateCryptographicallySecureGuid().ToString()),
 
-            // Issuer
-            new(JwtRegisteredClaimNames.Iss, _tokenSettings.Issuer),
-            
             // Issued at
             new(JwtRegisteredClaimNames.Iat, now.ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture)),
 
@@ -154,7 +140,6 @@ public class JwtTokenFactory : IJwtTokenFactory
         var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
-            issuer: _tokenSettings.Issuer,
             claims: claims,
             notBefore: now,
             expires: now.AddHours(_tokenSettings.RefreshTokenExpirationHours),

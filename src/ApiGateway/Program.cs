@@ -1,5 +1,4 @@
 using BuildingBlocks.Logging;
-using BuildingBlocks.Security;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
@@ -13,14 +12,8 @@ builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
 
 builder.Services.AddOcelot(builder.Configuration);
 
-// auth
-builder.Services.AddServiceJwtAuthentication(builder.Configuration);
-
 var app = builder.Build();
 
 await app.UseOcelot();
-
-app.UseAuthentication();
-app.UseAuthorization();
 
 app.Run();

@@ -7,9 +7,6 @@ public class BearerTokenSettings
     public string Secret { set; get; }
 
     [Required]
-    public string Issuer { set; get; }
-
-    [Required]
     public int AccessTokenExpirationMinutes { set; get; }
 
     [Required]

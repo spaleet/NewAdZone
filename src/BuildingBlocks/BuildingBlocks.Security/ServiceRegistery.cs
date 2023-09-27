@@ -9,6 +9,8 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using BuildingBlocks.Security.Interfaces;
 using BuildingBlocks.Security.Services;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.OpenApi.Models;
 
 namespace BuildingBlocks.Security;
 
@@ -42,7 +44,6 @@ public static class ServiceRegistery
                 options.SaveToken = true;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidIssuer = bearerTokenSettings?.Issuer,
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(bearerTokenSettings.Secret)),
@@ -84,9 +85,43 @@ public static class ServiceRegistery
         // authorization
         services.AddAuthorization(options =>
         {
-            options.AddPolicy(nameof(RolesEnum.Admin), policy => policy.RequireRole(nameof(RolesEnum.Admin)));
-            options.AddPolicy(nameof(RolesEnum.VerifiedUser), policy => policy.RequireRole(nameof(RolesEnum.VerifiedUser)));
-            options.AddPolicy(nameof(RolesEnum.BasicUser), policy => policy.RequireRole(nameof(RolesEnum.BasicUser)));
+            options.AddPolicy(AuthConsts.Admin, policy => policy.RequireRole("Admin"));
+            options.AddPolicy(AuthConsts.VerifiedUser, policy => policy.RequireRole("VerifiedUser"));
+            options.AddPolicy(AuthConsts.BasicUser, policy => policy.RequireRole("BasicUser"));
+        });
+    }
+
+    public static void AddSwaggerWithAuthentication(this IServiceCollection services, string title)
+    {
+        services.AddEndpointsApiExplorer();
+
+        services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = title, Version = "v1" });
+
+            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                Name = "Authorization",
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.ApiKey,
+                Scheme = "Bearer",
+                BearerFormat = "JWT",
+                Description = "Input your Bearer token in this format - Bearer {your token here} to access this API"
+            });
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    new List<string>()
+                }
+            });
         });
     }
 
