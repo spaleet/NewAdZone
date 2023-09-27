@@ -1,9 +1,18 @@
 ﻿using BuildingBlocks.Core.Utilities;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MongoDB.Driver;
+using Newtonsoft.Json;
 
 namespace Plan.Application.Features.SubscribingPlan;
 
-public record SubscribePlan(string PlanId, string UserId) : ICommand<SubscribePlanResponse>;
+public record SubscribePlan : ICommand<SubscribePlanResponse>
+{
+    public string PlanId { get; set; }
+
+    [JsonIgnore]
+    [BindNever]
+    public string UserId { get; set; }
+}
 
 public class SubscribePlanValidator : AbstractValidator<SubscribePlan>
 {

@@ -1,5 +1,8 @@
 ﻿using System.Text;
 using BuildingBlocks.Core.Web;
+using BuildingBlocks.Security;
+using BuildingBlocks.Security.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +32,7 @@ public class PlanController : BaseController
     }
 
     [HttpPost]
+    [Authorize(Policy = AuthConsts.Admin)]
     public async Task<IActionResult> CreatePlan([FromBody] CreateNewPlan request, CancellationToken cancellationToken)
     {
         await Mediator.Send(request, cancellationToken);
@@ -37,8 +41,11 @@ public class PlanController : BaseController
     }
 
     [HttpPost("subscribe")]
+    [Authorize]
     public async Task<ActionResult<InitializePaymentResponse>> SubscribeToPlan([FromBody] SubscribePlan request, CancellationToken cancellationToken)
     {
+        request.UserId = User.GetUserId();
+
         // add subscription in db
         var subscribeResult = await Mediator.Send(request, cancellationToken);
 
