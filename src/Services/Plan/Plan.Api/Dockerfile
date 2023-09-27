@@ -10,6 +10,7 @@ COPY ["src/BuildingBlocks/BuildingBlocks.Core/BuildingBlocks.Core.csproj", "src/
 COPY ["src/BuildingBlocks/BuildingBlocks.Messaging/BuildingBlocks.Messaging.csproj", "src/BuildingBlocks/BuildingBlocks.Messaging/"]
 COPY ["src/Services/Plan/Plan.Application/Plan.Application.csproj", "src/Services/Plan/Plan.Application/"]
 COPY ["src/BuildingBlocks/BuildingBlocks.Payment/BuildingBlocks.Payment.csproj", "src/BuildingBlocks/BuildingBlocks.Payment/"]
+COPY ["src/BuildingBlocks/BuildingBlocks.Security/BuildingBlocks.Security.csproj", "src/BuildingBlocks/BuildingBlocks.Security/"]
 COPY ["src/Services/Plan/Plan.Domain/Plan.Domain.csproj", "src/Services/Plan/Plan.Domain/"]
 COPY ["src/BuildingBlocks/BuildingBlocks.Persistence.Mongo/BuildingBlocks.Persistence.Mongo.csproj", "src/BuildingBlocks/BuildingBlocks.Persistence.Mongo/"]
 COPY ["src/Services/Plan/Plan.Infrastructure/Plan.Infrastructure.csproj", "src/Services/Plan/Plan.Infrastructure/"]

@@ -1,4 +1,5 @@
-﻿using MassTransit;
+﻿using BuildingBlocks.Security;
+using MassTransit;
 using Plan.Api.Consumers;
 
 namespace Plan.Api;
@@ -22,9 +23,9 @@ public static class ServiceRegistery
             });
         });
 
-        //================================== Swagger
-        services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
+        //================================== Auth & Swagger
+        services.AddServiceJwtAuthentication(configuration);
+        services.AddSwaggerWithAuthentication("Plan Api");
 
         //================================== CORS
 
