@@ -86,8 +86,7 @@ public static class ServiceRegistery
         services.AddAuthorization(options =>
         {
             options.AddPolicy(AuthConsts.Admin, policy => policy.RequireRole("Admin"));
-            options.AddPolicy(AuthConsts.VerifiedUser, policy => policy.RequireRole("VerifiedUser"));
-            options.AddPolicy(AuthConsts.BasicUser, policy => policy.RequireRole("BasicUser"));
+            options.AddPolicy(AuthConsts.User, policy => policy.RequireRole("User"));
         });
     }
 

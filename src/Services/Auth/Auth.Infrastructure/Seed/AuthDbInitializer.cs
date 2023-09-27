@@ -56,21 +56,12 @@ public class AuthDbInitializer
             });
         }
 
-        if (!await _roleManager.RoleExistsAsync(Roles.VerifiedUser.ToString()))
+        if (!await _roleManager.RoleExistsAsync(Roles.User.ToString()))
         {
             await _roleManager.CreateAsync(new UserRole
             {
-                Name = nameof(Roles.VerifiedUser),
-                NormalizedName = nameof(Roles.VerifiedUser).ToUpper()
-            });
-        }
-
-        if (!await _roleManager.RoleExistsAsync(Roles.BasicUser.ToString()))
-        {
-            await _roleManager.CreateAsync(new UserRole
-            {
-                Name = nameof(Roles.BasicUser),
-                NormalizedName = nameof(Roles.BasicUser).ToUpper()
+                Name = nameof(Roles.User),
+                NormalizedName = nameof(Roles.User).ToUpper()
             });
         }
     }
@@ -93,25 +84,7 @@ public class AuthDbInitializer
 
             await _userManager.CreateAsync(adminUser, "123Pa$$word!");
             await _userManager.AddToRoleAsync(adminUser, Roles.Admin.ToString());
-            await _userManager.AddToRoleAsync(adminUser, Roles.VerifiedUser.ToString());
-            await _userManager.AddToRoleAsync(adminUser, Roles.BasicUser.ToString());
-
-            //--------- Verified User
-            var verifiedUser = new User
-            {
-                UserName = "cooluser",
-                Email = "cooluser@gmail.com",
-                FirstName = "کاربر فعال",
-                LastName = "کاربری",
-                PhoneNumber = "09987654321",
-                EmailConfirmed = true,
-                Avatar = AuthPathConsts.DefaultAvatar
-            };
-
-            await _userManager.CreateAsync(verifiedUser, "123Pa$$word!");
-            await _userManager.AddToRoleAsync(verifiedUser, Roles.VerifiedUser.ToString());
-            await _userManager.AddToRoleAsync(verifiedUser, Roles.BasicUser.ToString());
-
+            await _userManager.AddToRoleAsync(adminUser, Roles.User.ToString());
 
             //--------- Basic User
             var basicUser = new User
@@ -126,7 +99,7 @@ public class AuthDbInitializer
             };
 
             await _userManager.CreateAsync(basicUser, "123Pa$$word!");
-            await _userManager.AddToRoleAsync(basicUser, Roles.BasicUser.ToString());
+            await _userManager.AddToRoleAsync(basicUser, Roles.User.ToString());
         }
     }
 }

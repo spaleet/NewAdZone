@@ -15,18 +15,11 @@ public class SecretController : BaseControllerLite
         return Ok("You can access all secret!");
     }
 
-    [Authorize(Policy = AuthConsts.BasicUser)]
+    [Authorize(Policy = AuthConsts.User)]
     [HttpGet("user")]
     public IActionResult UserSecret()
     {
         return Ok("You can access user secret!");
-    }
-
-    [Authorize(Policy = AuthConsts.VerifiedUser)]
-    [HttpGet("verified-user")]
-    public IActionResult VerifiedUserSecret()
-    {
-        return Ok("You can access verified user secret!");
     }
 
     [Authorize(Policy = AuthConsts.Admin)]

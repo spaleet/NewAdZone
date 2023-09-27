@@ -100,7 +100,6 @@ public class JwtTokenFactory : IJwtTokenFactory
 
         // User Roles
         claims.AddRange(rolesClaims.Select(role => new Claim(ClaimTypes.Role, role)));
-        claims.AddRange(rolesClaims.Select(role => new Claim("Role", role)));
 
         var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenSettings.Secret));
         var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);

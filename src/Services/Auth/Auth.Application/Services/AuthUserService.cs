@@ -55,7 +55,7 @@ public class AuthUserService : IAuthUserService
         if (!result.Succeeded)
             throw new ApiException(result.Errors.First().Description);
 
-        await _userManager.AddToRoleAsync(user, Roles.BasicUser.ToString());
+        await _userManager.AddToRoleAsync(user, Roles.User.ToString());
 
         return user.Id.ToString();
     }
@@ -119,17 +119,5 @@ public class AuthUserService : IAuthUserService
             refreshTokenSerial);
 
         return new AuthenticateUserResponse(jwtResult);
-    }
-
-    public async Task<bool> IsVerifiedRole(string userId)
-    {
-        var user = await _userManager.FindByIdAsync(userId);
-
-        if (user is null)
-            throw new NotFoundException("No user was found.");
-
-        bool isInRole = await _userManager.IsInRoleAsync(user, Roles.VerifiedUser.ToString());
-
-        return isInRole;
     }
 }

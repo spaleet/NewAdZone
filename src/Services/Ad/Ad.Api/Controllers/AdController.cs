@@ -5,6 +5,8 @@ using Ad.Application.Features.Ad.GettingAd;
 using Ad.Application.Features.Ad.GettingAds;
 using Ad.Application.Features.Ad.GettingRelatedAds;
 using Ad.Application.Features.Ad.PostingAd;
+using BuildingBlocks.Security;
+using BuildingBlocks.Security.Utils;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Ad.Api.Controllers;
@@ -12,7 +14,6 @@ namespace Ad.Api.Controllers;
 public class AdController : BaseController
 {
     [HttpGet]
-    [Authorize]
     public async Task<ActionResult<GetAdsResponse>> GetAds([FromQuery] GetAds request)
     {
         var ads = await Mediator.Send(request);
@@ -37,6 +38,7 @@ public class AdController : BaseController
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<ActionResult<AdDto>> Post([FromForm] PostAd postAd)
     {
         var res = await Mediator.Send(postAd);
@@ -45,6 +47,7 @@ public class AdController : BaseController
     }
 
     [HttpPut]
+    [Authorize]
     public async Task<IActionResult> Edit([FromForm] EditAd editAd)
     {
         await Mediator.Send(editAd);
@@ -53,6 +56,7 @@ public class AdController : BaseController
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<IActionResult> Delete([FromRoute] long id)
     {
         await Mediator.Send(new DeleteAd(id));

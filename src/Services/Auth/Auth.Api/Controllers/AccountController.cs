@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Auth.Api.Controllers;
 
-[Authorize(Policy = AuthConsts.BasicUser)]
+[Authorize(Policy = AuthConsts.User)]
 public class AccountController : BaseControllerLite
 {
     private readonly IAccountService _accountService;
