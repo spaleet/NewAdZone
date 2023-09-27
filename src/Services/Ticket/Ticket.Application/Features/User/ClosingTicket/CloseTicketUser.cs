@@ -1,9 +1,18 @@
-﻿using MongoDB.Driver;
+﻿using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MongoDB.Driver;
 using Ticket.Application.Exceptions;
 
 namespace Ticket.Application.Features.User.ClosingTicket;
 
-public record CloseTicketUser(string UserId, string TicketId) : ICommand;
+public record CloseTicketUser : ICommand
+{
+    [JsonIgnore]
+    [BindNever]
+    public string UserId { get; set; }
+
+    public string TicketId { get; set; }
+}
 
 public class CloseTicketUserValidator : AbstractValidator<CloseTicketUser>
 {

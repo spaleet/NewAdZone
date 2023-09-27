@@ -1,20 +1,27 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Ticket.Application.Dtos;
 using Ticket.Domain.Enums;
 
 namespace Ticket.Application.Features.User.PostingTicket;
 
-public record PostTicket(
-    string UserId,
-    string Title,
+public record PostTicket : ICommand<TicketDto>
+{
+    [JsonIgnore]
+    [BindNever]
+    public string UserId { get; set; }
+
+    public string Title { get; set; }
 
     [EnumDataType(typeof(TicketDepartmentEnum))]
-    TicketDepartmentEnum Section,
+    public TicketDepartmentEnum Section { get; set; }
 
     [EnumDataType(typeof(TicketPriorityEnum))]
-    TicketPriorityEnum Priority,
+    public TicketPriorityEnum Priority { get; set; }
 
-    string Text) : ICommand<TicketDto>;
+    public string Text { get; set; }
+}
 
 public class PostTicketValidator : AbstractValidator<PostTicket>
 {

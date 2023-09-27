@@ -1,4 +1,6 @@
 ﻿using BuildingBlocks.Core.Web;
+using BuildingBlocks.Security;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Ticket.Application.Dtos;
 using Ticket.Application.Features.Admin.AnsweringTicket;
@@ -8,6 +10,7 @@ using Ticket.Application.Features.Admin.GettingTickets;
 
 namespace Ticket.Api.Controllers.Admin;
 
+[Authorize(Policy = AuthConsts.Admin)]
 public class AdminTicketController : BaseController
 {
     [HttpGet]

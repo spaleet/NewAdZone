@@ -1,9 +1,21 @@
-﻿using MongoDB.Driver;
+﻿using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MongoDB.Driver;
 using Ticket.Application.Dtos;
 using Ticket.Application.Exceptions;
 
 namespace Ticket.Application.Features.User.PostingMessage;
-public record PostMessage(string UserId, string TicketId, string Text) : ICommand<TicketDto>;
+
+public record PostMessage : ICommand<TicketDto>
+{
+    [JsonIgnore]
+    [BindNever]
+    public string UserId { get; set; }
+
+    public string TicketId { get; set; }
+
+    public string Text { get; set; }
+}
 
 public class PostMessageValidator : AbstractValidator<PostMessage>
 {

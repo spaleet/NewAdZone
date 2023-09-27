@@ -1,4 +1,6 @@
 ﻿using BuildingBlocks.Core.Web;
+using BuildingBlocks.Security.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Ticket.Application.Dtos;
 using Ticket.Application.Features.User.ClosingTicket;
@@ -10,6 +12,7 @@ using Ticket.Application.Features.User.PostingTicket;
 
 namespace Ticket.Api.Controllers.User;
 
+[Authorize]
 public class UserTicketController : BaseController
 {
     [HttpGet]
@@ -21,9 +24,9 @@ public class UserTicketController : BaseController
     }
 
     [HttpGet("{id}", Name = "GetTicketDetailsUser")]
-    public async Task<ActionResult<GetTicketDetailsUserResponse>> GetTicketDetailsUser([FromRoute] string id, [FromQuery] string uId, CancellationToken cancellationToken)
+    public async Task<ActionResult<GetTicketDetailsUserResponse>> GetTicketDetailsUser([FromRoute] string id, CancellationToken cancellationToken)
     {
-        var res = await Mediator.Send(new GetTicketDetailsUser(id, uId), cancellationToken);
+        var res = await Mediator.Send(new GetTicketDetailsUser(id, User.GetUserId()), cancellationToken);
 
         return Ok(res);
     }
@@ -31,6 +34,7 @@ public class UserTicketController : BaseController
     [HttpPost("post")]
     public async Task<ActionResult<TicketDto>> PostTicket([FromBody] PostTicket request, CancellationToken cancellationToken)
     {
+        request.UserId = User.GetUserId();
         var res = await Mediator.Send(request, cancellationToken);
 
         return CreatedAtRoute(nameof(GetTicketDetailsUser), new { id = res.Id, uId = res.UserId }, res);
@@ -39,6 +43,7 @@ public class UserTicketController : BaseController
     [HttpDelete("close")]
     public async Task<IActionResult> Close([FromBody] CloseTicketUser request, CancellationToken cancellationToken)
     {
+        request.UserId = User.GetUserId();
         await Mediator.Send(request, cancellationToken);
 
         return NoContent();
@@ -47,6 +52,7 @@ public class UserTicketController : BaseController
     [HttpPost("message/post")]
     public async Task<ActionResult<TicketDto>> PostMessage([FromBody] PostMessage request, CancellationToken cancellationToken)
     {
+        request.UserId = User.GetUserId();
         var res = await Mediator.Send(request, cancellationToken);
 
         return CreatedAtRoute(nameof(GetTicketDetailsUser), new { id = res.Id, uId = res.UserId }, res);
@@ -55,6 +61,7 @@ public class UserTicketController : BaseController
     [HttpDelete("message/close")]
     public async Task<IActionResult> DeleteMessage([FromBody] DeleteMessage request, CancellationToken cancellationToken)
     {
+        request.UserId = User.GetUserId();
         await Mediator.Send(request, cancellationToken);
 
         return NoContent();
