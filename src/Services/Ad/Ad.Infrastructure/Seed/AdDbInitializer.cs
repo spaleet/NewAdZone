@@ -1,6 +1,5 @@
 ﻿using Ad.Domain.Entities;
 using Ad.Infrastructure.Context;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -21,7 +20,9 @@ public class AdDbInitializer
     {
         try
         {
-            if (_context.Database.IsSqlServer())
+            bool created = await _context.Database.EnsureCreatedAsync();
+
+            if (created && _context.Database.IsSqlServer())
             {
                 await _context.Database.MigrateAsync();
 
