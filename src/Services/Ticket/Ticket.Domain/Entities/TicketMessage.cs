@@ -3,6 +3,7 @@ using BuildingBlocks.Persistence.Mongo.Base;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Ticket.Domain.Entities;
+
 public class TicketMessage : MongoEntityBase
 {
     [Display(Name = "تیکت")]

@@ -40,4 +40,3 @@ public static class ConfigurationExtensions
         return BindOptions<TOptions>(configuration, typeof(TOptions).Name);
     }
 }
-

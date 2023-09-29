@@ -1,6 +1,7 @@
 ﻿using System.Net;
 
 namespace BuildingBlocks.Core.Exceptions.Base;
+
 public class IdentityException : CustomException
 {
     public IdentityException(

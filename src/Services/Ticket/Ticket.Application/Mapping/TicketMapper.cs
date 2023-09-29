@@ -31,6 +31,5 @@ public class TicketMapper : Profile
                            opt => opt.Ignore())
             .ForMember(dest => dest.SentDate,
                            opt => opt.MapFrom(src => src.CreationDate.ToLongShamsi()));
-
     }
 }

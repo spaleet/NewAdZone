@@ -12,7 +12,6 @@ public static class FileHelper
         if (extension.StartsWith("."))
             extension = extension.Substring(1);
 
-
         switch (extension.ToLower())
         {
             #region Big freaking list of mime types
@@ -577,7 +576,7 @@ public static class FileHelper
             case "z": return "application/x-compress";
             case "zip": return "application/x-zip-compressed";
 
-            #endregion
+            #endregion Big freaking list of mime types
 
             default: return "application/octet-stream";
         }

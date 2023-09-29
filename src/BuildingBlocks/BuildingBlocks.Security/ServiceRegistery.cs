@@ -1,20 +1,18 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using System.Net;
 using System.Text;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Mvc;
-using System.Net;
 using System.Text.Json;
-using Microsoft.AspNetCore.Http;
+using System.Text.Json.Serialization;
 using BuildingBlocks.Security.Interfaces;
 using BuildingBlocks.Security.Services;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.OpenApi.Models;
-using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Text.Json.Serialization;
 
 namespace BuildingBlocks.Security;
 
@@ -33,7 +31,6 @@ public static class ServiceRegistery
 
         var bearerTokenSettings =
             config.GetSection("BearerTokenSettings").Get(typeof(BearerTokenSettings)) as BearerTokenSettings;
-
 
         // add auth
         services
@@ -158,13 +155,11 @@ public static class ServiceRegistery
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
-
             var excludedProperties = context.ApiDescription.ParameterDescriptions.Where(p =>
                 p.Source.Equals(BindingSource.Form));
 
             if (excludedProperties.Any())
             {
-
                 foreach (var excludedPropertie in excludedProperties)
                 {
                     foreach (var customAttribute in excludedPropertie.CustomAttributes())
@@ -182,16 +177,12 @@ public static class ServiceRegistery
                                             .Remove(operation.RequestBody.Content.Values.ElementAt(i).Encoding
                                                 .ElementAt(j));
                                         operation.RequestBody.Content.Values.ElementAt(i).Schema.Properties.Remove(excludedPropertie.Name);
-
-
                                     }
                                 }
                             }
-
                         }
                     }
                 }
-
             }
         }
     }

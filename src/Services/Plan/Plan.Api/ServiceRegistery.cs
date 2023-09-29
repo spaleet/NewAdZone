@@ -33,6 +33,5 @@ public static class ServiceRegistery
         {
             opt.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
         }));
-
     }
 }

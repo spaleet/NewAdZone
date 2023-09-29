@@ -49,7 +49,6 @@ public class PostMessageHandler : ICommandHandler<PostMessage, TicketDto>
     {
         var ticket = _context.Tickets.AsQueryable().FirstOrDefault(x => x.Id == request.TicketId);
 
-
         if (ticket is null || ticket.UserId != request.UserId)
             throw new InvalidTicketException();
 

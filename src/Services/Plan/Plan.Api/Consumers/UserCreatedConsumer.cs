@@ -29,7 +29,8 @@ public class UserCreatedConsumer : IConsumer<UserCreatedEvent>
         // subscribe to BasicPlan
         string planId = plans.Plans.FirstOrDefault(x => x.Title == nameof(PlanNameConsts.BasicPlan)).Id;
 
-        await _mediator.Send(new SubscribePlan {
+        await _mediator.Send(new SubscribePlan
+        {
             PlanId = planId,
             UserId = userId
         });

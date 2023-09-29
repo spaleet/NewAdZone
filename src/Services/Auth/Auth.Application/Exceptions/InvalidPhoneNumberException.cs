@@ -1,6 +1,7 @@
 ﻿using BuildingBlocks.Core.Exceptions.Base;
 
 namespace Auth.Application.Exceptions;
+
 public class InvalidPhoneNumberException : BadRequestException
 {
     public string PhoneNumber { get; }

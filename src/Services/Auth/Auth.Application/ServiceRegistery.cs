@@ -6,6 +6,7 @@ using BuildingBlocks.Security.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Auth.Application;
+
 public static class ServiceRegistery
 {
     public static void AddApplication(this IServiceCollection services)

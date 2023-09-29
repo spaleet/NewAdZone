@@ -13,7 +13,7 @@ public static class DateConvertors
             $"{pd.GetShamsiDayName(value)} {pd.GetShamsiDay(value)} {pd.GetShamsiMonthName(value)} {pd.GetShamsiYear(value)}";
     }
 
-    #endregion
+    #endregion ToShamsi
 
     #region ToDetailedShamsi
 
@@ -25,7 +25,7 @@ public static class DateConvertors
         return $"{pc.GetHour(value)}:{pc.GetMinute(value)} {pd.GetShamsiDayName(value)} {pd.GetShamsiDay(value)} {pd.GetShamsiMonthName(value)} {pd.GetShamsiYear(value)}";
     }
 
-    #endregion
+    #endregion ToDetailedShamsi
 
     #region ToMiladi
 
@@ -44,7 +44,7 @@ public static class DateConvertors
         return miladyDateTime;
     }
 
-    #endregion
+    #endregion ToMiladi
 
     #region ToFileName
 
@@ -54,7 +54,7 @@ public static class DateConvertors
                + Guid.NewGuid().ToString("N").Substring(0, 4);
     }
 
-    #endregion
+    #endregion ToFileName
 }
 
 public class PersianDateShamsi
@@ -64,13 +64,15 @@ public class PersianDateShamsi
     private PersianCalendar persianCalendar = new PersianCalendar();
     private string[] DaysOfWeek = new[] { "شنبه", "يكشنبه", "دوشنبه", "سه شنبه", "چهارشنبه", "پنجشنبه", "جمعه" };
     private string[] DaysOfWeekShort = new[] { "ش", "ي", "د", "س", "چ", "پ", "ج" };
+
     private string[] Months = new[] {
             "فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"
         };
+
     private string[] Pn = new[] { "۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹" };
     private string[] En = new[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
-    #endregion
+    #endregion Constants
 
     #region Year
 
@@ -105,7 +107,7 @@ public class PersianDateShamsi
         return persianCalendar.GetYear(dateTime).ToString();
     }
 
-    #endregion
+    #endregion Year
 
     #region Month
 
@@ -149,7 +151,7 @@ public class PersianDateShamsi
         return Months[persianCalendar.GetMonth(dateTime) - 1];
     }
 
-    #endregion
+    #endregion Month
 
     #region Day
 
@@ -203,7 +205,7 @@ public class PersianDateShamsi
         return DaysOfWeekShort[dw + 1];
     }
 
-    #endregion
+    #endregion Day
 
     #region Numbers
 
@@ -225,5 +227,5 @@ public class PersianDateShamsi
         return cash;
     }
 
-    #endregion
+    #endregion Numbers
 }

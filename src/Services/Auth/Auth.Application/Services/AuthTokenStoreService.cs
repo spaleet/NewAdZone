@@ -3,6 +3,7 @@
 using Microsoft.Extensions.Options;
 
 namespace Auth.Application.Services;
+
 public class AuthTokenStoreService : IAuthTokenStoreService
 {
     private readonly IAuthDbContext _dbContext;

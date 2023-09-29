@@ -1,9 +1,6 @@
-﻿
-using System.Collections;
-using BuildingBlocks.Persistence.Mongo.Base;
+﻿using BuildingBlocks.Persistence.Mongo.Base;
 using BuildingBlocks.Persistence.Mongo.DbContext;
 using Humanizer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;

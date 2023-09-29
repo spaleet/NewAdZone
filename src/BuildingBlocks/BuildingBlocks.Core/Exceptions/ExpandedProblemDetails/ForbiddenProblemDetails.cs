@@ -12,4 +12,3 @@ public class ForbiddenProblemDetails : ProblemDetails
         Type = "https://httpstatuses.com/403";
     }
 }
-

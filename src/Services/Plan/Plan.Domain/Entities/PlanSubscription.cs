@@ -2,6 +2,7 @@
 using BuildingBlocks.Persistence.Mongo.Base;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+
 namespace Plan.Domain.Entities;
 
 public class PlanSubscription : MongoEntityBase
@@ -21,7 +22,6 @@ public class PlanSubscription : MongoEntityBase
 
     [Display(Name = "وضعیت")]
     [BsonElement("state")]
-    //[BsonRepresentation(MongoDB.Bson.BsonType.Boolean)]
     public PlanSubscriptionState State { get; set; }
 
     [Display(Name = "کد پیگیری")]

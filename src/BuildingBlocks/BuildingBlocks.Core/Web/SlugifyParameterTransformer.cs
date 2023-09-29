@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Routing;
 
 namespace BuildingBlocks.Core.Web;
+
 public class SlugifyParameterTransformer : IOutboundParameterTransformer
 {
     public string TransformOutbound(object value)

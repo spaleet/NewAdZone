@@ -68,7 +68,6 @@ public static class ImageHelper
 
             return fileName;
         }
-
     }
 
     public static void DeleteImage(string fileName, string path)

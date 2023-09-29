@@ -68,7 +68,6 @@ public class AccountService : IAccountService
 
         if (!res.Succeeded)
             throw new BadRequestException(res.Errors.FirstOrDefault().Description);
-
     }
 
     public async Task ChangePassword(ChangePasswordRequest model)

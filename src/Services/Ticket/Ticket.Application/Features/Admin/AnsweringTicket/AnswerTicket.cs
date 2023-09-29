@@ -77,4 +77,3 @@ public class AnswerTicketHandler : ICommandHandler<AnswerTicket, TicketDto>
         return _mapper.Map<TicketDto>(ticket);
     }
 }
-

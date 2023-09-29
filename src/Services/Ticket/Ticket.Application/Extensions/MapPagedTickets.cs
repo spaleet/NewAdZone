@@ -3,6 +3,7 @@ using BuildingBlocks.Core.Utilities;
 using Ticket.Application.Dtos;
 
 namespace Ticket.Application.Extensions;
+
 public static class MapPagedTickets
 {
     public static PagingModel<TicketDto> MapTicketsDate(this PagingModel<TicketDto> query)

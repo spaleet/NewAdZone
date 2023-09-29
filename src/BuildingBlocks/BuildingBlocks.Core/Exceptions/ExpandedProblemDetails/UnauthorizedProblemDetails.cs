@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
 namespace BuildingBlocks.Core.Exceptions.ExpandedProblemDetails;
+
 public class UnauthorizedProblemDetails : ProblemDetails
 {
     public UnauthorizedProblemDetails(string? details = null)

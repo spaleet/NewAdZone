@@ -14,6 +14,7 @@ public class DeleteAdValidator : AbstractValidator<DeleteAd>
 public class DeleteAdHandler : ICommandHandler<DeleteAd>
 {
     private readonly IAdDbContext _context;
+
     public DeleteAdHandler(IAdDbContext context)
     {
         _context = context;

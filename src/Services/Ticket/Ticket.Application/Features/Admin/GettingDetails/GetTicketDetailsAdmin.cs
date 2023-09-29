@@ -15,7 +15,6 @@ public class GetAdValidator : AbstractValidator<GetTicketDetailsAdmin>
     }
 }
 
-
 public class GetTicketDetailsAdminHandler : IQueryHandler<GetTicketDetailsAdmin, GetTicketDetailsAdminResponse>
 {
     private readonly TicketDbContext _context;

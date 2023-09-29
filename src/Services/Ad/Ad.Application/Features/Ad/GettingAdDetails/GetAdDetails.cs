@@ -13,7 +13,6 @@ public class GetAdValidator : AbstractValidator<GetAdDetails>
     }
 }
 
-
 public class GetAdDetailsHandler : IQueryHandler<GetAdDetails, GetAdDetailsResponse>
 {
     private readonly IAdDbContext _context;

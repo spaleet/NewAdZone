@@ -9,7 +9,6 @@ public class AdCategory : EfEntityBase<long>
 {
     public AdCategory()
     {
-
     }
 
     public AdCategory(string title, long? parentId = null)

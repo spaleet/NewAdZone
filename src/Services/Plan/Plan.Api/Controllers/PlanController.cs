@@ -18,6 +18,7 @@ namespace Plan.Api.Controllers;
 public class PlanController : BaseController
 {
     private readonly IServer _server;
+
     public PlanController(IServer server)
     {
         _server = server;
@@ -73,7 +74,6 @@ public class PlanController : BaseController
                                                    [FromQuery(Name = "Status")] string status,
                                                    CancellationToken cancellationToken)
     {
-
         if (string.IsNullOrEmpty(authority) || status.ToLower() != "ok" || string.IsNullOrEmpty(subId))
             return BadRequest("پرداخت با موفقیت انجام نشد. درصورت کسر وجه از حساب، مبلغ تا 24 ساعت دیگر به حساب شما بازگردانده خواهد شد.");
 

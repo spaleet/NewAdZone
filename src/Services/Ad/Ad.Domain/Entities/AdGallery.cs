@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using BuildingBlocks.Persistence.Ef.Base;
 
 namespace Ad.Domain.Entities;
+
 public class AdGallery : EfEntityBase<Guid>
 {
     [Display(Name = "آگهی")]

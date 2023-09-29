@@ -14,7 +14,6 @@ public class GetPlansHandler : IQueryHandler<GetPlans, GetPlansResponse>
     {
         _context = context;
         _mapper = mapper;
-
     }
 
     public async Task<GetPlansResponse> Handle(GetPlans request, CancellationToken cancellationToken)

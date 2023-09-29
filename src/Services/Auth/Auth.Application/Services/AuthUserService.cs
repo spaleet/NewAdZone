@@ -7,6 +7,7 @@ using AutoMapper;
 using BuildingBlocks.Core.Exceptions.Base;
 
 namespace Auth.Application.Services;
+
 public class AuthUserService : IAuthUserService
 {
     private readonly SignInManager<User> _signInManager;

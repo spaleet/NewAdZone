@@ -2,6 +2,7 @@
 using BuildingBlocks.Core.Exceptions.Base;
 
 namespace Auth.Application.Exceptions;
+
 public class InvalidEmailException : BadRequestException
 {
     public string Email { get; }

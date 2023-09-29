@@ -1,6 +1,5 @@
 ﻿using Auth.Application.Interfaces;
 using Auth.Application.Models;
-using Auth.Domain.Enums;
 using BuildingBlocks.Core.Web;
 using BuildingBlocks.Security;
 using Microsoft.AspNetCore.Authorization;

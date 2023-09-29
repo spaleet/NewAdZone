@@ -1,13 +1,13 @@
-﻿using Auth.Domain.Entities;
+﻿using Auth.Application.Consts;
+using Auth.Domain.Entities;
 using Auth.Domain.Enums;
 using Auth.Infrastructure.Context;
-using BuildingBlocks.Core.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Auth.Application.Consts;
 
 namespace Auth.Infrastructure.Seed;
+
 public class AuthDbInitializer
 {
     private readonly DatabaseContext _context;

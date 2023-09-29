@@ -13,6 +13,7 @@ public class GetRelatedAdsValidator : AbstractValidator<GetRelatedAds>
             .RequiredValidator("آدرس اسلاگ");
     }
 }
+
 public class GetRelatedAdsHandler : IQueryHandler<GetRelatedAds, List<AdDto>>
 {
     private readonly IAdDbContext _context;

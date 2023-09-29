@@ -4,6 +4,7 @@ using BuildingBlocks.Persistence.Mongo.DbContext;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BuildingBlocks.Persistence.Mongo;
+
 public static class ServiceRegistery
 {
     public static IServiceCollection AddMongoDbContext<TContext>(this IServiceCollection services)
@@ -17,4 +18,3 @@ public static class ServiceRegistery
         return services;
     }
 }
-

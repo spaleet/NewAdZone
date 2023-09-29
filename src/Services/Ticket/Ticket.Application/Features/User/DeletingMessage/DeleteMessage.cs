@@ -29,6 +29,7 @@ public class DeleteMessageValidator : AbstractValidator<DeleteMessage>
 public class DeleteMessageHandler : ICommandHandler<DeleteMessage>
 {
     private readonly TicketDbContext _context;
+
     public DeleteMessageHandler(TicketDbContext context)
     {
         _context = context;

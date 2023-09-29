@@ -33,7 +33,6 @@ public class UploadGalleryHandler : ICommandHandler<UploadGallery, UploadGallery
         // upload new image
         string uploadFileName = request.ImageSource.UploadImage(AdPathConsts.Gallery, width: 500, height: 500);
 
-
         // save db
         var gallery = new Domain.Entities.AdGallery
         {

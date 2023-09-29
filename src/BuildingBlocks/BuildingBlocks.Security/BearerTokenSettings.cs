@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace BuildingBlocks.Security;
+
 public class BearerTokenSettings
 {
     [Required]

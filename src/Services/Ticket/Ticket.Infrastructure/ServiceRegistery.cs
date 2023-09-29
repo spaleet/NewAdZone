@@ -12,6 +12,5 @@ public static class ServiceRegistery
         services.AddMongoDbContext<TicketDbContext>();
 
         services.AddScoped<TicketDbInitializer>();
-
     }
 }

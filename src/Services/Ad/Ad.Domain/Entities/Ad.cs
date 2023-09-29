@@ -50,5 +50,4 @@ public class Ad : EfEntityBase<long>
     public virtual AdCategory AdCategory { get; set; }
 
     public virtual ICollection<AdGallery> AdGalleries { get; set; }
-
 }

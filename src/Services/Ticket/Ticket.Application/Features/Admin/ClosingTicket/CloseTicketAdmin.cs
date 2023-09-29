@@ -5,7 +5,6 @@ namespace Ticket.Application.Features.Admin.ClosingTicket;
 
 public record CloseTicketAdmin(string TicketId) : ICommand;
 
-
 public class CloseTicketAdminValidator : AbstractValidator<CloseTicketAdmin>
 {
     public CloseTicketAdminValidator()
@@ -18,6 +17,7 @@ public class CloseTicketAdminValidator : AbstractValidator<CloseTicketAdmin>
 public class CloseTicketAdminHandler : ICommandHandler<CloseTicketAdmin>
 {
     private readonly TicketDbContext _context;
+
     public CloseTicketAdminHandler(TicketDbContext context)
     {
         _context = context;

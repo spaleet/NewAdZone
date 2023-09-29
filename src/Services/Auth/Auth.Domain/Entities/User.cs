@@ -8,7 +8,6 @@ public class User : IdentityUser<Guid>, AuditableBase
 {
     public User()
     {
-
     }
 
     [Display(Name = "نام")]

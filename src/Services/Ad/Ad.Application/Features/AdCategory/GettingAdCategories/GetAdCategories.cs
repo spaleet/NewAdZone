@@ -14,7 +14,6 @@ public class GetAdCategoriesHandler : IQueryHandler<GetAdCategories, GetAdCatego
     {
         _context = context;
         _mapper = mapper;
-
     }
 
     public async Task<GetAdCategoriesResponse> Handle(GetAdCategories request, CancellationToken cancellationToken)

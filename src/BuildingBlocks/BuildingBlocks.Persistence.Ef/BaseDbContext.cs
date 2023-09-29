@@ -9,7 +9,6 @@ public interface IBaseDbContext
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = new());
 }
 
-
 public abstract class BaseDbContext : DbContext, IBaseDbContext
 {
     public BaseDbContext(DbContextOptions options) : base(options)
@@ -71,5 +70,4 @@ public abstract class BaseDbContext : DbContext, IBaseDbContext
 
         base.OnModelCreating(modelBuilder);
     }
-
 }

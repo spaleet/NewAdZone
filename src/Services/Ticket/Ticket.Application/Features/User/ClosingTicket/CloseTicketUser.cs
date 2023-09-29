@@ -29,6 +29,7 @@ public class CloseTicketUserValidator : AbstractValidator<CloseTicketUser>
 public class CloseTicketUserHandler : ICommandHandler<CloseTicketUser>
 {
     private readonly TicketDbContext _context;
+
     public CloseTicketUserHandler(TicketDbContext context)
     {
         _context = context;

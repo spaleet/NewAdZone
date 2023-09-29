@@ -19,7 +19,6 @@ public class AdMapper : Profile
             .ForMember(dest => dest.Slug,
                            opt => opt.MapFrom(src => src.Title.ToSlug()));
 
-
         CreateMap<Domain.Entities.Ad, AdDto>()
             .ForMember(dest => dest.Description,
                            opt => opt.MapFrom(src => src.Description.Substring(0, 20) + " ..."))
@@ -45,6 +44,5 @@ public class AdMapper : Profile
                            opt => opt.MapFrom(src => src.SelectedCategory))
             .ForMember(dest => dest.Slug,
                            opt => opt.MapFrom(src => src.Title.ToSlug()));
-
     }
 }

@@ -4,11 +4,11 @@ namespace BuildingBlocks.Core.Utilities;
 
 public static class Generator
 {
-    private readonly static char[] Letters = "ABCDEFGHJKMNPQRSTUVWXYZ".ToCharArray();
+    private static readonly char[] Letters = "ABCDEFGHJKMNPQRSTUVWXYZ".ToCharArray();
 
-    private readonly static char[] Numbers = "0123456789".ToCharArray();
+    private static readonly char[] Numbers = "0123456789".ToCharArray();
 
-    private readonly static char[] Chars =
+    private static readonly char[] Chars =
         "$%#@!*?;:abcdefghijklmnopqrstuvxxyzABCDEFGHIJKLMNOPQRSTUVWXYZ^&".ToCharArray();
 
     public static string Code(int subString = 5)

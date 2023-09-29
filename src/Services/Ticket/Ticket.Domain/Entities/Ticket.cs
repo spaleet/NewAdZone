@@ -5,6 +5,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using Ticket.Domain.Enums;
 
 namespace Ticket.Domain.Entities;
+
 public class Ticket : MongoEntityBase
 {
     [Display(Name = "کاربر")]

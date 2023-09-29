@@ -43,7 +43,7 @@ public class DatabaseContext : IdentityDbContext<User, UserRole, Guid>, IAuthDbC
 
         foreach (var modifiedEntry in modifiedEntries)
         {
-            //if modifiedEntry inherits BaseEntity. 
+            //if modifiedEntry inherits BaseEntity.
             var baseEntity = modifiedEntry as AuditableBase;
             if (baseEntity != null)
             {

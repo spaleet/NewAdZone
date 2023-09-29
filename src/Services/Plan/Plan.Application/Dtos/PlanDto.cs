@@ -1,4 +1,5 @@
 ﻿namespace Plan.Application.Dtos;
+
 public class PlanDto
 {
     public string Id { get; set; }

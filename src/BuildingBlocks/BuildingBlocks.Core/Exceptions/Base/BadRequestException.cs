@@ -1,6 +1,7 @@
 ﻿using System.Net;
 
 namespace BuildingBlocks.Core.Exceptions.Base;
+
 public class BadRequestException : CustomException
 {
     public BadRequestException(string message)
@@ -9,4 +10,3 @@ public class BadRequestException : CustomException
         StatusCode = HttpStatusCode.BadRequest;
     }
 }
-

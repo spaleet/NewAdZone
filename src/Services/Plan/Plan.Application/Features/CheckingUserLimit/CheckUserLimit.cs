@@ -16,6 +16,7 @@ public class CheckUserLimitValidator : AbstractValidator<CheckUserLimit>
 public class CheckUserLimitHandler : IQueryHandler<CheckUserLimit, bool>
 {
     private readonly PlanDbContext _context;
+
     public CheckUserLimitHandler(PlanDbContext context)
     {
         _context = context;

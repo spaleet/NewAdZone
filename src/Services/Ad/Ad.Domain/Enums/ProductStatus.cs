@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace Ad.Domain.Enums;
+
 public enum ProductStatus
 {
     /// <summary>

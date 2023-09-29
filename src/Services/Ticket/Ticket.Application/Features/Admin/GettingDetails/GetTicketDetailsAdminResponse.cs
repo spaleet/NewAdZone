@@ -2,6 +2,7 @@
 using Ticket.Domain.Enums;
 
 namespace Ticket.Application.Features.Admin.GettingDetails;
+
 public class GetTicketDetailsAdminResponse
 {
     public string Id { get; set; }

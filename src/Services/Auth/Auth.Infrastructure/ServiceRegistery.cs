@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Auth.Infrastructure;
+
 public static class ServiceRegistery
 {
     public static void AddInfrastructure(this IServiceCollection services, string connectionString)

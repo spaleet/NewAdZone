@@ -1,6 +1,7 @@
 ﻿using Ad.Domain.Entities;
 
 namespace Ad.Application.Extensions;
+
 public static class AdCategoryExtension
 {
     public static async Task<string> JoinTags(this DbSet<AdCategory> query, long categoryId)

@@ -1,4 +1,5 @@
 ﻿namespace Ad.Infrastructure.Settings;
+
 public sealed class UserClientOptions
 {
     public string UserRoleUrl { get; set; }

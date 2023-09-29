@@ -7,5 +7,4 @@ global using FluentValidation;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.EntityFrameworkCore;
 
-
 namespace Auth.Application;

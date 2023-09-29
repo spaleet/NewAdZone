@@ -22,7 +22,6 @@ public class JwtTokenFactory : IJwtTokenFactory
         _logger = logger;
     }
 
-
     public async Task<JwtTokenResponse> CreateJwtTokenAsync(string userId,
                                                             string userName,
                                                             string email,

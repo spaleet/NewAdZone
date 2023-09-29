@@ -8,7 +8,6 @@ public class Plan : MongoEntityBase
 {
     public Plan()
     {
-
     }
 
     public Plan(string title, int monthlyQuota, decimal price)

@@ -1,5 +1,4 @@
-﻿using Auth.Domain.Enums;
-using BuildingBlocks.Core.Web;
+﻿using BuildingBlocks.Core.Web;
 using BuildingBlocks.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

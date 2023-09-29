@@ -2,6 +2,7 @@
 using FluentValidation;
 
 namespace BuildingBlocks.Core.Validation;
+
 public static class ValidationExtension
 {
     public static void ValidateWithResponse<T>(this AbstractValidator<T> validator, T request)

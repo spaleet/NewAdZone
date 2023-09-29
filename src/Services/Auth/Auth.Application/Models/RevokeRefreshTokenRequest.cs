@@ -1,4 +1,5 @@
 ﻿namespace Auth.Application.Models;
+
 public class RevokeRefreshTokenRequest
 {
     public string RefreshToken { get; set; }

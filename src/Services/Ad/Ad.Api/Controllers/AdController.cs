@@ -5,7 +5,6 @@ using Ad.Application.Features.Ad.GettingAd;
 using Ad.Application.Features.Ad.GettingAds;
 using Ad.Application.Features.Ad.GettingRelatedAds;
 using Ad.Application.Features.Ad.PostingAd;
-using BuildingBlocks.Security;
 using BuildingBlocks.Security.Utils;
 using Microsoft.AspNetCore.Authorization;
 

@@ -3,6 +3,7 @@ using BuildingBlocks.Security.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace BuildingBlocks.Security.Services;
+
 public class AuthTokenValidatorService : IAuthTokenValidatorService
 {
     //private readonly IAuthTokenStoreService _authTokenStoreService;
@@ -46,7 +47,6 @@ public class AuthTokenValidatorService : IAuthTokenValidatorService
         //    context.Fail("This token is expired. Please login again.");
         //    return;
         //}
-
 
         //if (context.SecurityToken is not JwtSecurityToken accessToken ||
         //    string.IsNullOrWhiteSpace(accessToken.RawData) ||

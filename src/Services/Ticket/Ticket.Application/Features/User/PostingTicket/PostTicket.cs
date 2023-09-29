@@ -37,7 +37,6 @@ public class PostTicketValidator : AbstractValidator<PostTicket>
         RuleFor(x => x.Priority)
             .IsInEnum();
 
-
         RuleFor(x => x.Text)
             .RequiredValidator("متن")
             .MinLengthValidator("متن", 50)

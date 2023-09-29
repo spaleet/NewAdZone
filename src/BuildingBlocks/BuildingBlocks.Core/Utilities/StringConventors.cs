@@ -7,16 +7,16 @@ public static class StringConventors
 {
     public static string ToSlug(this string value)
     {
-        //First to lower case 
+        //First to lower case
         value = value.ToLowerInvariant();
 
-        //Replace spaces 
+        //Replace spaces
         value = Regex.Replace(value, @"\s", "-", RegexOptions.Compiled);
 
-        //Trim dashes from end 
+        //Trim dashes from end
         value = value.Trim('-', '_');
 
-        //Replace double occurences of - or \_ 
+        //Replace double occurences of - or \_
         value = Regex.Replace(value, @"([-_]){2,}", "$1", RegexOptions.Compiled);
 
         return value;

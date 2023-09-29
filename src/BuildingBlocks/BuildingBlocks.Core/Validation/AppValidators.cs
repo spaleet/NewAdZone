@@ -16,7 +16,7 @@ public static class AppValidators
                           .WithMessage(string.Format("لطفا {0} را وارد کنید", propertyName));
     }
 
-    #endregion
+    #endregion Required Validator
 
     #region Range Validator
 
@@ -39,7 +39,7 @@ public static class AppValidators
             .WithMessage(string.Format("لطفا {0} را وارد کنید", propertyName));
     }
 
-    #endregion
+    #endregion Range Validator
 
     #region MaxLengthValidator
 
@@ -50,7 +50,7 @@ public static class AppValidators
             .WithMessage(string.Format("مقدار {0} نباید بیشتر از {1} کاراکتر باشد", propertyName, maxLength));
     }
 
-    #endregion
+    #endregion MaxLengthValidator
 
     #region MinLengthValidator
 
@@ -61,7 +61,7 @@ public static class AppValidators
             .WithMessage(string.Format("مقدار {0} نباید کمتر از {1} کاراکتر باشد", propertyName, minLength));
     }
 
-    #endregion
+    #endregion MinLengthValidator
 
     #region EmailAddressValidator
 
@@ -71,7 +71,7 @@ public static class AppValidators
             .WithMessage("ایمیل وارد شده نامعتبر است");
     }
 
-    #endregion
+    #endregion EmailAddressValidator
 
     #region MobileValidator
 
@@ -85,7 +85,7 @@ public static class AppValidators
             .WithMessage("شماره موبایل وارد شده نامعتبر است");
     }
 
-    #endregion
+    #endregion MobileValidator
 
     #region MaxFileSizeValidator
 
@@ -103,5 +103,5 @@ public static class AppValidators
             .WithMessage("حجم فایل بیشتر از مقدار مجاز است. لطفا فایل دیگری آپلود کنید");
     }
 
-    #endregion
+    #endregion MaxFileSizeValidator
 }

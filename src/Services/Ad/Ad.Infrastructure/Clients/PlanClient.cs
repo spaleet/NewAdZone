@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.WebUtilities;
 
 namespace Ad.Infrastructure.Clients;
+
 public class PlanClient : IPlanClient
 {
     private readonly HttpClient _client;

@@ -2,6 +2,7 @@
 using Ticket.Domain.Enums;
 
 namespace Ticket.Application.Dtos;
+
 public class TicketDto
 {
     public string Id { get; set; }
@@ -24,5 +25,4 @@ public class TicketDto
     public DateTime CreationDate { get; set; }
 
     public string SentDate { get; set; }
-
 }
