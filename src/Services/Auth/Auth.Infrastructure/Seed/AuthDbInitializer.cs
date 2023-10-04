@@ -28,17 +28,14 @@ public class AuthDbInitializer
     {
         try
         {
-            bool created = await _context.Database.EnsureCreatedAsync();
+            await _context.Database.MigrateAsync();
 
-            if (created && _context.Database.IsSqlServer())
-            {
-                await _context.Database.MigrateAsync();
+            await SeedRolesAsync();
+            await SeedUsersAsync();
 
-                await SeedRolesAsync();
-                await SeedUsersAsync();
+            await _context.SaveChangesAsync();
 
-                _logger.LogInformation("Successfully initialized Auth Db!");
-            }
+            _logger.LogInformation("Successfully initialized Auth Db!");
         }
         catch (Exception ex)
         {

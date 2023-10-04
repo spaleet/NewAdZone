@@ -1,27 +1,25 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
 using Ad.Application.Clients;
 using Ad.Application.Dtos;
 using Ad.Application.Extensions;
 using AutoMapper;
 using BuildingBlocks.Core.Exceptions.Base;
+using BuildingBlocks.Security.Utils;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 
 namespace Ad.Application.Features.Ad.PostingAd;
 
 public record PostAd : ICommand<AdDto>
 {
-    [JsonIgnore]
-    [BindNever]
-    public string UserId { get; set; }
-
     public long SelectedCategory { get; set; }
 
     public string Title { get; set; }
 
+    [EnumDataType(typeof(SaleStatus))]
     public SaleStatus SaleState { get; set; }
 
+    [EnumDataType(typeof(ProductStatus))]
     public ProductStatus ProductState { get; set; }
 
     public string Description { get; set; }
@@ -50,13 +48,15 @@ public class PostAdValidator : AbstractValidator<PostAd>
 
 public class PostAdHandler : ICommandHandler<PostAd, AdDto>
 {
+    private readonly IHttpContextAccessor _httpContext;
     private readonly IAdDbContext _context;
     private readonly IMapper _mapper;
     private readonly IPlanClient _planClient;
     private readonly ILogger<PostAdHandler> _logger;
 
-    public PostAdHandler(IAdDbContext context, IMapper mapper, IPlanClient planClient, ILogger<PostAdHandler> logger)
+    public PostAdHandler(IHttpContextAccessor httpContext, IAdDbContext context, IMapper mapper, IPlanClient planClient, ILogger<PostAdHandler> logger)
     {
+        _httpContext = httpContext;
         _context = context;
         _mapper = mapper;
         _planClient = planClient;
@@ -65,12 +65,14 @@ public class PostAdHandler : ICommandHandler<PostAd, AdDto>
 
     public async Task<AdDto> Handle(PostAd request, CancellationToken cancellationToken)
     {
-        int adsPosted = await _context.Ads.CountAsync(x => x.UserId == request.UserId);
+        var userId = _httpContext.HttpContext.User.GetUserId();
+
+        int adsPosted = await _context.Ads.CountAsync(x => x.UserId == userId);
 
         // check user plan limit
-        bool verifyPlan = await _planClient.VerifyPlanLimit(request.UserId, adsPosted);
+        bool verifyPlan = await _planClient.VerifyPlanLimit(userId, adsPosted);
 
-        _logger.LogInformation("Verify Plan result: {0} for user Id : {1}", verifyPlan, request.UserId);
+        _logger.LogInformation("Verify Plan result: {0} for user Id : {1}", verifyPlan, userId);
 
         if (!verifyPlan)
             throw new BadRequestException("شما بیشتر از حداکثر تعداد آگهی در پلن انتخاب شده، آگهی ثبت کرده اید! پلن را ارتقا دهید ");

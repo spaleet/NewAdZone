@@ -40,7 +40,6 @@ public class AdController : BaseController
     [Authorize]
     public async Task<ActionResult<AdDto>> Post([FromForm] PostAd postAd)
     {
-        postAd.UserId = User.GetUserId();
         var res = await Mediator.Send(postAd);
 
         return CreatedAtRoute(nameof(GetAd), new { slug = res.Slug }, res);

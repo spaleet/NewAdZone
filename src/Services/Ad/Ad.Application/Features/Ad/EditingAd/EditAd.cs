@@ -1,4 +1,5 @@
-﻿using Ad.Application.Extensions;
+﻿using System.ComponentModel.DataAnnotations;
+using Ad.Application.Extensions;
 using AutoMapper;
 using BuildingBlocks.Core.Exceptions.Base;
 using Microsoft.AspNetCore.Http;
@@ -15,8 +16,10 @@ public record EditAd : ICommand
 
     public string Title { get; set; }
 
+    [EnumDataType(typeof(SaleStatus))]
     public SaleStatus SaleState { get; set; }
 
+    [EnumDataType(typeof(ProductStatus))]
     public ProductStatus ProductState { get; set; }
 
     public string Description { get; set; }

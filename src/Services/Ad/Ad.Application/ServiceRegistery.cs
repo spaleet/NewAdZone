@@ -14,6 +14,8 @@ public static class ServiceRegistery
         services.AddAutoMapper(typeof(AssemblyMarker));
         services.AddValidatorsFromAssemblyContaining<AssemblyMarker>();
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
+        services.AddHttpContextAccessor();
     }
 }
 

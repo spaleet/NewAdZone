@@ -4,7 +4,6 @@ namespace Ad.Application.Dtos;
 
 public class AdCategoryDto
 {
-    [JsonIgnore]
     public long Id { get; set; }
 
     public string Title { get; set; }
