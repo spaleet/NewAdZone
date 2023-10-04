@@ -16,7 +16,7 @@ builder.Services.AddApi(builder.Configuration);
 
 var app = builder.Build();
 
-await app.UseDbInitializer();
+app.MigrateDatabase();
 
 app.UseProblemDetails();
 

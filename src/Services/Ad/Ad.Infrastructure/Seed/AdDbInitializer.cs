@@ -16,20 +16,16 @@ public class AdDbInitializer
         _context = context;
     }
 
-    public async Task InitializeAsync()
+    public void Initialize()
     {
         try
         {
-            bool created = await _context.Database.EnsureCreatedAsync();
+            // don't use EnsureCreated with Migrate
+            _context.Database.Migrate();
 
-            if (created && _context.Database.IsSqlServer())
-            {
-                await _context.Database.MigrateAsync();
+            SeedCategories();
 
-                await SeedCategoriesAsync();
-
-                _logger.LogInformation("Successfully initialized Ad Db!");
-            }
+            _logger.LogInformation("Successfully initialized Ad Db!");
         }
         catch (Exception ex)
         {
@@ -38,24 +34,24 @@ public class AdDbInitializer
         }
     }
 
-    private async Task SeedCategoriesAsync()
+    private void SeedCategories()
     {
-        if (!await _context.AdCategories.AnyAsync())
+        if (!_context.AdCategories.Any())
         {
             var mobileCategory = new AdCategory("موبایل");
 
-            await _context.AdCategories.AddAsync(mobileCategory);
-            await _context.SaveChangesAsync();
+            _context.AdCategories.Add(mobileCategory);
+            _context.SaveChanges();
 
             var laptopCategory = new AdCategory("لپتاپ");
 
-            await _context.AdCategories.AddAsync(laptopCategory);
-            await _context.SaveChangesAsync();
+            _context.AdCategories.Add(laptopCategory);
+            _context.SaveChanges();
 
             var headphoneCategory = new AdCategory("هدفون");
 
-            await _context.AdCategories.AddAsync(headphoneCategory);
-            await _context.SaveChangesAsync();
+            _context.AdCategories.Add(headphoneCategory);
+            _context.SaveChanges();
 
             List<AdCategory> seeds = new List<AdCategory>
             {
@@ -71,8 +67,8 @@ public class AdDbInitializer
                 new ("گلکسی بادز", parentId: headphoneCategory.Id),
             };
 
-            await _context.AdCategories.AddRangeAsync(seeds);
-            await _context.SaveChangesAsync();
+            _context.AdCategories.AddRange(seeds);
+            _context.SaveChanges();
         }
     }
 }
