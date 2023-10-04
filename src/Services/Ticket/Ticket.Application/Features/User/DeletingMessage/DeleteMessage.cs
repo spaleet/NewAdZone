@@ -1,18 +1,10 @@
-﻿using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using Microsoft.AspNetCore.Http;
 using MongoDB.Driver;
 using Ticket.Application.Exceptions;
 
 namespace Ticket.Application.Features.User.DeletingMessage;
 
-public record DeleteMessage : ICommand
-{
-    public string MessageId { get; set; }
-
-    [JsonIgnore]
-    [BindNever]
-    public string UserId { get; set; }
-}
+public record DeleteMessage(string MessageId) : ICommand;
 
 public class DeleteMessageValidator : AbstractValidator<DeleteMessage>
 {
@@ -20,23 +12,24 @@ public class DeleteMessageValidator : AbstractValidator<DeleteMessage>
     {
         RuleFor(x => x.MessageId)
             .RequiredValidator("شناسه");
-
-        RuleFor(x => x.UserId)
-            .RequiredValidator("شناسه کاربری");
     }
 }
 
 public class DeleteMessageHandler : ICommandHandler<DeleteMessage>
 {
     private readonly TicketDbContext _context;
+    private readonly IHttpContextAccessor _httpContext;
 
-    public DeleteMessageHandler(TicketDbContext context)
+    public DeleteMessageHandler(TicketDbContext context, IHttpContextAccessor httpContext)
     {
         _context = context;
+        _httpContext = httpContext;
     }
 
     public async Task<Unit> Handle(DeleteMessage request, CancellationToken cancellationToken)
     {
+        string userId = _httpContext.HttpContext.User.GetUserId();
+
         var ticketMessage = await _context.TicketMessages.Find(x => x.Id == request.MessageId).FirstOrDefaultAsync();
 
         if (ticketMessage is null)
@@ -44,7 +37,7 @@ public class DeleteMessageHandler : ICommandHandler<DeleteMessage>
 
         var ticket = _context.Tickets.AsQueryable().FirstOrDefault(x => x.Id == ticketMessage.TicketId);
 
-        if (ticket is null || ticket.UserId != request.UserId)
+        if (ticket is null || ticket.UserId != userId)
             throw new InvalidTicketException();
 
         var filter = Builders<TicketMessage>.Filter.Eq(x => x.Id, ticketMessage.Id);

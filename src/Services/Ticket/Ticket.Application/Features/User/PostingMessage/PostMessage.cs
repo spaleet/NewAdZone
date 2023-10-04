@@ -1,4 +1,6 @@
 ﻿using System.Text.Json.Serialization;
+using BuildingBlocks.Security.Utils;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MongoDB.Driver;
 using Ticket.Application.Dtos;
@@ -6,24 +8,12 @@ using Ticket.Application.Exceptions;
 
 namespace Ticket.Application.Features.User.PostingMessage;
 
-public record PostMessage : ICommand<TicketDto>
-{
-    [JsonIgnore]
-    [BindNever]
-    public string UserId { get; set; }
-
-    public string TicketId { get; set; }
-
-    public string Text { get; set; }
-}
+public record PostMessage(string TicketId, string Text) : ICommand<TicketDto>;
 
 public class PostMessageValidator : AbstractValidator<PostMessage>
 {
     public PostMessageValidator()
     {
-        RuleFor(x => x.UserId)
-            .RequiredValidator("شناسه کاربری");
-
         RuleFor(x => x.TicketId)
             .RequiredValidator("شناسه");
 
@@ -38,18 +28,22 @@ public class PostMessageHandler : ICommandHandler<PostMessage, TicketDto>
 {
     private readonly TicketDbContext _context;
     private readonly IMapper _mapper;
+    private readonly IHttpContextAccessor _httpContext;
 
-    public PostMessageHandler(TicketDbContext context, IMapper mapper)
+    public PostMessageHandler(TicketDbContext context, IMapper mapper, IHttpContextAccessor httpContext)
     {
         _context = context;
         _mapper = mapper;
+        _httpContext = httpContext;
     }
 
     public async Task<TicketDto> Handle(PostMessage request, CancellationToken cancellationToken)
     {
+        string userId = _httpContext.HttpContext.User.GetUserId();
+
         var ticket = _context.Tickets.AsQueryable().FirstOrDefault(x => x.Id == request.TicketId);
 
-        if (ticket is null || ticket.UserId != request.UserId)
+        if (ticket is null || ticket.UserId != userId)
             throw new InvalidTicketException();
 
         // insert ticket message
@@ -57,7 +51,7 @@ public class PostMessageHandler : ICommandHandler<PostMessage, TicketDto>
         {
             TicketId = ticket.Id,
             Text = request.Text,
-            UserId = request.UserId
+            UserId = userId
         };
 
         await _context.TicketMessages.InsertOneAsync(ticketMessage);

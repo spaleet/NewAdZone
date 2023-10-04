@@ -2,6 +2,7 @@
 using Ad.Application.Extensions;
 using AutoMapper;
 using BuildingBlocks.Core.Exceptions.Base;
+using BuildingBlocks.Security.Utils;
 using Microsoft.AspNetCore.Http;
 
 namespace Ad.Application.Features.Ad.EditingAd;
@@ -9,8 +10,6 @@ namespace Ad.Application.Features.Ad.EditingAd;
 public record EditAd : ICommand
 {
     public long Id { get; set; }
-
-    public long UserId { get; set; }
 
     public long SelectedCategory { get; set; }
 
@@ -51,17 +50,21 @@ public class EditAdValidator : AbstractValidator<EditAd>
 
 public class EditAdHandler : ICommandHandler<EditAd>
 {
+    private readonly IHttpContextAccessor _httpContext;
     private readonly IAdDbContext _context;
     private readonly IMapper _mapper;
 
-    public EditAdHandler(IAdDbContext context, IMapper mapper)
+    public EditAdHandler(IHttpContextAccessor httpContext, IAdDbContext context, IMapper mapper)
     {
+        _httpContext = httpContext;
         _context = context;
         _mapper = mapper;
     }
 
     public async Task<Unit> Handle(EditAd request, CancellationToken cancellationToken)
     {
+        string userId = _httpContext.HttpContext.User.GetUserId();
+
         // get ad model from db
         var adModel = await _context.Ads.FindAsync(request.Id);
 
@@ -95,6 +98,7 @@ public class EditAdHandler : ICommandHandler<EditAd>
 
         // map ad data
         _mapper.Map(request, adModel);
+        adModel.UserId = userId;
 
         // fix price
         if (adModel.SaleState != SaleStatus.Paid)

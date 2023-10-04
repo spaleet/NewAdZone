@@ -65,7 +65,7 @@ public class PostAdHandler : ICommandHandler<PostAd, AdDto>
 
     public async Task<AdDto> Handle(PostAd request, CancellationToken cancellationToken)
     {
-        var userId = _httpContext.HttpContext.User.GetUserId();
+        string userId = _httpContext.HttpContext.User.GetUserId();
 
         int adsPosted = await _context.Ads.CountAsync(x => x.UserId == userId);
 
@@ -83,6 +83,7 @@ public class PostAdHandler : ICommandHandler<PostAd, AdDto>
 
         // map ad model
         var createdAd = _mapper.Map<Domain.Entities.Ad>(request);
+        createdAd.UserId = userId;
 
         // join tags
         createdAd.Tags = await _context.AdCategories.JoinTags(createdAd.CategoryId);

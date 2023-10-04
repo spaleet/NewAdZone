@@ -34,7 +34,6 @@ public class UserTicketController : BaseController
     [HttpPost("post")]
     public async Task<ActionResult<TicketDto>> PostTicket([FromBody] PostTicket request, CancellationToken cancellationToken)
     {
-        request.UserId = User.GetUserId();
         var res = await Mediator.Send(request, cancellationToken);
 
         return CreatedAtRoute(nameof(GetTicketDetailsUser), new { id = res.Id, uId = res.UserId }, res);
@@ -43,7 +42,6 @@ public class UserTicketController : BaseController
     [HttpDelete("close")]
     public async Task<IActionResult> Close([FromBody] CloseTicketUser request, CancellationToken cancellationToken)
     {
-        request.UserId = User.GetUserId();
         await Mediator.Send(request, cancellationToken);
 
         return NoContent();
@@ -52,7 +50,6 @@ public class UserTicketController : BaseController
     [HttpPost("message/post")]
     public async Task<ActionResult<TicketDto>> PostMessage([FromBody] PostMessage request, CancellationToken cancellationToken)
     {
-        request.UserId = User.GetUserId();
         var res = await Mediator.Send(request, cancellationToken);
 
         return CreatedAtRoute(nameof(GetTicketDetailsUser), new { id = res.Id, uId = res.UserId }, res);
@@ -61,7 +58,6 @@ public class UserTicketController : BaseController
     [HttpDelete("message/close")]
     public async Task<IActionResult> DeleteMessage([FromBody] DeleteMessage request, CancellationToken cancellationToken)
     {
-        request.UserId = User.GetUserId();
         await Mediator.Send(request, cancellationToken);
 
         return NoContent();

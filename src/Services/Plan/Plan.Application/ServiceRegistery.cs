@@ -16,6 +16,8 @@ public static class ServiceRegistery
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
         services.AddZarinPal();
+
+        services.AddHttpContextAccessor();
     }
 }
 

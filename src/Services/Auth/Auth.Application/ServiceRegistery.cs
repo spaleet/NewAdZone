@@ -20,5 +20,7 @@ public static class ServiceRegistery
         services.AddTransient<IAuthUserService, AuthUserService>();
         services.AddTransient<IJwtTokenFactory, JwtTokenFactory>();
         services.AddTransient<IAuthTokenStoreService, AuthTokenStoreService>();
+
+        services.AddHttpContextAccessor();
     }
 }

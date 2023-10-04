@@ -1,5 +1,6 @@
 ﻿using BuildingBlocks.Core.Web;
 using BuildingBlocks.Security;
+using BuildingBlocks.Security.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Ticket.Application.Dtos;
@@ -34,7 +35,7 @@ public class AdminTicketController : BaseController
     {
         var answerCommand = new AnswerTicket(request);
 
-        answerCommand.AdminId = "10000"; // TODO Auth
+        answerCommand.AdminId = User.GetUserId();
 
         var res = await Mediator.Send(answerCommand, cancellationToken);
 

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+using BuildingBlocks.Security.Utils;
+using Microsoft.AspNetCore.Http;
 using Ticket.Application.Dtos;
 using Ticket.Domain.Enums;
 
@@ -8,10 +9,6 @@ namespace Ticket.Application.Features.User.PostingTicket;
 
 public record PostTicket : ICommand<TicketDto>
 {
-    [JsonIgnore]
-    [BindNever]
-    public string UserId { get; set; }
-
     public string Title { get; set; }
 
     [EnumDataType(typeof(TicketDepartmentEnum))]
@@ -48,11 +45,13 @@ public class PostTicketHandler : ICommandHandler<PostTicket, TicketDto>
 {
     private readonly TicketDbContext _context;
     private readonly IMapper _mapper;
+    private readonly IHttpContextAccessor _httpContext;
 
-    public PostTicketHandler(TicketDbContext context, IMapper mapper)
+    public PostTicketHandler(TicketDbContext context, IMapper mapper, IHttpContextAccessor httpContext)
     {
         _context = context;
         _mapper = mapper;
+        _httpContext = httpContext;
     }
 
     public async Task<TicketDto> Handle(PostTicket request, CancellationToken cancellationToken)
@@ -65,12 +64,14 @@ public class PostTicketHandler : ICommandHandler<PostTicket, TicketDto>
         // insert ticket
         await _context.Tickets.InsertOneAsync(ticket);
 
+        string userId = _httpContext.HttpContext.User.GetUserId();
+
         // insert ticket message
         var ticketMessage = new TicketMessage
         {
             TicketId = ticket.Id,
             Text = request.Text,
-            UserId = request.UserId
+            UserId = userId
         };
 
         await _context.TicketMessages.InsertOneAsync(ticketMessage);

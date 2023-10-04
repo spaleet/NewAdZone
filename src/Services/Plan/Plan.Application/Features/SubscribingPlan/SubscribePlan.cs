@@ -1,18 +1,13 @@
 ﻿using BuildingBlocks.Core.Utilities;
+using BuildingBlocks.Security.Utils;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MongoDB.Driver;
 using Newtonsoft.Json;
 
 namespace Plan.Application.Features.SubscribingPlan;
 
-public record SubscribePlan : ICommand<SubscribePlanResponse>
-{
-    public string PlanId { get; set; }
-
-    [JsonIgnore]
-    [BindNever]
-    public string UserId { get; set; }
-}
+public record SubscribePlan(string PlanId) : ICommand<SubscribePlanResponse>;
 
 public class SubscribePlanValidator : AbstractValidator<SubscribePlan>
 {
@@ -20,18 +15,17 @@ public class SubscribePlanValidator : AbstractValidator<SubscribePlan>
     {
         RuleFor(x => x.PlanId)
             .RequiredValidator("شناسه پلن");
-
-        RuleFor(x => x.UserId)
-            .RequiredValidator("شناسه کاربر");
     }
 }
 
 public class SubscribePlanHandler : ICommandHandler<SubscribePlan, SubscribePlanResponse>
 {
+    private readonly IHttpContextAccessor _httpContext;
     private readonly PlanDbContext _context;
 
-    public SubscribePlanHandler(PlanDbContext context)
+    public SubscribePlanHandler(IHttpContextAccessor httpContext, PlanDbContext context)
     {
+        _httpContext = httpContext;
         _context = context;
     }
 
@@ -42,10 +36,10 @@ public class SubscribePlanHandler : ICommandHandler<SubscribePlan, SubscribePlan
         if (plan is null)
             throw new NotFoundException("پلن مورد نظر پیدا نشد");
 
-        // TODO : check user exists
+        string userId = _httpContext.HttpContext.User.GetUserId();
 
         var userWithPlan = _context.PlanSubscriptions.AsQueryable()
-            .Where(x => x.UserId == request.UserId && x.PlanId == request.PlanId)
+            .Where(x => x.UserId == userId && x.PlanId == request.PlanId)
             .FirstOrDefault();
 
         if (userWithPlan != null)
@@ -54,7 +48,7 @@ public class SubscribePlanHandler : ICommandHandler<SubscribePlan, SubscribePlan
         var subscription = new PlanSubscription
         {
             PlanId = request.PlanId,
-            UserId = request.UserId,
+            UserId = userId,
             State = PlanSubscriptionState.Pending,
             Price = plan.Price,
             IssueTrackingNo = "0000-0000"

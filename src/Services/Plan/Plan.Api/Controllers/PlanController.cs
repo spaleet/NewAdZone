@@ -45,8 +45,6 @@ public class PlanController : BaseController
     [Authorize]
     public async Task<ActionResult<InitializePaymentResponse>> SubscribeToPlan([FromBody] SubscribePlan request, CancellationToken cancellationToken)
     {
-        request.UserId = User.GetUserId();
-
         // add subscription in db
         var subscribeResult = await Mediator.Send(request, cancellationToken);
 
