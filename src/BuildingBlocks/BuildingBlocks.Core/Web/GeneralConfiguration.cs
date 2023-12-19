@@ -15,6 +15,9 @@ public static class GeneralConfiguration
         builder.Services.AddControllers(options =>
         {
             options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
+        }).AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.IncludeFields = true;
         });
 
         return builder;

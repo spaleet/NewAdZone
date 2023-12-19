@@ -7,6 +7,7 @@ WORKDIR /src
 COPY ["src/Services/Ad/Ad.Api/Ad.Api.csproj", "src/Services/Ad/Ad.Api/"]
 COPY ["src/BuildingBlocks/BuildingBlocks.Logging/BuildingBlocks.Logging.csproj", "src/BuildingBlocks/BuildingBlocks.Logging/"]
 COPY ["src/BuildingBlocks/BuildingBlocks.Core/BuildingBlocks.Core.csproj", "src/BuildingBlocks/BuildingBlocks.Core/"]
+COPY ["src/BuildingBlocks/BuildingBlocks.Cache/BuildingBlocks.Cache.csproj", "src/BuildingBlocks/BuildingBlocks.Cache/"]
 COPY ["src/Services/Ad/Ad.Infrastructure/Ad.Infrastructure.csproj", "src/Services/Ad/Ad.Infrastructure/"]
 COPY ["src/BuildingBlocks/BuildingBlocks.Security/BuildingBlocks.Security.csproj", "src/BuildingBlocks/BuildingBlocks.Security/"]
 COPY ["src/Services/Ad/Ad.Application/Ad.Application.csproj", "src/Services/Ad/Ad.Application/"]

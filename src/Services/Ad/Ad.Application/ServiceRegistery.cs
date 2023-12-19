@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using BuildingBlocks.Cache;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Ad.Application;
 
@@ -16,6 +17,7 @@ public static class ServiceRegistery
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
         services.AddHttpContextAccessor();
+        services.AddRedisCache();
     }
 }
 
