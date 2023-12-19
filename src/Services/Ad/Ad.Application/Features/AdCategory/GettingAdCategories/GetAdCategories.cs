@@ -21,14 +21,13 @@ public class GetAdCategoriesHandler : IQueryHandler<GetAdCategories, GetAdCatego
 
     public async Task<GetAdCategoriesResponse> Handle(GetAdCategories request, CancellationToken cancellationToken)
     {
-        var categories = await _cacheService.Get<List<AdCategoryDto>>("categories");
-
-        if (categories is null)
+        // get categories from cache
+        var categories = await _cacheService.Get<List<AdCategoryDto>>("categories", async () =>
         {
-            categories = await _context.AdCategories.AsQueryable()
-                                                        .Select(x => _mapper.Map(x, new AdCategoryDto()))
-                                                        .ToListAsync();
-        }
+            return await _context.AdCategories.AsQueryable()
+                                              .Select(x => _mapper.Map(x, new AdCategoryDto()))
+                                              .ToListAsync();
+        });
 
         var parents = categories.Where(x => x.ParentId == null).ToList();
 
@@ -39,8 +38,6 @@ public class GetAdCategoriesHandler : IQueryHandler<GetAdCategories, GetAdCatego
             var children = categories.Where(x => x.ParentId == p.Id).ToList();
             response.Add(new AdCategoryOrderedResponse(p, children));
         }
-
-        await _cacheService.Set<List<AdCategoryDto>>("categories", categories);
 
         return new GetAdCategoriesResponse(response);
     }
