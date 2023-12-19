@@ -1,6 +1,5 @@
 ﻿
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace BuildingBlocks.Cache;
@@ -16,16 +15,24 @@ public class CacheService : ICacheService
 
     public async Task<T?> Get<T>(string key, CancellationToken cancellationToken = default) where T : class
     {
-        string? result = await _distributedCache.GetStringAsync(key, cancellationToken);
+        string? cachedValue = await _distributedCache.GetStringAsync(key, cancellationToken);
 
-        if (result is null) return null;
+        if (cachedValue is null) return null;
         
-        return JsonSerializer.Deserialize<T>(result);
+        return JsonSerializer.Deserialize<T>(cachedValue);
     }
 
-    public Task<T> Get<T>(string key, Func<Task<T>> factory, CancellationToken cancellationToken = default) where T : class
+    public async Task<T> Get<T>(string key, Func<Task<T>> factory, CancellationToken cancellationToken = default) where T : class
     {
-        throw new NotImplementedException();
+        T? cachedValue = await Get<T>(key, cancellationToken);
+
+        if (cachedValue is not null) return cachedValue;
+
+        cachedValue = await factory();
+
+        await Set(key, cachedValue, cancellationToken);
+
+        return cachedValue;
     }
 
     public async Task Set<T>(string key, T value, CancellationToken cancellationToken = default) where T : class
