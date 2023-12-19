@@ -1,5 +1,6 @@
 ﻿using Ad.Application.Dtos;
 using AutoMapper;
+using BuildingBlocks.Cache;
 
 namespace Ad.Application.Features.AdCategory.CreatingAdCategory;
 
@@ -18,11 +19,13 @@ public class CreateAdCategoryHandler : ICommandHandler<CreateAdCategory, AdCateg
 {
     private readonly IAdDbContext _context;
     private readonly IMapper _mapper;
+    private readonly ICacheService _cacheService;
 
-    public CreateAdCategoryHandler(IAdDbContext context, IMapper mapper)
+    public CreateAdCategoryHandler(IAdDbContext context, IMapper mapper, ICacheService cacheService)
     {
         _context = context;
         _mapper = mapper;
+        _cacheService = cacheService;
     }
 
     public async Task<AdCategoryDto> Handle(CreateAdCategory request, CancellationToken cancellationToken)
@@ -45,6 +48,8 @@ public class CreateAdCategoryHandler : ICommandHandler<CreateAdCategory, AdCateg
 
         await _context.AdCategories.AddAsync(category);
         await _context.SaveChangesAsync();
+
+        await _cacheService.Remove(CacheKeyConsts.Categories);
 
         return _mapper.Map<AdCategoryDto>(category);
     }

@@ -22,12 +22,12 @@ public class GetAdCategoriesHandler : IQueryHandler<GetAdCategories, GetAdCatego
     public async Task<GetAdCategoriesResponse> Handle(GetAdCategories request, CancellationToken cancellationToken)
     {
         // get categories from cache
-        var categories = await _cacheService.Get<List<AdCategoryDto>>("categories", async () =>
+        var categories = await _cacheService.Get<List<AdCategoryDto>>(CacheKeyConsts.Categories, async () =>
         {
             return await _context.AdCategories.AsQueryable()
                                               .Select(x => _mapper.Map(x, new AdCategoryDto()))
                                               .ToListAsync();
-        });
+        }, TimeSpan.FromMinutes(5));
 
         var parents = categories.Where(x => x.ParentId == null).ToList();
 
