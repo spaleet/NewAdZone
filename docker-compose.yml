@@ -39,6 +39,16 @@ services:
     networks:
       - backend
 
+  redis.db:
+    container_name: redis.db
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_PASSWORD=Pass@word
+      - REDIS_PORT=6379
+
   api.gateway:
     container_name: api.gateway
     image: ${DOCKER_REGISTRY-}api.gateway
@@ -68,12 +78,14 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:80
       - ConnectionStrings__SqlConnection=Server=sql.db;Database=NewAdZone;User Id=sa;Password=Pass@word;Encrypt=False
+      - ConnectionStrings__Redis=redis.db:6379
       - UserClientOptions__UserPlanUrl=http://plan.api/api/user-plan/verify
     ports:
       - "3000:80"
     depends_on:
       - sql.db
       - plan.api
+      - redis.db
     networks:
       - backend
   

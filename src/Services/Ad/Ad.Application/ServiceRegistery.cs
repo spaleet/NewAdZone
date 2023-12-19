@@ -19,7 +19,7 @@ public static class ServiceRegistery
 
         services.AddHttpContextAccessor();
 
-        services.AddRedisCache(configuration.GetConnectionString("redis"));
+        services.AddRedisCache(configuration.GetConnectionString("Redis"));
     }
 }
 
