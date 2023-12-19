@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Ad.Application.Extensions;
 using AutoMapper;
+using BuildingBlocks.Cache;
 using BuildingBlocks.Core.Exceptions.Base;
 using BuildingBlocks.Security.Utils;
 using Microsoft.AspNetCore.Http;
@@ -53,12 +54,14 @@ public class EditAdHandler : ICommandHandler<EditAd>
     private readonly IHttpContextAccessor _httpContext;
     private readonly IAdDbContext _context;
     private readonly IMapper _mapper;
+    private readonly ICacheService _cacheService;
 
-    public EditAdHandler(IHttpContextAccessor httpContext, IAdDbContext context, IMapper mapper)
+    public EditAdHandler(IHttpContextAccessor httpContext, IAdDbContext context, IMapper mapper, ICacheService cacheService)
     {
         _httpContext = httpContext;
         _context = context;
         _mapper = mapper;
+        _cacheService = cacheService;
     }
 
     public async Task<Unit> Handle(EditAd request, CancellationToken cancellationToken)
@@ -70,6 +73,10 @@ public class EditAdHandler : ICommandHandler<EditAd>
 
         // check for null
         AdNotFoundException.ThrowIfNull(adModel);
+
+        // remove cache
+        string cacheKey = $"{CacheKeyConsts.Ad}_{adModel.Slug}";
+        await _cacheService.Remove(cacheKey);
 
         // TODO CHECK USER!!
         // TODO CHECK USER LIMIT & ROLE

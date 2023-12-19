@@ -13,7 +13,7 @@ public class CacheService : ICacheService
         _distributedCache = distributedCache;
     }
 
-    public async Task<T?> Get<T>(string key, ) where T : class
+    public async Task<T?> Get<T>(string key) where T : class
     {
         string? cachedValue = await _distributedCache.GetStringAsync(key);
 
