@@ -24,7 +24,7 @@ public class AdDbInitializer
             _context.Database.Migrate();
 
             SeedCategories();
-            
+
             _context.SaveChanges();
 
             _logger.LogInformation("Successfully initialized Ad Db!");

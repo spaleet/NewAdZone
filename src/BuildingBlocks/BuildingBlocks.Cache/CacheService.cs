@@ -18,7 +18,7 @@ public class CacheService : ICacheService
         string? cachedValue = await _distributedCache.GetStringAsync(key);
 
         if (cachedValue is null) return null;
-        
+
         return JsonSerializer.Deserialize<T>(cachedValue);
     }
 

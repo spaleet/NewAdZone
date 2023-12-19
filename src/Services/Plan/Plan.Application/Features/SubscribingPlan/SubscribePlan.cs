@@ -1,9 +1,7 @@
 ﻿using BuildingBlocks.Core.Utilities;
 using BuildingBlocks.Security.Utils;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MongoDB.Driver;
-using Newtonsoft.Json;
 
 namespace Plan.Application.Features.SubscribingPlan;
 

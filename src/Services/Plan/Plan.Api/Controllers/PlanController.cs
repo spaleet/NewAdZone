@@ -1,7 +1,6 @@
 ﻿using System.Text;
 using BuildingBlocks.Core.Web;
 using BuildingBlocks.Security;
-using BuildingBlocks.Security.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;

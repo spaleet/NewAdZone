@@ -78,9 +78,6 @@ public class EditAdHandler : ICommandHandler<EditAd>
         string cacheKey = $"{CacheKeyConsts.Ad}_{adModel.Slug}";
         await _cacheService.Remove(cacheKey);
 
-        // TODO CHECK USER!!
-        // TODO CHECK USER LIMIT & ROLE
-
         // if ad is paid but price not entered!
         if (request.SaleState == SaleStatus.Paid && request.Price == 0)
             throw new BadRequestException("لطفا قیمت را وارد کنید یا وضعیت فروش را تغییر دهید");

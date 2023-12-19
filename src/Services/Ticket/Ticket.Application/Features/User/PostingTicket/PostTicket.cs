@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 using BuildingBlocks.Security.Utils;
 using Microsoft.AspNetCore.Http;
 using Ticket.Application.Dtos;

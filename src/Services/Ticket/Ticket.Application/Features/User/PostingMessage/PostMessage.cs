@@ -1,7 +1,5 @@
-﻿using System.Text.Json.Serialization;
-using BuildingBlocks.Security.Utils;
+﻿using BuildingBlocks.Security.Utils;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MongoDB.Driver;
 using Ticket.Application.Dtos;
 using Ticket.Application.Exceptions;
