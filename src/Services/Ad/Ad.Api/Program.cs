@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddCustomSerilog();
 builder.AddGeneralConfiguration();
 
-builder.Services.AddApplication();
+builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApi(builder.Configuration);
 
@@ -24,6 +24,7 @@ app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ad Api");
+    c.DisplayRequestDuration();
 });
 
 app.UseCors("CORS_POLICY");
