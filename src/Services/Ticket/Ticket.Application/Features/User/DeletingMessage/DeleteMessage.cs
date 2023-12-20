@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BuildingBlocks.Security.Utils;
+using Microsoft.AspNetCore.Http;
 using MongoDB.Driver;
 using Ticket.Application.Exceptions;
 
